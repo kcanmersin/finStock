@@ -1,7 +1,10 @@
 ﻿using api.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore; // For async methods
 //mapper
 using api.Mappers;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace api.Controllers
 {
@@ -9,35 +12,31 @@ namespace api.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
-
         private readonly ApplicationDBContext _context;
-            public StockController(ApplicationDBContext context)
-            {
-                _context = context;
-            }
+
+        public StockController(ApplicationDBContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            // var stocks = _context.Stocks.ToList().
-            // Select(s =>s.ToStockDto());
-            // return Ok(stocks);
-            //use mapper ToStockDto
-            var stocks = _context.Stocks.ToList().Select(s => StockMappers.ToStockDto(s));
+            var stocks = await _context.Stocks
+                                       .Select(s => StockMappers.ToStockDto(s))
+                                       .ToListAsync();
             return Ok(stocks);
-
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var stock = _context.Stocks.Find(id);
+            var stock = await _context.Stocks.FindAsync(id);
             if (stock == null)
             {
                 return NotFound();
             }
-            return Ok(stock.StockMappers.ToStockDto());
+            return Ok(StockMappers.ToStockDto(stock));
         }
-        
     }
 }
