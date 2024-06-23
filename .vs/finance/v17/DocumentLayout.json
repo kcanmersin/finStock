@@ -3,20 +3,43 @@
   "WorkspaceRootPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\interfaces\\istockrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\interfaces\\istockrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\interfaces\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\interfaces\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\mappers\\stockmappers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\mappers\\stockmappers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\mappers\\commentmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\mappers\\commentmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\helpers\\queryobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\helpers\\queryobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\helpers\\commentqueryobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\helpers\\commentqueryobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\repository\\commentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\repository\\commentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/finstock/True/SqlTable/dbo.Stocks.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|c:\\users\\kc\\desktop\\kod\\.nets\\finance\\api\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C53DEFAD-B948-472D-A312-70DC994CB963}|api\\api.csproj|solutionrelative:api\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,15 +49,102 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IStockRepository.cs",
+              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Interfaces\\IStockRepository.cs",
+              "RelativeDocumentMoniker": "api\\Interfaces\\IStockRepository.cs",
+              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Interfaces\\IStockRepository.cs",
+              "RelativeToolTip": "api\\Interfaces\\IStockRepository.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T10:24:06.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ITokenService.cs",
+              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Interfaces\\ITokenService.cs",
+              "RelativeDocumentMoniker": "api\\Interfaces\\ITokenService.cs",
+              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Interfaces\\ITokenService.cs",
+              "RelativeToolTip": "api\\Interfaces\\ITokenService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T10:24:05.228Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "StockMappers.cs",
+              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Mappers\\StockMappers.cs",
+              "RelativeDocumentMoniker": "api\\Mappers\\StockMappers.cs",
+              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Mappers\\StockMappers.cs",
+              "RelativeToolTip": "api\\Mappers\\StockMappers.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAowAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T10:24:00.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CommentMapper.cs",
+              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Mappers\\CommentMapper.cs",
+              "RelativeDocumentMoniker": "api\\Mappers\\CommentMapper.cs",
+              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Mappers\\CommentMapper.cs",
+              "RelativeToolTip": "api\\Mappers\\CommentMapper.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T10:23:54.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "QueryObject.cs",
+              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Helpers\\QueryObject.cs",
+              "RelativeDocumentMoniker": "api\\Helpers\\QueryObject.cs",
+              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Helpers\\QueryObject.cs",
+              "RelativeToolTip": "api\\Helpers\\QueryObject.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T10:23:44.881Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CommentQueryObject.cs",
+              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Helpers\\CommentQueryObject.cs",
+              "RelativeDocumentMoniker": "api\\Helpers\\CommentQueryObject.cs",
+              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Helpers\\CommentQueryObject.cs",
+              "RelativeToolTip": "api\\Helpers\\CommentQueryObject.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T10:23:36.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CommentRepository.cs",
+              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Repository\\CommentRepository.cs",
+              "RelativeDocumentMoniker": "api\\Repository\\CommentRepository.cs",
+              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Repository\\CommentRepository.cs",
+              "RelativeToolTip": "api\\Repository\\CommentRepository.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAwwCkAAABHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T10:23:18.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "StockController.cs",
               "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Controllers\\StockController.cs",
               "RelativeDocumentMoniker": "api\\Controllers\\StockController.cs",
@@ -42,47 +152,33 @@
               "RelativeToolTip": "api\\Controllers\\StockController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T21:08:30.68Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-20T21:08:30.68Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "api.csproj",
-              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\api.csproj",
-              "RelativeDocumentMoniker": "api\\api.csproj",
-              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\api.csproj",
-              "RelativeToolTip": "api\\api.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-06-20T21:05:58.046Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ApplicationDBContext.cs",
-              "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Data\\ApplicationDBContext.cs",
-              "RelativeDocumentMoniker": "api\\Data\\ApplicationDBContext.cs",
-              "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Data\\ApplicationDBContext.cs",
-              "RelativeToolTip": "api\\Data\\ApplicationDBContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T20:58:12.55Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Program.cs",
               "RelativeDocumentMoniker": "api\\Program.cs",
               "ToolTip": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\api\\Program.cs",
               "RelativeToolTip": "api\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA+AAAA",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAAHYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-20T20:57:57.138Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "dbo.Stocks [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/finstock/True/SqlTable/dbo.Stocks.sql",
+              "ToolTip": "dbo.Stocks [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-06-23T10:04:33.894Z"
             }
           ]
         }

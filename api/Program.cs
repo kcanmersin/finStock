@@ -115,8 +115,7 @@ app.UseCors(x => x
       //.WithOrigins("https://localhost:44351))
       .SetIsOriginAllowed(origin => true));
 
-app.UseAuthentication();
-app.UseAuthorization();
+ 
 
 app.MapControllers();
 
