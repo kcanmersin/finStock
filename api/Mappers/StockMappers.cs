@@ -34,6 +34,7 @@ namespace api.Mappers
                 LastDiv = stockDto.LastDiv,
                 Industry = stockDto.Industry,
                 MarketCap = stockDto.MarketCap
+                Name = stockDto.Name
             };
         }
 

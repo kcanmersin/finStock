@@ -24,56 +24,45 @@ namespace api.Service
 
         public async Task<Stock> FindStockBySymbolAsync(string symbol)
         {
-            try
+            var uri = $"https://financialmodelingprep.com/api/v3/profile/{symbol}?apikey={_config["FMPKey"]}";
+            return await GetApiData<Dtos.Stock.FMPStock[]>(uri, "stock by symbol").ContinueWith(task =>
             {
-                var uri = $"https://financialmodelingprep.com/api/v3/profile/{symbol}?apikey={_config["FMPKey"]}";
-                var result = await _httpClient.GetAsync(uri);
-                if (result.IsSuccessStatusCode)
-                {
-                    var content = await result.Content.ReadAsStringAsync();
-                    var tasks = JsonConvert.DeserializeObject<Dtos.Stock.FMPStock[]>(content);
-                    var stock = tasks.FirstOrDefault();
-                    return stock != null ? stock.ToStockFromFMP() : null;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error in FindStockBySymbolAsync: {e.Message}");
-                return null;
-            }
+                var stocks = task.Result;
+                return stocks?.FirstOrDefault()?.ToStockFromFMP();
+            });
         }
 
         public async Task<List<Stock>> GetAdditionalStocksInfo(QueryObject query)
         {
             var uri = $"https://financialmodelingprep.com/api/v3/quote/{query.Symbol}?apikey={_config["FMPKey"]}";
-            return await GetApiData<List<Stock>>(uri, "additional stocks info");
+            return await GetStockListFromFMP(uri, "additional stocks info");
         }
 
         public async Task<List<Stock>> GetSymbolListAsync()
         {
             var uri = $"https://financialmodelingprep.com/api/v3/stock/list?apikey={_config["FMPKey"]}";
-            return await GetApiData<List<Stock>>(uri, "symbol list");
+            return await GetStockListFromFMP(uri, "symbol list");
         }
 
-       public async Task<List<Stock>> GeneralSearchAsync(string query)
-{
-    var uri = $"https://financialmodelingprep.com/api/v3/search?query={query}&apikey={_config["FMPKey"]}";
-    var fmpStocks = await GetApiData<Dtos.Stock.FMPStock[]>(uri, "general search");
-
-    if (fmpStocks != null)
-    {
-        return fmpStocks.Select(fmpStock => fmpStock.ToStockFromFMP()).ToList();
-    }
-
-    return new List<Stock>();
-}
-
+        public async Task<List<Stock>> GeneralSearchAsync(string query)
+        {
+            var uri = $"https://financialmodelingprep.com/api/v3/search?query={query}&apikey={_config["FMPKey"]}";
+            return await GetStockListFromFMP(uri, "general search");
+        }
 
         public async Task<List<Stock>> NameSearchAsync(string companyName)
         {
             var uri = $"https://financialmodelingprep.com/api/v3/search-ticker?query={companyName}&apikey={_config["FMPKey"]}";
-            return await GetApiData<List<Stock>>(uri, "name search");
+            return await GetStockListFromFMP(uri, "name search");
+        }
+
+        private async Task<List<Stock>> GetStockListFromFMP(string uri, string dataType)
+        {
+            return await GetApiData<Dtos.Stock.FMPStock[]>(uri, dataType).ContinueWith(task =>
+            {
+                var fmpStocks = task.Result;
+                return fmpStocks?.Select(fmpStock => fmpStock.ToStockFromFMP()).ToList() ?? new List<Stock>();
+            });
         }
 
         private async Task<T> GetApiData<T>(string uri, string dataType)

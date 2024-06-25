@@ -43,5 +43,7 @@ namespace api.Dtos.Stock
         public bool isActivelyTrading { get; set; }
         public bool isAdr { get; set; }
         public bool isFund { get; set; }
+
+        public string Name { get; set; }
     }
 }
