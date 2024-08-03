@@ -1322,7 +1322,7 @@
           "bin/placeholder/Core.dll": {}
         }
       },
-      "Entitiy/1.0.0": {
+      "Entity/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
@@ -1333,10 +1333,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0"
         },
         "compile": {
-          "bin/placeholder/Entitiy.dll": {}
+          "bin/placeholder/Entity.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Entitiy.dll": {}
+          "bin/placeholder/Entity.dll": {}
         }
       }
     }
@@ -3865,15 +3865,15 @@
       "path": "../Core/Core.csproj",
       "msbuildProject": "../Core/Core.csproj"
     },
-    "Entitiy/1.0.0": {
+    "Entity/1.0.0": {
       "type": "project",
-      "path": "../Entitiy/Entitiy.csproj",
-      "msbuildProject": "../Entitiy/Entitiy.csproj"
+      "path": "../Entity/Entity.csproj",
+      "msbuildProject": "../Entity/Entity.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Entitiy >= 1.0.0",
+      "Entity >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 7.0.0",
       "Microsoft.EntityFrameworkCore >= 7.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.0",
@@ -3909,8 +3909,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {
-              "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj"
+            "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
+              "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj"
             }
           }
         }

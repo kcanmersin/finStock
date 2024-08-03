@@ -3440,7 +3440,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "Entitiy": "1.0.0",
+          "Entity": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.0",
@@ -3453,7 +3453,7 @@
           "bin/placeholder/Data.dll": {}
         }
       },
-      "Entitiy/1.0.0": {
+      "Entity/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
@@ -3464,10 +3464,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0"
         },
         "compile": {
-          "bin/placeholder/Entitiy.dll": {}
+          "bin/placeholder/Entity.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Entitiy.dll": {}
+          "bin/placeholder/Entity.dll": {}
         }
       },
       "Service/1.0.0": {
@@ -3477,7 +3477,7 @@
           "AutoMapper": "12.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.0",
           "Data": "1.0.0",
-          "Entitiy": "1.0.0",
+          "Entity": "1.0.0",
           "FluentValidation.AspNetCore": "11.2.2",
           "FluentValidation.DependencyInjectionExtensions": "11.2.2"
         },
@@ -9732,10 +9732,10 @@
       "path": "../Data/Data.csproj",
       "msbuildProject": "../Data/Data.csproj"
     },
-    "Entitiy/1.0.0": {
+    "Entity/1.0.0": {
       "type": "project",
-      "path": "../Entitiy/Entitiy.csproj",
-      "msbuildProject": "../Entitiy/Entitiy.csproj"
+      "path": "../Entity/Entity.csproj",
+      "msbuildProject": "../Entity/Entity.csproj"
     },
     "Service/1.0.0": {
       "type": "project",
@@ -9746,7 +9746,7 @@
   "projectFileDependencyGroups": {
     "net7.0": [
       "Data >= 1.0.0",
-      "Entitiy >= 1.0.0",
+      "Entity >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 6.0.9",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.0",
       "NToastNotify >= 8.0.0",
@@ -9786,8 +9786,8 @@
             "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj": {
               "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj"
             },
-            "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {
-              "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj"
+            "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
+              "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj"
             },
             "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Service\\Service.csproj": {
               "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Service\\Service.csproj"

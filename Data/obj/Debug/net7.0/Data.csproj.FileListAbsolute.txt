@@ -13,8 +13,8 @@ C:\Users\KC\Desktop\kod\.nets\finance\Data\obj\Debug\net7.0\ref\Data.dll
 C:\Users\KC\Desktop\kod\.nets\finance\Data\obj\Debug\net7.0\Data.csproj.AssemblyReference.cache
 C:\Users\KC\Desktop\kod\.nets\finance\Data\bin\Debug\net7.0\Data.runtimeconfig.json
 C:\Users\KC\Desktop\kod\.nets\finance\Data\bin\Debug\net7.0\Core.dll
-C:\Users\KC\Desktop\kod\.nets\finance\Data\bin\Debug\net7.0\Entitiy.dll
-C:\Users\KC\Desktop\kod\.nets\finance\Data\bin\Debug\net7.0\Entitiy.pdb
 C:\Users\KC\Desktop\kod\.nets\finance\Data\bin\Debug\net7.0\Core.pdb
 C:\Users\KC\Desktop\kod\.nets\finance\Data\obj\Debug\net7.0\Data.csproj.Up2Date
 C:\Users\KC\Desktop\kod\.nets\finance\Data\obj\Debug\net7.0\Data.genruntimeconfig.cache
+C:\Users\KC\Desktop\kod\.nets\finance\Data\bin\Debug\net7.0\Entity.dll
+C:\Users\KC\Desktop\kod\.nets\finance\Data\bin\Debug\net7.0\Entity.pdb

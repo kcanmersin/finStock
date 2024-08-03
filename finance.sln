@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{EA65BE0F-3A81-45D0-850A-9146B328CC90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entitiy", "Entitiy\Entitiy.csproj", "{0CB02309-F2AD-48E1-AB89-27221380EF7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{0CB02309-F2AD-48E1-AB89-27221380EF7B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EA65BE0F-3A81-45D0-850A-9146B328CC90} = {EA65BE0F-3A81-45D0-850A-9146B328CC90}
 	EndProjectSection
@@ -24,6 +24,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{F1C4FB1F-1A1F-4158-B009-7D103F6B043A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0CB02309-F2AD-48E1-AB89-27221380EF7B} = {0CB02309-F2AD-48E1-AB89-27221380EF7B}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED796D05-5E3A-43EF-A74F-1A66CC5A1B22}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Global

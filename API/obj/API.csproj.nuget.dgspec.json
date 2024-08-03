@@ -32,8 +32,8 @@
               "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj": {
                 "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj"
               },
-              "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {
-                "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj"
+              "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj"
               },
               "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Service\\Service.csproj": {
                 "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Service\\Service.csproj"
@@ -188,8 +188,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {
-                "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj"
+              "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj"
               }
             }
           }
@@ -252,14 +252,14 @@
         }
       }
     },
-    "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {
+    "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj",
-        "projectName": "Entitiy",
-        "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj",
+        "projectUniqueName": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj",
+        "projectName": "Entity",
+        "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj",
         "packagesPath": "C:\\Users\\KC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\obj\\",
+        "outputPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KC\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -363,8 +363,8 @@
               "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj": {
                 "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj"
               },
-              "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {
-                "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj"
+              "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj"
               }
             }
           }

@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "Data/1.0.0": {
         "dependencies": {
-          "Entitiy": "1.0.0",
+          "Entity": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.0",
@@ -796,7 +796,7 @@
           "Core.dll": {}
         }
       },
-      "Entitiy/1.0.0": {
+      "Entity/1.0.0": {
         "dependencies": {
           "AutoMapper": "12.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.0",
@@ -805,7 +805,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0"
         },
         "runtime": {
-          "Entitiy.dll": {}
+          "Entity.dll": {}
         }
       }
     }
@@ -1367,7 +1367,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Entitiy/1.0.0": {
+    "Entity/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
