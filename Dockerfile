@@ -9,6 +9,10 @@ COPY ["Service/Service.csproj", "Service/"]
 COPY ["Core/Core.csproj", "Core/"]
 RUN dotnet restore "finance.sln"
 
+
+
+
+
 COPY ["API/", "API/"]
 
 
