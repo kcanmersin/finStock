@@ -1,4 +1,4 @@
-﻿namespace Entity
+﻿namespace Entitiy
 {
     public class Class1
     {

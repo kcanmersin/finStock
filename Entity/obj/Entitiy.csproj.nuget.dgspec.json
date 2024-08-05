@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {}
+    "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {}
   },
   "projects": {
     "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Core\\Core.csproj": {
@@ -65,14 +65,14 @@
         }
       }
     },
-    "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
+    "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj",
-        "projectName": "Entity",
-        "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj",
+        "projectUniqueName": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj",
+        "projectName": "Entitiy",
+        "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\Entitiy.csproj",
         "packagesPath": "C:\\Users\\KC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\obj\\",
+        "outputPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entitiy\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KC\\AppData\\Roaming\\NuGet\\NuGet.Config",

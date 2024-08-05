@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using  Entity.DTOs.Users;
 using Microsoft.AspNetCore.Identity;
-using  Entity.Entities;
+using Service.Services.Abstractions;
+using Entity.DTOs.Users;
 
 namespace  Web.Controllers.API
 {
@@ -13,72 +13,56 @@ namespace  Web.Controllers.API
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly IUserService _userService;
 
-        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AuthController(IUserService userService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _userService = userService;
+        }
+        //get all user
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegistrationDto registrationDto)
+        {
+            try
+            {
+                var token = await _userService.RegisterUserAsync(registrationDto);
+                return Ok(new { Message = "Registration successful", Token = token });
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                var token = await _userService.LoginUserAsync(loginDto);
+                return Ok(new { Message = "Login successful", Token = token });
             }
-
-            var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
-            if (user != null)
+            catch (System.UnauthorizedAccessException)
             {
-                var result = await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    // Consider returning a token or a success message based on your security implementation
-                    return Ok("Login successful.");
-                }
+                return Unauthorized(new { Message = "Invalid credentials" });
             }
-
-            return Unauthorized("Invalid login attempt.");
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await _signInManager.SignOutAsync();
-            return Ok("Logged out successfully.");
-        }
-
-        [HttpGet("access-denied")]
-        public IActionResult AccessDenied()
-        {
-            return Unauthorized("Access denied. You do not have permission to access this resource.");
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserAddDto userAddDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = new AppUser { UserName = userAddDto.Email, Email = userAddDto.Email };
-            var result = await _userManager.CreateAsync(user, userAddDto.Password);
-            if (result.Succeeded)
-            {
-                // Optionally, sign the user in after successful registration
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok("User registered successfully.");
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-            return BadRequest(ModelState);
+            // Assuming logout means to clear a cookie or a client-side stored token
+            return Ok(new { Message = "Logged out successfully" });
         }
     }
 }

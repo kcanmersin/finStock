@@ -52,21 +52,21 @@ namespace Data.Migrations
                         new
                         {
                             Id = new Guid("16ea936c-7a28-4c30-86a2-9a9704b6115e"),
-                            ConcurrencyStamp = "fd88b679-e139-47bb-a776-5f27ff6d780a",
+                            ConcurrencyStamp = "6d5ef03b-4400-4927-9837-000e4a318500",
                             Name = "Superadmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("7cb750cf-3612-4fb4-9f7d-a38ba8f16bf4"),
-                            ConcurrencyStamp = "86d97608-625a-47a6-817a-058a9a7c0874",
+                            ConcurrencyStamp = "375fa066-2c4a-4ad2-ae28-3b88b7cd3a83",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("edf6c246-41d8-475f-8d92-41dddac3aefb"),
-                            ConcurrencyStamp = "6206485e-fda8-454c-9a01-5a03d05f3fd5",
+                            ConcurrencyStamp = "21373a9c-8290-427c-939d-610c6764bc61",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -104,6 +104,9 @@ namespace Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -178,7 +181,8 @@ namespace Data.Migrations
                         {
                             Id = new Guid("cb94223b-ccb8-4f2f-93d7-0df96a7f065c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "22d2c0c2-152d-4fed-9101-59f003a796a8",
+                            Balance = 0m,
+                            ConcurrencyStamp = "f16300c3-6f27-4e3c-aa74-bacd44f9f961",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Can",
@@ -187,10 +191,10 @@ namespace Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBJfUOJRxkzBXY8TBtBPNyYXkRULGSWYucqm86KY4e0eydUQMv0/LJqpGtGqGCFF5Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHiTbQH2Z7OrgsE2Rt+Cm1Ikf9BNrZJGP5bapCF3njATuOkn8qdhZS0o9CnbbK11MQ==",
                             PhoneNumber = "+905439999999",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "f4ecd548-043e-474c-a465-26d67d541ac5",
+                            SecurityStamp = "425babf5-7a43-42f6-8957-d804b5039b02",
                             TwoFactorEnabled = false,
                             UserName = "superadmin@gmail.com"
                         },
@@ -198,7 +202,8 @@ namespace Data.Migrations
                         {
                             Id = new Guid("3aa42229-1c0f-4630-8c1a-db879ecd0427"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8cf4bd36-3152-4249-b2c5-b6a717ffd12e",
+                            Balance = 0m,
+                            ConcurrencyStamp = "8076e97b-e5c4-4f46-a139-837493c4c684",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -207,10 +212,10 @@ namespace Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKVJ6WP2jSTG4oZ8f1EC1MZIExL3SVdT4QpgEetAb4wzrnHrEb+Gf+Znda359HQE2A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOeAr8EyaKKjaxBUn22WxwiI1dJ4IxDpeWRfktky1adWI5rWF734cOHwguIaEVxdcA==",
                             PhoneNumber = "+905439999988",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "396c3c6d-cc08-424d-94a0-aaffd234c4e1",
+                            SecurityStamp = "812e00f5-5411-4ded-b892-632627355c5e",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -354,7 +359,7 @@ namespace Data.Migrations
                         {
                             Id = new Guid("f71f4b9a-aa60-461d-b398-de31001bf214"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 7, 30, 9, 13, 58, 534, DateTimeKind.Utc).AddTicks(4245),
+                            CreatedDate = new DateTime(2024, 8, 5, 20, 57, 52, 69, DateTimeKind.Utc).AddTicks(2107),
                             FileName = "images/testimage",
                             FileType = "jpg",
                             IsDeleted = false
@@ -363,11 +368,194 @@ namespace Data.Migrations
                         {
                             Id = new Guid("d16a6ec7-8c50-4ab0-89a5-02b9a551f0fa"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 7, 30, 9, 13, 58, 534, DateTimeKind.Utc).AddTicks(4252),
+                            CreatedDate = new DateTime(2024, 8, 5, 20, 57, 52, 69, DateTimeKind.Utc).AddTicks(2112),
                             FileName = "images/vstest",
                             FileType = "png",
                             IsDeleted = false
                         });
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.Portfolio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Portfolios", (string)null);
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.Stock", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stocks", (string)null);
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.StockHolding", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PortfolioId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("PurchasePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("StockId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("StockHoldings", (string)null);
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.Transaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Entities.AppRoleClaim", b =>
@@ -432,9 +620,68 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Entity.Entities.Stock.Portfolio", b =>
+                {
+                    b.HasOne("Entity.Entities.AppUser", "AppUser")
+                        .WithOne("Portfolio")
+                        .HasForeignKey("Entity.Entities.Stock.Portfolio", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.StockHolding", b =>
+                {
+                    b.HasOne("Entity.Entities.Stock.Portfolio", "Portfolio")
+                        .WithMany("StockHoldings")
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Entities.Stock.Stock", "Stock")
+                        .WithMany("StockHoldings")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Portfolio");
+
+                    b.Navigation("Stock");
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.Transaction", b =>
+                {
+                    b.HasOne("Entity.Entities.AppUser", "User")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Entity.Entities.AppUser", b =>
+                {
+                    b.Navigation("Portfolio")
+                        .IsRequired();
+
+                    b.Navigation("Transactions");
+                });
+
             modelBuilder.Entity("Entity.Entities.Image", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.Portfolio", b =>
+                {
+                    b.Navigation("StockHoldings");
+                });
+
+            modelBuilder.Entity("Entity.Entities.Stock.Stock", b =>
+                {
+                    b.Navigation("StockHoldings");
                 });
 #pragma warning restore 612, 618
         }

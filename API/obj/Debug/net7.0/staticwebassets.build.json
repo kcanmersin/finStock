@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uFaf+uSzdutOBZ+kdHfoE/VZ67WFnwhRatsq0FmhRqU=",
+  "Hash": "MiDplp3hLrlsqJTNvwpgDj7hpCqN+VoMP9pvZIrXpj8=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\images\\user-images\\a.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "images/user-images/a.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\user-images\\a.png"
     }
   ]
 }

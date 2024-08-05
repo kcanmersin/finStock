@@ -423,3 +423,4 @@ C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Npgsql.dll
 C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Entity.dll
 C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Entity.pdb
+C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

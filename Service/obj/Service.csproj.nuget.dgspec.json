@@ -264,9 +264,6 @@
             "projectReferences": {
               "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj": {
                 "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Data\\Data.csproj"
-              },
-              "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\Entity\\Entity.csproj"
               }
             }
           }
@@ -301,6 +298,10 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.2.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             }
           },
           "imports": [

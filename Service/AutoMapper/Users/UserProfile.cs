@@ -13,11 +13,10 @@ namespace Service.AutoMapper.Users
     {
         public UserProfile()
         {
-            CreateMap<AppUser, UserDto>().ReverseMap();
-            CreateMap<AppUser, UserAddDto>().ReverseMap();
             CreateMap<AppUser, UserUpdateDto>().ReverseMap();
-            CreateMap<AppUser, UserProfileDto>().ReverseMap();
-            CreateMap<AppUser, CreatedUserResponse>().ReverseMap();
+            CreateMap<AppUser, UserRegistrationDto>().ReverseMap();
+            CreateMap<AppUser, UserLoginDto>().ReverseMap();
+
 
         }
     }

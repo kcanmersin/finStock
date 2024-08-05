@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Entity.Entities.Stock;
 using Microsoft.AspNetCore.Identity;
 
 namespace Entity.Entities
@@ -8,8 +9,17 @@ namespace Entity.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public Guid ImageId { get; set; } = Guid.Parse("4084c97a-2aa1-4675-b519-69f6fe410633");
+        public Guid ImageId { get; set; } = Guid.Parse("F71F4B9A-AA60-461D-B398-DE31001BF214");
+        
+        // Guid.Parse("4084c97a-2aa1-4675-b519-69f6fe410633");
         public Image Image { get; set; }
+
+
+            public decimal Balance { get; set; }  // Kullanıcının bakiyesi
+
+    // Navigation properties
+    public virtual Portfolio Portfolio { get; set; }
+    public virtual List<Transaction> Transactions { get; set; }
 
     }
 }

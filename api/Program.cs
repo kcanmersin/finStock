@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
-using  Data.Context;
-using  Data.Extensions;
-using  Entity.Entities;
-using  Service.Describers;
-using  Service.Extensions;
+using Data.Context;
+using Data.Extensions;
+using Entity.Entities;
+using Service.Describers;
+using Service.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Models;
@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Load extensions and configurations
 builder.Services.LoadDataLayerExtension(builder.Configuration);
-builder.Services.LoadServiceLayerExtension();
+builder.Services.LoadServiceLayerExtension(builder.Configuration);
 builder.Services.AddSession();
 
 //add controllers view
@@ -26,6 +26,9 @@ builder.Services.AddIdentity<AppUser, AppRole>(opt =>
     opt.Password.RequireNonAlphanumeric = false;
     opt.Password.RequireLowercase = false;
     opt.Password.RequireUppercase = false;
+    opt.Password.RequireDigit = false;
+    opt.Password.RequiredLength = 6;
+
 })
 .AddRoleManager<RoleManager<AppRole>>()
 .AddErrorDescriber<CustomIdentityErrorDescriber>()

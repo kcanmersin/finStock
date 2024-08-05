@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
-using  Entity.DTOs.Users;
-using  Entity.Entities;
+using Entity.DTOs.Users;
+using Entity.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace  Service.Services.Abstractions
+namespace Service.Services.Abstractions
 {
-    public interface IUserService
+ public interface IUserService
     {
-        Task<List<UserDto>> GetAllUsersWithRoleAsync();
-        Task<List<AppRole>> GetAllRolesAsync();
-        Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto);
-        Task<IdentityResult> UpdateUserAsync(UserUpdateDto userUpdateDto);
-        Task<(IdentityResult identityResult, string? email)> DeleteUserAsync(Guid userId);
-        Task<AppUser> GetAppUserByIdAsync(Guid userId);
-        Task<string> GetUserRoleAsync(AppUser user);
-        Task<UserProfileDto> GetUserProfileAsync();
-        Task<bool> UserProfileUpdateAsync(UserProfileDto userProfileDto);
+        //get all user
+        Task<IEnumerable<AppUser>> GetAllUsersAsync();
+        Task<string> RegisterUserAsync(UserRegistrationDto registrationDto);
+
+        Task<string> LoginUserAsync(UserLoginDto loginDto);
+        Task UpdateUserAsync(UserUpdateDto updateDto);
     }
 }
