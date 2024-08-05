@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
 COPY ["finance.sln", "./"]
-COPY ["/API/API.csproj", "API/"]
+COPY ["./API/API.csproj", "./API/"]
 COPY ["Data/Data.csproj", "Data/"]
 COPY ["Entity/Entity.csproj", "Entity/"]
 COPY ["Service/Service.csproj", "Service/"]
