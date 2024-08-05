@@ -13,6 +13,10 @@ RUN dotnet restore "finance.sln"
 
 
 
+
+
+
+
 COPY ["API/", "API/"]
 
 
