@@ -10,6 +10,9 @@ COPY ["Core/Core.csproj", "Core/"]
 RUN dotnet restore "finance.sln"
 
 COPY ["API/", "API/"]
+
+
+
 COPY ["Data/", "Data/"]
 COPY ["Entity/", "Entity/"]
 COPY ["Service/", "Service/"]
