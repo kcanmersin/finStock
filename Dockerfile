@@ -17,6 +17,19 @@ COPY ["API/", "API/"]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 COPY ["Data/", "Data/"]
 COPY ["Entity/", "Entity/"]
 COPY ["Service/", "Service/"]
