@@ -10,6 +10,9 @@ COPY ["Core/Core.csproj", "Core/"]
 RUN dotnet restore "finance.sln"
 
 COPY ["API/", "API/"]
+
+
+
 COPY ["Data/", "Data/"]
 COPY ["Entity/", "Entity/"]
 COPY ["Service/", "Service/"]
@@ -24,5 +27,10 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 EXPOSE 80
 EXPOSE 443
+
+
+
+
+
 
 ENTRYPOINT ["dotnet", "API.dll"]
