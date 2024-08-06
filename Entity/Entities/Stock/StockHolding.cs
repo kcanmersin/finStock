@@ -11,9 +11,7 @@ namespace Entity.Entities.Stock
         public decimal PurchasePrice { get; set; }
 
         [NotMapped]
-        public decimal CurrentPrice { get; set; }  // Updated from external API, not stored in DB
-
-        // Navigation properties
+        public decimal CurrentPrice { get; set; }  
         public virtual Portfolio Portfolio { get; set; }
         public virtual Stock Stock { get; set; }
     }

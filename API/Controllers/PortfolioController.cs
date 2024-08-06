@@ -10,7 +10,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]  // Optional: Requires authorization for access
+    //[Authorize]  // Optional: Requires authorization for access
     public class PortfolioController : ControllerBase
     {
         private readonly IPortfolioService _portfolioService;
@@ -56,32 +56,34 @@ namespace API.Controllers
             return Ok(portfolio);
         }
 
-        // POST: api/Portfolio
-        [HttpPost]
-        public async Task<ActionResult> AddPortfolio(PortfolioCreateDto portfolioCreateDto)
-        {
-            await _portfolioService.AddPortfolioAsync(portfolioCreateDto);
-            return CreatedAtAction(nameof(GetPortfolioById), new { id = portfolioCreateDto.UserId }, portfolioCreateDto);
-        }
+// POST: api/Portfolio
+[HttpPost]
+public async Task<IActionResult> AddPortfolio(PortfolioCreateDto portfolioCreateDto)
+{
+    await _portfolioService.AddPortfolioAsync(portfolioCreateDto);
+    return StatusCode(201); 
+}
 
-        // PUT: api/Portfolio/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePortfolio(Guid id, PortfolioUpdateDto portfolioUpdateDto)
-        {
-            if (id != portfolioUpdateDto.Id)
-            {
-                return BadRequest("Portfolio ID mismatch.");
-            }
 
-            var portfolioExists = await _portfolioService.PortfolioExistsAsync(id);
-            if (!portfolioExists)
-            {
-                return NotFound();
-            }
+// PUT: api/Portfolio/{id}
+[HttpPut("{id}")]
+public async Task<IActionResult> UpdatePortfolio(Guid id, PortfolioUpdateDto portfolioUpdateDto)
+{
+    if (id != portfolioUpdateDto.Id)
+    {
+        return BadRequest("Portfolio ID mismatch.");
+    }
 
-            await _portfolioService.UpdatePortfolioAsync(portfolioUpdateDto);
-            return NoContent();
-        }
+    var portfolioExists = await _portfolioService.PortfolioExistsAsync(id);
+    if (!portfolioExists)
+    {
+        return NotFound();
+    }
+
+    await _portfolioService.UpdatePortfolioAsync(portfolioUpdateDto);
+    return NoContent();
+}
+
 
         // DELETE: api/Portfolio/{id}
         [HttpDelete("{id}")]

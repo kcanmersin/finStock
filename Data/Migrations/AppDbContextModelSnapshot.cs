@@ -52,21 +52,21 @@ namespace Data.Migrations
                         new
                         {
                             Id = new Guid("16ea936c-7a28-4c30-86a2-9a9704b6115e"),
-                            ConcurrencyStamp = "6d5ef03b-4400-4927-9837-000e4a318500",
+                            ConcurrencyStamp = "6c57a6c7-1bd2-44fe-9459-ef7c88af9b4e",
                             Name = "Superadmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("7cb750cf-3612-4fb4-9f7d-a38ba8f16bf4"),
-                            ConcurrencyStamp = "375fa066-2c4a-4ad2-ae28-3b88b7cd3a83",
+                            ConcurrencyStamp = "a28c6538-ef40-4711-897c-f298cfd3f66f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("edf6c246-41d8-475f-8d92-41dddac3aefb"),
-                            ConcurrencyStamp = "21373a9c-8290-427c-939d-610c6764bc61",
+                            ConcurrencyStamp = "fd5f7786-6708-4af9-a4af-07d9d01d27b5",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -182,7 +182,7 @@ namespace Data.Migrations
                             Id = new Guid("cb94223b-ccb8-4f2f-93d7-0df96a7f065c"),
                             AccessFailedCount = 0,
                             Balance = 0m,
-                            ConcurrencyStamp = "f16300c3-6f27-4e3c-aa74-bacd44f9f961",
+                            ConcurrencyStamp = "a3e481ff-227a-4beb-9dba-1b85a027fa76",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Can",
@@ -191,10 +191,10 @@ namespace Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHiTbQH2Z7OrgsE2Rt+Cm1Ikf9BNrZJGP5bapCF3njATuOkn8qdhZS0o9CnbbK11MQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEECrxewrhgVoMFDnc0t0h0R0mRtmUKVMdbZtMAAhWCKxoj41W1D3FamqDhXVayXznQ==",
                             PhoneNumber = "+905439999999",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "425babf5-7a43-42f6-8957-d804b5039b02",
+                            SecurityStamp = "35103173-328b-41fc-8ba2-5b6eca7cc93b",
                             TwoFactorEnabled = false,
                             UserName = "superadmin@gmail.com"
                         },
@@ -203,7 +203,7 @@ namespace Data.Migrations
                             Id = new Guid("3aa42229-1c0f-4630-8c1a-db879ecd0427"),
                             AccessFailedCount = 0,
                             Balance = 0m,
-                            ConcurrencyStamp = "8076e97b-e5c4-4f46-a139-837493c4c684",
+                            ConcurrencyStamp = "41492a8a-11fc-4ec9-92ba-05c2cd7ff967",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -212,10 +212,10 @@ namespace Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOeAr8EyaKKjaxBUn22WxwiI1dJ4IxDpeWRfktky1adWI5rWF734cOHwguIaEVxdcA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELj7hmS1YocVz/Ztqyo8wb5yOC4NYtkdmjJ9aKl38H1R0E/VUqynfgn24+QneZLeEg==",
                             PhoneNumber = "+905439999988",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "812e00f5-5411-4ded-b892-632627355c5e",
+                            SecurityStamp = "be974421-f2aa-4d62-a7b6-d0c151a2d189",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -321,7 +321,6 @@ namespace Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -359,7 +358,7 @@ namespace Data.Migrations
                         {
                             Id = new Guid("f71f4b9a-aa60-461d-b398-de31001bf214"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 8, 5, 20, 57, 52, 69, DateTimeKind.Utc).AddTicks(2107),
+                            CreatedDate = new DateTime(2024, 8, 6, 8, 24, 46, 235, DateTimeKind.Utc).AddTicks(589),
                             FileName = "images/testimage",
                             FileType = "jpg",
                             IsDeleted = false
@@ -368,7 +367,7 @@ namespace Data.Migrations
                         {
                             Id = new Guid("d16a6ec7-8c50-4ab0-89a5-02b9a551f0fa"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 8, 5, 20, 57, 52, 69, DateTimeKind.Utc).AddTicks(2112),
+                            CreatedDate = new DateTime(2024, 8, 6, 8, 24, 46, 235, DateTimeKind.Utc).AddTicks(593),
                             FileName = "images/vstest",
                             FileType = "png",
                             IsDeleted = false
@@ -382,7 +381,6 @@ namespace Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -403,6 +401,10 @@ namespace Data.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
@@ -421,7 +423,6 @@ namespace Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -464,7 +465,6 @@ namespace Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -516,7 +516,6 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -529,7 +528,6 @@ namespace Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 

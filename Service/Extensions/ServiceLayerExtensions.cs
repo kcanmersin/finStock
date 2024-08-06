@@ -14,6 +14,7 @@ using Service.Services.Concrete;
 using Service.Authentication;
 using Microsoft.Extensions.Configuration;
 using Entity.Configuration;
+using Service.ExternalAPI;
 
 namespace Service.Extensions
 {
@@ -23,16 +24,25 @@ namespace Service.Extensions
         {
             var assembly = Assembly.GetExecutingAssembly();
 
+            // Add services for dependency injection
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IJwtService, JwtService>();
-
+            services.AddScoped<IPortfolioService, PortfolioService>();
+            services.AddScoped<ITransactionService, TransactionService>(); 
+          //  services.AddScoped<IStockHoldingService, StockHoldingService>(); 
+            services.AddScoped<IStockApiService, StockApiService>(); 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            //stockapiservice
+            services.AddScoped<IStockApiService, StockApiService>();
+            // Configure JWT settings
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
             services.AddSingleton(jwtSettings);
 
+            // Register AutoMapper
             services.AddAutoMapper(assembly);
+
+            // FluentValidation configuration
             services.AddControllersWithViews()
                 .AddFluentValidation(opt =>
                 {
@@ -40,8 +50,14 @@ namespace Service.Extensions
                     opt.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
                 });
 
+            // Register HttpClient for StockApiService
+            services.AddHttpClient<IStockApiService, StockApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://finnhub.io/api/v1/"); 
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+
             return services;
         }
-
     }
 }

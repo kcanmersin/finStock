@@ -58,11 +58,6 @@ namespace  Web.Controllers.API
             }
         }
 
-        [HttpPost("logout")]
-        public IActionResult Logout()
-        {
-            // Assuming logout means to clear a cookie or a client-side stored token
-            return Ok(new { Message = "Logged out successfully" });
-        }
+    
     }
 }

@@ -14,9 +14,9 @@ namespace Data.Mappings
                 .IsRequired()
                 .HasMaxLength(10);
 
-            builder.Property(s => s.Name)
-                .IsRequired()
-                .HasMaxLength(100);
+            //builder.Property(s => s.Name)
+            //    .IsRequired()
+            //    .HasMaxLength(100);
 
             builder.HasMany(s => s.StockHoldings)
                 .WithOne(sh => sh.Stock)

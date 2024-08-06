@@ -33,6 +33,7 @@ namespace Service.Services.Concrete
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
         }
+        
 
         public async Task<List<PortfolioDto>> GetAllPortfoliosAsync()
         {
@@ -60,15 +61,33 @@ namespace Service.Services.Concrete
 
         public async Task AddPortfolioAsync(PortfolioCreateDto portfolioCreateDto)
         {
-            var portfolio = _mapper.Map<Portfolio>(portfolioCreateDto);
+              
+            //var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           ///cb94223b-ccb8-4f2f-93d7-0df96a7f065c
+           var userId="cb94223b-ccb8-4f2f-93d7-0df96a7f065c";
 
+           //find user email
+              //var userEmail = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+            var userEmail = "superadmin@gmail.com";
+
+
+            var portfolio = _mapper.Map<Portfolio>(portfolioCreateDto);
+            portfolio.UserId = Guid.Parse(userId);
+            portfolio.CreatedBy = userEmail;
             await _portfolioRepository.AddAsync(portfolio);
             await _unitOfWork.SaveAsync();
         }
-
+        //find stock holding value and check user balance if it is enough then add stock holding to portfolio
         public async Task UpdatePortfolioAsync(PortfolioUpdateDto portfolioUpdateDto)
         {
-            var portfolio = await _portfolioRepository.GetByGuidAsync(portfolioUpdateDto.Id);
+            //control that this portfolio belongs to the user
+            //var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           ///cb94223b-ccb8-4f2f-93d7-0df96a7f065c
+           var userId="cb94223b-ccb8-4f2f-93d7-0df96a7f065c";
+           
+            var portfolio = await _portfolioRepository.GetAsync(p => p.UserId == Guid.Parse(userId), p => p.StockHoldings, p => p.AppUser);
+            
+            //var portfolio = await _portfolioRepository.GetByGuidAsync(portfolioUpdateDto.Id);
             if (portfolio != null)
             {
                 _mapper.Map(portfolioUpdateDto, portfolio);

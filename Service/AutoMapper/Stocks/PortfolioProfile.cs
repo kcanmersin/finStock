@@ -14,7 +14,7 @@ namespace Service.AutoMapper.Stocks
         public PortfolioProfile()
         {
             CreateMap<Portfolio, PortfolioDto>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.AppUser.UserName))
+                //.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.AppUser.UserName))
                 .ForMember(dest => dest.StockHoldings, opt => opt.MapFrom(src => src.StockHoldings));
 
             CreateMap<PortfolioCreateDto, Portfolio>();

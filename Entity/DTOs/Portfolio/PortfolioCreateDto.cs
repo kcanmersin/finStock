@@ -7,6 +7,7 @@ namespace Entity.DTOs.Portfolio
 {
     public class PortfolioCreateDto
     {
-           public Guid UserId { get; set; }
+       // public Guid UserId { get; set; }
+        public string Name { get; set; }
     }
 }

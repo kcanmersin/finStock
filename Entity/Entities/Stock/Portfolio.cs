@@ -6,6 +6,7 @@ namespace Entity.Entities.Stock
 {
     public class Portfolio : EntityBase
     {
+        public string Name { get; set; }
         public Guid UserId { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual List<StockHolding> StockHoldings { get; set; }

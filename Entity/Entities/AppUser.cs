@@ -15,7 +15,8 @@ namespace Entity.Entities
         public Image Image { get; set; }
 
 
-            public decimal Balance { get; set; }  // Kullanıcının bakiyesi
+            public decimal Balance { get; set; }  = 0;
+             //zero
 
     // Navigation properties
     public virtual Portfolio Portfolio { get; set; }
