@@ -19,7 +19,8 @@ namespace Entity.Entities
              //zero
 
     // Navigation properties
-    public virtual Portfolio Portfolio { get; set; }
+        public virtual ICollection<StockHolding> StockHoldings { get; set; }
+
     public virtual List<Transaction> Transactions { get; set; }
 
     }

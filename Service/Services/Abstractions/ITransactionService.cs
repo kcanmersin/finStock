@@ -9,13 +9,13 @@ public interface ITransactionService
 {
     Task<IEnumerable<TransactionDto>> GetAllTransactionsAsync();
     Task<TransactionDto> GetTransactionByIdAsync(Guid transactionId);
-    Task AddTransactionAsync(TransactionCreateDto transactionCreateDto);
-    Task UpdateTransactionAsync(TransactionUpdateDto transactionUpdateDto);
-    Task DeleteTransactionAsync(Guid transactionId);
 
 
     Task AddDepositAsync(TransactionDepositDto depositDto);
     Task AddWithdrawalAsync(TransactionWithdrawalDto withdrawalDto);
+
+ Task PurchaseStockAsync(TransactionPurchaseDto purchaseDto);
+     Task SellStockAsync(TransactionSellDto sellDto);
 }
 
 }

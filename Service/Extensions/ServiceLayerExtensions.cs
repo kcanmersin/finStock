@@ -28,13 +28,13 @@ namespace Service.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IJwtService, JwtService>();
-            services.AddScoped<IPortfolioService, PortfolioService>();
             services.AddScoped<ITransactionService, TransactionService>(); 
           //  services.AddScoped<IStockHoldingService, StockHoldingService>(); 
             services.AddScoped<IStockApiService, StockApiService>(); 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //stockapiservice
             services.AddScoped<IStockApiService, StockApiService>();
+            services.AddScoped<IStockHoldingService, StockHoldingService>();
             // Configure JWT settings
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
             services.AddSingleton(jwtSettings);

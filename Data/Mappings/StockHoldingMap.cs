@@ -17,15 +17,15 @@ namespace Data.Mappings
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
 
-            builder.HasOne(sh => sh.Portfolio)
-                .WithMany(p => p.StockHoldings)
-                .HasForeignKey(sh => sh.PortfolioId)
+            // Linking StockHolding directly to AppUser
+            builder.HasOne(sh => sh.User)
+                .WithMany(u => u.StockHoldings)
+                .HasForeignKey(sh => sh.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(sh => sh.Stock)
-                .WithMany(s => s.StockHoldings)
-                .HasForeignKey(sh => sh.StockId)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Using a simple string for StockSymbol, no foreign key to a Stock entity
+            builder.Property(sh => sh.StockSymbol)
+                .IsRequired();
 
             builder.ToTable("StockHoldings");
         }

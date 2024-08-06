@@ -18,10 +18,10 @@ namespace Data.Mappings
             //    .IsRequired()
             //    .HasMaxLength(100);
 
-            builder.HasMany(s => s.StockHoldings)
-                .WithOne(sh => sh.Stock)
-                .HasForeignKey(sh => sh.StockId)
-                .OnDelete(DeleteBehavior.Restrict);
+            // builder.HasMany(s => s.StockHoldings)
+            //     .WithOne(sh => sh.Stock)
+            //     .HasForeignKey(sh => sh.StockId)
+            //     .OnDelete(DeleteBehavior.Restrict);
 
             builder.ToTable("Stocks");
         }

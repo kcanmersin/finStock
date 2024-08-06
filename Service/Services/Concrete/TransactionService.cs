@@ -55,54 +55,119 @@ namespace Service.Services.Concrete
         return _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
     }
 
-        public async Task PurchaseStockAsync(TransactionPurchaseDto purchaseDto)
+public async Task PurchaseStockAsync(TransactionPurchaseDto purchaseDto)
+{
+    var currentPrice = await _stockApiService.GetStockPriceAsync(purchaseDto.StockSymbol);
+    var totalCost = purchaseDto.Quantity * currentPrice;
+    var userId = Guid.Parse("cb94223b-ccb8-4f2f-93d7-0df96a7f065c");
+    var user = await _userRepository.GetAsync(u => u.Id == userId);
+    if (user == null) throw new InvalidOperationException("User not found.");
+    
+    if (user.Balance < totalCost)
+    {
+        throw new InvalidOperationException("Insufficient funds to complete the purchase.");
+    }
+
+    user.Balance -= totalCost;
+
+    var stockHolding = await _stockHoldingRepository.FirstOrDefaultAsync(sh =>
+        sh.UserId == userId && sh.StockSymbol == purchaseDto.StockSymbol);
+
+    if (stockHolding == null)
+    {
+        stockHolding = new StockHolding
         {
-            var currentPrice = await _stockApiService.GetStockPriceAsync(purchaseDto.StockSymbol);
-            var totalCost = purchaseDto.Quantity * currentPrice;
+            UserId = userId,
+            StockSymbol = purchaseDto.StockSymbol,
+            Quantity = purchaseDto.Quantity,
+            PurchasePrice = currentPrice
+        };
+        await _stockHoldingRepository.AddAsync(stockHolding);
+    }
+else
+{
+    decimal totalExistingCost = stockHolding.Quantity * stockHolding.PurchasePrice;
+
+    decimal totalNewCost = purchaseDto.Quantity * currentPrice;
+
+    stockHolding.Quantity += purchaseDto.Quantity;
+
+    if (stockHolding.Quantity > 0) 
+    {
+        stockHolding.PurchasePrice = (totalExistingCost + totalNewCost) / stockHolding.Quantity;
+    }
+}
+
+
+    var transaction = new Transaction
+    {
+        UserId = userId,
+        Amount = totalCost,
+        TransactionDate = DateTime.UtcNow,
+        Type = TransactionType.Purchase,
+        Description = $"Purchased {purchaseDto.Quantity} shares of {purchaseDto.StockSymbol} at {currentPrice} each."
+    };
+
+    await _transactionRepository.AddAsync(transaction);
+    await _userRepository.UpdateAsync(user);  // Update user balance
+    await _unitOfWork.SaveAsync();  // Commit all changes
+}
+
+
+
+  public async Task SellStockAsync(TransactionSellDto sellDto)
+        {
+            var currentPrice = await _stockApiService.GetStockPriceAsync(sellDto.StockSymbol);
             var userId = Guid.Parse("cb94223b-ccb8-4f2f-93d7-0df96a7f065c");
             var user = await _userRepository.GetAsync(u => u.Id == userId);
-
             if (user == null) throw new InvalidOperationException("User not found.");
-            if (user.Balance < totalCost)
-            {
-                throw new InvalidOperationException("Insufficient funds to complete the purchase.");
-            }
-
-            user.Balance -= totalCost;
 
             var stockHolding = await _stockHoldingRepository.FirstOrDefaultAsync(sh =>
-                sh.UserId == userId && sh.Stock.Symbol == purchaseDto.StockSymbol);
+                sh.UserId == userId && sh.StockSymbol == sellDto.StockSymbol);
 
-            if (stockHolding == null)
+            if (stockHolding == null || stockHolding.Quantity < sellDto.Quantity)
             {
-                stockHolding = new StockHolding
-                {
-                    PortfolioId = user.Portfolio.Id,
-                    StockId = GetStockIdBySymbol(purchaseDto.StockSymbol), // Method to fetch StockId from symbol
-                    Quantity = purchaseDto.Quantity,
-                    PurchasePrice = currentPrice
-                };
-                await _stockHoldingRepository.AddAsync(stockHolding);
+                throw new InvalidOperationException("Insufficient stock holdings to complete the sale.");
+            }
+
+            var totalRevenue = sellDto.Quantity * currentPrice;
+            user.Balance += totalRevenue;
+
+
+            //calculate stockholding.purshaceprice 
+            
+            stockHolding.Quantity -= sellDto.Quantity;
+
+            if (stockHolding.Quantity == 0)
+            {
+                await _stockHoldingRepository.DeleteAsync(stockHolding);
             }
             else
             {
-                stockHolding.Quantity += purchaseDto.Quantity;
-                // Optional: Update the purchase price to new weighted average
+                await _stockHoldingRepository.UpdateAsync(stockHolding);
             }
 
             var transaction = new Transaction
             {
                 UserId = userId,
-                Amount = totalCost,
+                Amount = totalRevenue,
                 TransactionDate = DateTime.UtcNow,
-                Type = TransactionType.Purchase,
-                Description = $"Purchased {purchaseDto.Quantity} shares of {purchaseDto.StockSymbol} at {currentPrice} each."
+                Type = TransactionType.Sale,
+                Description = $"Sold {sellDto.Quantity} shares of {sellDto.StockSymbol} at {currentPrice} each."
             };
 
             await _transactionRepository.AddAsync(transaction);
-            await _userRepository.UpdateAsync(user);  // Update user balance
-            await _unitOfWork.SaveAsync();  // Commit all changes
+            await _userRepository.UpdateAsync(user);
+            await _unitOfWork.SaveAsync();
         }
+
+
+
+
+
+
+
+
 
     public async Task AddDepositAsync(TransactionDepositDto depositDto)
     {
@@ -156,22 +221,6 @@ namespace Service.Services.Concrete
         await _unitOfWork.SaveAsync();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public async Task<IEnumerable<TransactionDto>> GetAllTransactionsAsync()
     {
         var transactions = await _transactionRepository.GetAllAsync(includeProperties: t => t.User);
@@ -184,43 +233,6 @@ namespace Service.Services.Concrete
         return _mapper.Map<TransactionDto>(transaction);
     }
 
-    public async Task AddTransactionAsync(TransactionCreateDto transactionCreateDto)
-    {
-        var transaction = _mapper.Map<Transaction>(transactionCreateDto);
-        transaction.UserId = GetUserId();
-        transaction.CreatedBy = GetUserEmail();
-        transaction.CreatedDate = DateTime.UtcNow;
 
-        await _transactionRepository.AddAsync(transaction);
-        await _unitOfWork.SaveAsync();
-    }
-
-    public async Task UpdateTransactionAsync(TransactionUpdateDto transactionUpdateDto)
-    {
-        var transaction = await _transactionRepository.GetByGuidAsync(transactionUpdateDto.Id);
-        if (transaction != null)
-        {
-            _mapper.Map(transactionUpdateDto, transaction);
-            transaction.ModifiedBy = GetUserEmail();
-            transaction.ModifiedDate = DateTime.UtcNow;
-
-            await _transactionRepository.UpdateAsync(transaction);
-            await _unitOfWork.SaveAsync();
-        }
-    }
-
-    public async Task DeleteTransactionAsync(Guid transactionId)
-    {
-        var transaction = await _transactionRepository.GetByGuidAsync(transactionId);
-        if (transaction != null)
-        {
-            transaction.DeletedBy = GetUserEmail();
-            transaction.DeletedDate = DateTime.UtcNow;
-            transaction.IsDeleted = true;
-
-            await _transactionRepository.UpdateAsync(transaction);  // Soft delete
-            await _unitOfWork.SaveAsync();
-        }
-    }
     }
 }

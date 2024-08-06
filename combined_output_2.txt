@@ -1,0 +1,913 @@
+        {
+            _jwtSettings = jwtSettings;
+        }
+
+        public string GenerateToken(string email, Guid userId)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(_jwtSettings.ExpiryMinutes),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+    }
+}
+namespace Service.AutoMapper.Stocks
+{
+public class StockHoldingProfile : Profile
+    {
+        public StockHoldingProfile()
+        {
+            CreateMap<StockHolding, StockHoldingDto>()
+                .ForMember(dest => dest.TotalValue, opt => opt.MapFrom(src => src.Quantity * src.CurrentPrice));
+        }
+    }
+}
+namespace Service.AutoMapper.Stocks
+{
+ public class StockProfile : Profile
+    {
+        public StockProfile()
+        {
+            CreateMap<Stock, StockHoldingDto>()
+                .ForMember(dest => dest.StockSymbol, opt => opt.MapFrom(src => src.Symbol));
+        }
+    }
+}
+namespace Service.AutoMapper.Users
+{
+    public class UserProfile : Profile
+    {
+        public UserProfile()
+        {
+            CreateMap<AppUser, UserUpdateDto>().ReverseMap();
+            CreateMap<AppUser, UserRegistrationDto>().ReverseMap();
+            CreateMap<AppUser, UserLoginDto>().ReverseMap();
+
+
+        }
+    }
+}
+
+namespace Service.Describers
+{
+    public class CustomIdentityErrorDescriber : IdentityErrorDescriber
+    {
+        public override IdentityError PasswordRequiresUniqueChars(int uniqueChars)
+        {
+            return new IdentityError { Code = "PasswordRequiresUniqueChars", Description = $"Password must contain at least {uniqueChars} unique characters." };
+        }
+        public override IdentityError DuplicateEmail(string email)
+        {
+            return new IdentityError { Code = "DuplicateEmail", Description = $"An account with email {email} already exists." };
+        }
+        public override IdentityError DuplicateUserName(string userName)
+        {
+            return new IdentityError { Code = "DuplicateUserName", Description = $"An account with username {userName} already exists." };
+        }
+        public override IdentityError DuplicateRoleName(string role)
+        {
+            return new IdentityError { Code = "DuplicateRoleName", Description = $"A role with name {role} already exists." };
+        }
+        public override IdentityError InvalidEmail(string email)
+        {
+            return new IdentityError { Code = "InvalidEmail", Description = $"The email address {email} is invalid." };
+        }
+        public override IdentityError InvalidRoleName(string role)
+        {
+            return new IdentityError { Code = "InvalidRoleName", Description = $"The role name {role} is invalid." };
+        }
+        public override IdentityError InvalidUserName(string userName)
+        {
+            return new IdentityError { Code = "InvalidUserName", Description = $"The username {userName} is invalid." };
+        }
+        public override IdentityError PasswordTooShort(int length)
+        {
+            return new IdentityError { Code = "PasswordTooShort", Description = $"The password is too short (minimum is {length} characters)." };
+        }
+        public override IdentityError UserAlreadyInRole(string role)
+        {
+            return new IdentityError { Code = "UserAlreadyInRole", Description = $"The user is already in role {role}." };
+        }
+        public override IdentityError UserNotInRole(string role)
+        {
+            return new IdentityError { Code = "UserNotInRole", Description = $"The user is not in role {role}." };
+        }
+        public override IdentityError ConcurrencyFailure()
+        {
+            return new IdentityError { Code = "ConcurrencyFailure", Description = "Optimistic concurrency failure, object has been modified." };
+        }
+        public override IdentityError LoginAlreadyAssociated()
+        {
+            return new IdentityError { Code = "LoginAlreadyAssociated", Description = "A user with this login already exists." };
+        }
+        public override IdentityError PasswordMismatch()
+        {
+            return new IdentityError { Code = "PasswordMismatch", Description = "Incorrect password." };
+        }
+        public override IdentityError PasswordRequiresDigit()
+        {
+            return new IdentityError { Code = "PasswordRequiresDigit", Description = "Password must contain at least one digit." };
+        }
+        public override IdentityError PasswordRequiresNonAlphanumeric()
+        {
+            return new IdentityError { Code = "PasswordRequiresNonAlphanumeric", Description = "Password must contain at least one non-alphanumeric character." };
+        }
+        public override IdentityError PasswordRequiresUpper()
+        {
+            return new IdentityError { Code = "PasswordRequiresUpper", Description = "Password must contain at least one uppercase letter." };
+        }
+        public override IdentityError RecoveryCodeRedemptionFailed()
+        {
+            return new IdentityError { Code = "RecoveryCodeRedemptionFailed", Description = "Recovery code redemption failed." };
+        }
+        public override IdentityError UserAlreadyHasPassword()
+        {
+            return new IdentityError { Code = "UserAlreadyHasPassword", Description = "The user already has a password set." };
+        }
+        public override IdentityError DefaultError()
+        {
+            return new IdentityError { Code = "DefaultError", Description = "An error occurred." };
+        }
+        public override IdentityError PasswordRequiresLower()
+        {
+            return new IdentityError { Code = "PasswordRequiresLower", Description = "Password must contain at least one lowercase letter." };
+        }
+        public override IdentityError UserLockoutNotEnabled()
+        {
+            return new IdentityError { Code = "UserLockoutNotEnabled", Description = "Lockout is not enabled for this user." };
+        }
+    }
+}
+
+namespace Service.Extensions
+{
+public static class JwtExtensions
+    {
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, JwtSettings settings)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Secret)),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = settings.Issuer,
+                    ValidAudience = settings.Audience,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            return services;
+        }
+    }
+}
+namespace  Service.Extensions
+{
+    public static class LoggedInUserExtensions
+    {
+        public static Guid GetLoggedInUserId(this ClaimsPrincipal principal)
+        {
+            return Guid.Parse(principal.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
+        public static string GetLoggedInEmail(this ClaimsPrincipal principal)
+        {
+            return principal.FindFirstValue(ClaimTypes.Email);
+        }
+    }
+}
+
+namespace Service.Extensions
+{
+    public static class ServiceLayerExtensions
+    {
+        public static IServiceCollection LoadServiceLayerExtension(this IServiceCollection services, IConfiguration configuration)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+
+            // Add services for dependency injection
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<ITransactionService, TransactionService>(); 
+          //  services.AddScoped<IStockHoldingService, StockHoldingService>(); 
+            services.AddScoped<IStockApiService, StockApiService>(); 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //stockapiservice
+            services.AddScoped<IStockApiService, StockApiService>();
+            services.AddScoped<IStockHoldingService, StockHoldingService>();
+            // Configure JWT settings
+            var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
+            services.AddSingleton(jwtSettings);
+
+            // Register AutoMapper
+            services.AddAutoMapper(assembly);
+
+            // FluentValidation configuration
+            services.AddControllersWithViews()
+                .AddFluentValidation(opt =>
+                {
+                    opt.DisableDataAnnotationsValidation = true;
+                    opt.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
+                });
+
+            // Register HttpClient for StockApiService
+            services.AddHttpClient<IStockApiService, StockApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://finnhub.io/api/v1/"); 
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+
+            return services;
+        }
+    }
+}
+
+namespace  Service.Extensions
+{
+    public static class ValidationExtensions
+    {
+        public static void AddToModelState(this ValidationResult result, ModelStateDictionary modelState)
+        {
+            foreach (var error in result.Errors)
+            {
+                modelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }
+        }
+        public static void AddToIdentityModelState(this IdentityResult result, ModelStateDictionary modelState)
+        {
+            foreach (var error in result.Errors)
+            {
+                modelState.AddModelError("", error.Description);
+            }
+        }
+
+    }
+}
+
+namespace Service.ExternalAPI
+{
+    public interface IStockApiService
+    {
+        Task<decimal> GetStockPriceAsync(string symbol);
+    }
+
+}
+
+public class StockApiService : IStockApiService
+{
+    private readonly HttpClient _httpClient;
+    private readonly string _apiKey;
+
+    public StockApiService(HttpClient httpClient, IConfiguration configuration)
+    {
+        _httpClient = httpClient;
+        _apiKey = configuration["StockApiSettings:ApiKey"]; // Store the API key in the configuration
+    }
+
+    public async Task<decimal> GetStockPriceAsync(string symbol)
+    {
+        var requestUri = $"quote?symbol={symbol}&token={_apiKey}";
+
+        var response = await _httpClient.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var stockData = JsonSerializer.Deserialize<StockApiResponse>(content);
+
+        return stockData?.c ?? 0;
+    }
+    //TO DO: add other methods for calculate the daily profit-loss 
+}
+
+public class StockApiResponse
+{
+    public decimal c { get; set; } // Current price
+    public decimal d { get; set; } // Change
+    public decimal dp { get; set; } // Percent change
+    public decimal h { get; set; } // High price of the day
+    public decimal l { get; set; } // Low price of the day
+    public decimal o { get; set; } // Open price of the day
+    public decimal pc { get; set; } // Previous close price
+}
+
+namespace  Service.FluentValidations
+{
+    public class UserValidator : AbstractValidator<AppUser>
+    {
+        public UserValidator()
+        {
+            RuleFor(x => x.FirstName)
+             .NotEmpty()
+             .MinimumLength(3)
+             .MaximumLength(50)
+             .WithName("İsim");
+
+            RuleFor(x => x.LastName)
+             .NotEmpty()
+             .MinimumLength(3)
+             .MaximumLength(50)
+             .WithName("Soyisim");
+
+            RuleFor(x => x.PhoneNumber)
+             .NotEmpty()
+             .MinimumLength(11)
+             .WithName("Telefon numarası");
+        }
+    }
+}
+
+namespace  Service.Helpers.Images
+{
+    public interface IImageHelper
+    {
+        Task<ImageUploadedDto> Upload(string name, IFormFile imageFile,ImageType imageType, string folderName = null);
+        void Delete(string imageName);
+    }
+}
+
+namespace  Service.Helpers.Images
+{
+    public class ImageHelper : IImageHelper
+    {
+        private readonly string wwwroot;
+        private readonly IWebHostEnvironment env;
+        private const string imgFolder = "images";
+        private const string userImagesFolder = "user-images";
+
+
+        public ImageHelper(IWebHostEnvironment env)
+        {
+            this.env = env;
+            wwwroot = env.WebRootPath;
+        }
+
+        private string ReplaceInvalidChars(string fileName)
+        {
+            return fileName.Replace("İ", "I")
+                 .Replace("ı", "i")
+                 .Replace("Ğ", "G")
+                 .Replace("ğ", "g")
+                 .Replace("Ü", "U")
+                 .Replace("ü", "u")
+                 .Replace("ş", "s")
+                 .Replace("Ş", "S")
+                 .Replace("Ö", "O")
+                 .Replace("ö", "o")
+                 .Replace("Ç", "C")
+                 .Replace("ç", "c")
+                 .Replace("é", "")
+                 .Replace("!", "")
+                 .Replace("'", "")
+                 .Replace("^", "")
+                 .Replace("+", "")
+                 .Replace("%", "")
+                 .Replace("/", "")
+                 .Replace("(", "")
+                 .Replace(")", "")
+                 .Replace("=", "")
+                 .Replace("?", "")
+                 .Replace("_", "")
+                 .Replace("*", "")
+                 .Replace("æ", "")
+                 .Replace("ß", "")
+                 .Replace("@", "")
+                 .Replace("€", "")
+                 .Replace("<", "")
+                 .Replace(">", "")
+                 .Replace("#", "")
+                 .Replace("$", "")
+                 .Replace("½", "")
+                 .Replace("{", "")
+                 .Replace("[", "")
+                 .Replace("]", "")
+                 .Replace("}", "")
+                 .Replace(@"\", "")
+                 .Replace("|", "")
+                 .Replace("~", "")
+                 .Replace("¨", "")
+                 .Replace(",", "")
+                 .Replace(";", "")
+                 .Replace("`", "")
+                 .Replace(".", "")
+                 .Replace(":", "")
+                 .Replace(" ", "");
+        }
+
+
+        public async Task<ImageUploadedDto> Upload(string name, IFormFile imageFile, ImageType imageType, string folderName = null)
+        {
+            folderName=userImagesFolder;//for now just user-images folder is used
+            if (!Directory.Exists($"{wwwroot}/{imgFolder}/{folderName}"))
+                Directory.CreateDirectory($"{wwwroot}/{imgFolder}/{folderName}");
+
+            string oldFileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
+            string fileExtension = Path.GetExtension(imageFile.FileName);
+            
+            //log name, oldFileName, fileExtension
+
+            Console.WriteLine($"name: {name}");
+            Console.WriteLine($"oldFileName: {oldFileName}");
+            Console.WriteLine($"fileExtension: {fileExtension}");
+
+
+
+            name = ReplaceInvalidChars(oldFileName);
+
+            //DateTime dateTime = DateTime.Now;
+            DateTime dateTime = DateTime.UtcNow;
+
+            string newFileName = $"{name}_{dateTime.Millisecond}{fileExtension}";
+
+            var path = Path.Combine($"{wwwroot}/{imgFolder}/{folderName}", newFileName);
+
+            await imageFile.CopyToAsync(stream);
+            await stream.FlushAsync();
+
+            string message = imageType == ImageType.User 
+                ? $"{newFileName} isimli kullanıcı resmi başarı ile eklenmiştir." 
+                : $"{newFileName} isimli makale resmi başarı ile eklenmiştir";
+
+            return new ImageUploadedDto()
+            {
+                FullName = $"{folderName}/{newFileName}"
+            };
+        }
+
+        public void Delete(string imageName)
+        {
+            var fileToDelete = Path.Combine($"{wwwroot}/{imgFolder}/{imageName}");
+            if (File.Exists(fileToDelete))
+                File.Delete(fileToDelete);
+
+        }
+    }
+}
+// <autogenerated />
+[assembly: global::System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v7.0", FrameworkDisplayName = ".NET 7.0")]
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//     Runtime Version:4.0.30319.42000
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+
+[assembly: System.Reflection.AssemblyCompanyAttribute("Service")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d705af26642b7361a73cdf564a16357e30d10d3")]
+[assembly: System.Reflection.AssemblyProductAttribute("Service")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Service")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+
+// Generated by the MSBuild WriteCodeFragment class.
+
+// <auto-generated/>
+
+namespace Service.Services.Abstractions
+{
+    public interface IStockHoldingService
+    {
+        Task<PortfolioDto> GetUserStockHoldingsAsync();
+    }
+}
+namespace Service.Services.Abstractions
+{
+public interface ITransactionService
+{
+    Task<IEnumerable<TransactionDto>> GetAllTransactionsAsync();
+    Task<TransactionDto> GetTransactionByIdAsync(Guid transactionId);
+
+
+    Task AddDepositAsync(TransactionDepositDto depositDto);
+    Task AddWithdrawalAsync(TransactionWithdrawalDto withdrawalDto);
+
+ Task PurchaseStockAsync(TransactionPurchaseDto purchaseDto);
+     Task SellStockAsync(TransactionSellDto sellDto);
+}
+
+}
+namespace Service.Services.Abstractions
+{
+ public interface IUserService
+    {
+        //get all user
+        Task<IEnumerable<AppUser>> GetAllUsersAsync();
+        Task<string> RegisterUserAsync(UserRegistrationDto registrationDto);
+
+        Task<string> LoginUserAsync(UserLoginDto loginDto);
+        Task UpdateUserAsync(UserUpdateDto updateDto);
+    }
+}
+namespace Service.Services.Concrete
+{
+    public class StockHoldingService : IStockHoldingService
+    {
+        private readonly IRepository<StockHolding> _stockHoldingRepository;
+        private readonly IStockApiService _stockApiService;
+        private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public StockHoldingService(
+            IRepository<StockHolding> stockHoldingRepository, 
+            IStockApiService stockApiService, 
+            IMapper mapper, 
+            IHttpContextAccessor httpContextAccessor)
+        {
+            _stockHoldingRepository = stockHoldingRepository;
+            _stockApiService = stockApiService;
+            _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<PortfolioDto> GetUserStockHoldingsAsync()
+        {
+            var userId = Guid.Parse("cb94223b-ccb8-4f2f-93d7-0df96a7f065c"); // Replace with actual user ID retrieval logic
+
+            var holdings = await _stockHoldingRepository.GetAllAsync(sh => sh.UserId == userId);
+            var holdingDtos = new List<StockHoldingDto>();
+
+            foreach (var holding in holdings)
+            {
+                var currentPrice = await _stockApiService.GetStockPriceAsync(holding.StockSymbol);
+                var stockHoldingDto = _mapper.Map<StockHoldingDto>(holding);
+                stockHoldingDto.CurrentPrice = currentPrice;
+                stockHoldingDto.TotalValue = holding.Quantity * currentPrice;
+
+                holdingDtos.Add(stockHoldingDto);
+            }
+
+            var portfolioDto = new PortfolioDto
+            {
+                StockHoldings = holdingDtos
+            };
+
+            return portfolioDto;
+        }
+    }
+}
+
+namespace Service.Services.Concrete
+{
+    public class TransactionService  : ITransactionService
+    {
+         private readonly IRepository<Transaction> _transactionRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IMapper _mapper;
+        private readonly IRepository<AppUser> _userRepository;
+                private readonly IRepository<StockHolding> _stockHoldingRepository;
+ private readonly IStockApiService _stockApiService;
+    public TransactionService(
+        IRepository<Transaction> transactionRepository, 
+        IUnitOfWork unitOfWork, 
+        IHttpContextAccessor httpContextAccessor, 
+        IMapper mapper,
+           IRepository<AppUser> userRepository,
+                IStockApiService stockApiService,
+                            IRepository<StockHolding> stockHoldingRepository
+        
+    )
+    {
+        _transactionRepository = transactionRepository;
+        _unitOfWork = unitOfWork;
+        _httpContextAccessor = httpContextAccessor;
+        _mapper = mapper;
+            _userRepository = userRepository;
+                  _stockApiService = stockApiService;
+                        _stockHoldingRepository = stockHoldingRepository;
+    }
+
+   private Guid GetUserId()
+    {
+        var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+        return userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+    }
+
+    private string GetUserEmail()
+    {
+        return _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
+    }
+
+public async Task PurchaseStockAsync(TransactionPurchaseDto purchaseDto)
+{
+    var currentPrice = await _stockApiService.GetStockPriceAsync(purchaseDto.StockSymbol);
+    var totalCost = purchaseDto.Quantity * currentPrice;
+    var userId = Guid.Parse("cb94223b-ccb8-4f2f-93d7-0df96a7f065c");
+    var user = await _userRepository.GetAsync(u => u.Id == userId);
+    if (user == null) throw new InvalidOperationException("User not found.");
+    
+    if (user.Balance < totalCost)
+    {
+        throw new InvalidOperationException("Insufficient funds to complete the purchase.");
+    }
+
+    user.Balance -= totalCost;
+
+    var stockHolding = await _stockHoldingRepository.FirstOrDefaultAsync(sh =>
+        sh.UserId == userId && sh.StockSymbol == purchaseDto.StockSymbol);
+
+    if (stockHolding == null)
+    {
+        stockHolding = new StockHolding
+        {
+            UserId = userId,
+            StockSymbol = purchaseDto.StockSymbol,
+            Quantity = purchaseDto.Quantity,
+            PurchasePrice = currentPrice
+        };
+        await _stockHoldingRepository.AddAsync(stockHolding);
+    }
+else
+{
+    decimal totalExistingCost = stockHolding.Quantity * stockHolding.PurchasePrice;
+
+    decimal totalNewCost = purchaseDto.Quantity * currentPrice;
+
+    stockHolding.Quantity += purchaseDto.Quantity;
+
+    if (stockHolding.Quantity > 0) 
+    {
+        stockHolding.PurchasePrice = (totalExistingCost + totalNewCost) / stockHolding.Quantity;
+    }
+}
+
+
+    var transaction = new Transaction
+    {
+        UserId = userId,
+        Amount = totalCost,
+        TransactionDate = DateTime.UtcNow,
+        Type = TransactionType.Purchase,
+        Description = $"Purchased {purchaseDto.Quantity} shares of {purchaseDto.StockSymbol} at {currentPrice} each."
+    };
+
+    await _transactionRepository.AddAsync(transaction);
+    await _userRepository.UpdateAsync(user);  // Update user balance
+    await _unitOfWork.SaveAsync();  // Commit all changes
+}
+
+
+
+  public async Task SellStockAsync(TransactionSellDto sellDto)
+        {
+            var currentPrice = await _stockApiService.GetStockPriceAsync(sellDto.StockSymbol);
+            var userId = Guid.Parse("cb94223b-ccb8-4f2f-93d7-0df96a7f065c");
+            var user = await _userRepository.GetAsync(u => u.Id == userId);
+            if (user == null) throw new InvalidOperationException("User not found.");
+
+            var stockHolding = await _stockHoldingRepository.FirstOrDefaultAsync(sh =>
+                sh.UserId == userId && sh.StockSymbol == sellDto.StockSymbol);
+
+            if (stockHolding == null || stockHolding.Quantity < sellDto.Quantity)
+            {
+                throw new InvalidOperationException("Insufficient stock holdings to complete the sale.");
+            }
+
+            var totalRevenue = sellDto.Quantity * currentPrice;
+            user.Balance += totalRevenue;
+
+
+            //calculate stockholding.purshaceprice 
+            
+            stockHolding.Quantity -= sellDto.Quantity;
+
+            if (stockHolding.Quantity == 0)
+            {
+                await _stockHoldingRepository.DeleteAsync(stockHolding);
+            }
+            else
+            {
+                await _stockHoldingRepository.UpdateAsync(stockHolding);
+            }
+
+            var transaction = new Transaction
+            {
+                UserId = userId,
+                Amount = totalRevenue,
+                TransactionDate = DateTime.UtcNow,
+                Type = TransactionType.Sale,
+                Description = $"Sold {sellDto.Quantity} shares of {sellDto.StockSymbol} at {currentPrice} each."
+            };
+
+            await _transactionRepository.AddAsync(transaction);
+            await _userRepository.UpdateAsync(user);
+            await _unitOfWork.SaveAsync();
+        }
+
+
+
+
+
+
+
+
+
+    public async Task AddDepositAsync(TransactionDepositDto depositDto)
+    {
+        //var userId = GetUserId();
+            var userId = Guid.Parse("cb94223b-ccb8-4f2f-93d7-0df96a7f065c");
+            var user = await _userRepository.GetAsync(u => u.Id == userId);
+
+
+        if (user == null) throw new InvalidOperationException("User not found.");
+
+        // Update user balance
+        user.Balance += depositDto.Amount;
+
+        // Create transaction record
+        var transaction = new Transaction
+        {
+            UserId = userId,
+            Amount = depositDto.Amount,
+            TransactionDate = DateTime.UtcNow,
+            Type = TransactionType.Deposit
+        };
+
+        await _transactionRepository.AddAsync(transaction);
+        await _userRepository.UpdateAsync(user);
+        await _unitOfWork.SaveAsync();
+    }
+    
+
+    public async Task AddWithdrawalAsync(TransactionWithdrawalDto withdrawalDto)
+    {
+            var userId = Guid.Parse("cb94223b-ccb8-4f2f-93d7-0df96a7f065c");
+            var user = await _userRepository.GetAsync(u => u.Id == userId);
+
+            if (user == null) throw new InvalidOperationException("User not found.");
+        if (user.Balance < withdrawalDto.Amount) throw new InvalidOperationException("Insufficient funds.");
+
+        // Update user balance
+        user.Balance -= withdrawalDto.Amount;
+
+        // Create transaction record
+        var transaction = new Transaction
+        {
+            UserId = userId,
+            Amount = -withdrawalDto.Amount, 
+            TransactionDate = DateTime.UtcNow,
+            Type = TransactionType.Withdrawal
+        };
+
+        await _transactionRepository.AddAsync(transaction);
+        await _userRepository.UpdateAsync(user);
+        await _unitOfWork.SaveAsync();
+    }
+
+    public async Task<IEnumerable<TransactionDto>> GetAllTransactionsAsync()
+    {
+        var transactions = await _transactionRepository.GetAllAsync(includeProperties: t => t.User);
+        return _mapper.Map<IEnumerable<TransactionDto>>(transactions);
+    }
+
+    public async Task<TransactionDto> GetTransactionByIdAsync(Guid transactionId)
+    {
+        var transaction = await _transactionRepository.GetByGuidAsync(transactionId);
+        return _mapper.Map<TransactionDto>(transaction);
+    }
+
+
+    }
+}
+namespace Service.Services.Concrete
+{
+    public class UserService : IUserService
+    {
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IJwtService _jwtService;
+
+        public UserService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IJwtService jwtService)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
+            _jwtService = jwtService;
+        }
+        //get all user
+        public async Task<IEnumerable<AppUser>> GetAllUsersAsync()
+        {
+            return _userManager.Users;
+        }
+        public async Task<string> RegisterUserAsync(UserRegistrationDto registrationDto)
+        {
+            var user = new AppUser { UserName = registrationDto.Email, Email = registrationDto.Email };
+            user.PhoneNumber = "1234567890";
+                user.FirstName = "John";
+                user.LastName = "Doe";
+
+            /*        public Guid RoleId { get; set; }
+        public List<AppRole> Roles { get; set; }*/
+             //give this properties hardcoded
+
+            
+          try
+{
+    var result = await _userManager.CreateAsync(user, registrationDto.Password);
+    if (!result.Succeeded)
+    {
+        var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+        throw new InvalidOperationException($"Registration failed: {errors}");
+    }
+
+    // Additional code for role assignment and further processing...
+}
+catch (Exception ex)
+{
+    // Log the detailed exception message and inner exception
+    Console.WriteLine($"An error occurred: {ex.Message}");
+    if (ex.InnerException != null)
+    {
+        Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+    }
+    throw;
+}
+
+            if (!string.IsNullOrEmpty(registrationDto.RoleName))
+            {
+                if (!await _roleManager.RoleExistsAsync(registrationDto.RoleName))
+                {
+                    await _roleManager.CreateAsync(new AppRole { Name = registrationDto.RoleName });
+                }
+                await _userManager.AddToRoleAsync(user, registrationDto.RoleName);
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return _jwtService.GenerateToken(user.Email, user.Id);
+        }
+
+        public async Task<string> LoginUserAsync(UserLoginDto loginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException("Login failed: User not found.");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, lockoutOnFailure: false);
+            if (!result.Succeeded)
+            {
+                throw new UnauthorizedAccessException("Login failed: Invalid credentials.");
+            }
+
+            return _jwtService.GenerateToken(user.Email, user.Id);
+        }
+
+        public async Task UpdateUserAsync(UserUpdateDto updateDto)
+        {
+            var user = await _userManager.FindByIdAsync(updateDto.UserId.ToString());
+            if (user == null)
+            {
+                throw new ArgumentException("User not found.");
+            }
+
+            if (!string.IsNullOrEmpty(updateDto.NewEmail))
+            {
+                user.Email = updateDto.NewEmail;
+                user.UserName = updateDto.NewEmail;
+            }
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                throw new InvalidOperationException($"Update failed: {string.Join(", ", updateResult.Errors)}");
+            }
+
+            if (!string.IsNullOrEmpty(updateDto.NewPassword))
+            {
+                var passwordResult = await _userManager.ChangePasswordAsync(user, user.PasswordHash, updateDto.NewPassword);
+                if (!passwordResult.Succeeded)
+                {
+                    throw new InvalidOperationException($"Password update failed: {string.Join(", ", passwordResult.Errors)}");
+                }
+            }
+        }
+    }
+}

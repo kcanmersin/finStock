@@ -11,5 +11,7 @@ namespace Entity.DTOs.StockHolding
         public string StockSymbol { get; set; }
         public int Quantity { get; set; }
         public decimal PurchasePrice { get; set; }
+        public decimal CurrentPrice { get; set; }
+        public decimal TotalValue { get; set; }
     }
 }

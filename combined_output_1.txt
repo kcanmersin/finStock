@@ -1,0 +1,1488 @@
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Load extensions and configurations
+builder.Services.LoadDataLayerExtension(builder.Configuration);
+builder.Services.LoadServiceLayerExtension(builder.Configuration);
+builder.Services.AddSession();
+
+//add controllers view
+
+// Configure identity
+builder.Services.AddIdentity<AppUser, AppRole>(opt =>
+{
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequireDigit = false;
+    opt.Password.RequiredLength = 6;
+
+})
+.AddRoleManager<RoleManager<AppRole>>()
+.AddErrorDescriber<CustomIdentityErrorDescriber>()
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+
+// Configure cookies
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = new PathString("/Admin/Auth/Login");
+    config.LogoutPath = new PathString("/Admin/Auth/Logout");
+    config.Cookie = new CookieBuilder
+    {
+        Name = "Finance",
+        HttpOnly = true,
+        SameSite = SameSiteMode.Strict,
+        SecurePolicy = CookieSecurePolicy.SameAsRequest // Always
+    };
+    config.SlidingExpiration = true;
+    config.ExpireTimeSpan = TimeSpan.FromDays(7);
+    config.AccessDeniedPath = new PathString("/Admin/Auth/AccessDenied");
+});
+
+// Add Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Finance API", Version = "v1" });
+});
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Finance API V1");
+    c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
+});
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseSession();
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapAreaControllerRoute(
+        name: "Admin",
+        areaName: "Admin",
+        pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapDefaultControllerRoute();
+});
+
+app.Run();
+namespace API
+{
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+        public string? Summary { get; set; }
+    }
+}
+
+namespace  Web.Controllers.API
+{
+    //admin id cb94223b-ccb8-4f2f-93d7-0df96a7f065c
+    //admin gmail 
+    //superadmin@gmail.com
+    //pass 123456
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
+    {
+        private readonly IUserService _userService;
+
+        public AuthController(IUserService userService)
+        {
+            _userService = userService;
+        }
+        //get all user
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegistrationDto registrationDto)
+        {
+            try
+            {
+                var token = await _userService.RegisterUserAsync(registrationDto);
+                return Ok(new { Message = "Registration successful", Token = token });
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
+        {
+            try
+            {
+                var token = await _userService.LoginUserAsync(loginDto);
+                return Ok(new { Message = "Login successful", Token = token });
+            }
+            catch (System.UnauthorizedAccessException)
+            {
+                return Unauthorized(new { Message = "Invalid credentials" });
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+    
+    }
+}
+
+namespace API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ExternalApiStockController : ControllerBase
+    {
+        private readonly IStockApiService _stockApiService;
+
+        public ExternalApiStockController(IStockApiService stockApiService)
+        {
+            _stockApiService = stockApiService;
+        }
+
+        // GET: api/ExternalApiStock/price?symbol=AAPL
+        [HttpGet("price")]
+        public async Task<IActionResult> GetStockPrice(string symbol)
+        {
+            if (string.IsNullOrEmpty(symbol))
+            {
+                return BadRequest("Stock symbol is required.");
+            }
+
+            try
+            {
+                var price = await _stockApiService.GetStockPriceAsync(symbol);
+                return Ok(new { Symbol = symbol, Price = price });
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(500, $"Error retrieving stock price: {ex.Message}");
+            }
+        }
+    }
+}
+
+namespace API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+   // [Authorize]
+    public class StockHoldingController : ControllerBase
+    {
+        private readonly IStockHoldingService _stockHoldingService;
+
+        public StockHoldingController(IStockHoldingService stockHoldingService)
+        {
+            _stockHoldingService = stockHoldingService;
+        }
+
+        // GET: api/StockHolding
+        [HttpGet]
+        public async Task<IActionResult> GetUserStockHoldings()
+        {
+            var stockHoldings = await _stockHoldingService.GetUserStockHoldingsAsync();
+            return Ok(stockHoldings);
+        }
+    }
+}
+
+namespace API.Controllers
+{
+   // [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class TransactionController : ControllerBase
+    {
+        private readonly ITransactionService _transactionService;
+
+        public TransactionController(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+
+        }
+
+        [HttpPost("purchase")]
+        public async Task<ActionResult> PurchaseStock([FromBody] TransactionPurchaseDto purchaseDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _transactionService.PurchaseStockAsync(purchaseDto);
+
+            return CreatedAtAction(nameof(GetTransactionById), new { id = Guid.NewGuid() }, purchaseDto);
+        }
+
+        [HttpPost("sell")]
+
+        public async Task<ActionResult> SellStock([FromBody] TransactionSellDto sellDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _transactionService.SellStockAsync(sellDto);
+
+            return CreatedAtAction(nameof(GetTransactionById), new { id = Guid.NewGuid() }, sellDto);
+        }
+
+
+        //    Task AddDepositAsync(TransactionDepositDto depositDto);
+        [HttpPost("deposit")]
+        public async Task<ActionResult> AddDeposit([FromBody] TransactionDepositDto depositDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _transactionService.AddDepositAsync(depositDto);
+
+            return CreatedAtAction(nameof(GetTransactionById), new { id = Guid.NewGuid() }, depositDto);
+        }
+
+
+    // Task AddWithdrawalAsync(TransactionWithdrawalDto withdrawalDto);
+    //write controller for addwithdrawalasync
+    [HttpPost("withdrawal")]
+    public async Task<ActionResult> AddWithdrawal([FromBody] TransactionWithdrawalDto withdrawalDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+
+        await _transactionService.AddWithdrawalAsync(withdrawalDto);
+
+        return CreatedAtAction(nameof(GetTransactionById), new { id = Guid.NewGuid() }, withdrawalDto);
+    }
+
+        // GET: api/Transaction
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAllTransactions()
+        {
+            var transactions = await _transactionService.GetAllTransactionsAsync();
+            return Ok(transactions);
+        }
+
+        // GET: api/Transaction/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TransactionDto>> GetTransactionById(Guid id)
+        {
+            var transaction = await _transactionService.GetTransactionByIdAsync(id);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+            return Ok(transaction);
+        }
+
+    }
+}
+
+namespace API.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
+    {
+        private static readonly string[] Summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
+
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet(Name = "GetWeatherForecast")]
+        public IEnumerable<WeatherForecast> Get()
+        {
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
+    }
+}
+// <autogenerated />
+[assembly: global::System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v7.0", FrameworkDisplayName = ".NET 7.0")]
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//     Runtime Version:4.0.30319.42000
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+
+[assembly: System.Reflection.AssemblyCompanyAttribute("API")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d705af26642b7361a73cdf564a16357e30d10d3")]
+[assembly: System.Reflection.AssemblyProductAttribute("API")]
+[assembly: System.Reflection.AssemblyTitleAttribute("API")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+
+// Generated by the MSBuild WriteCodeFragment class.
+
+// <auto-generated/>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//     Runtime Version:4.0.30319.42000
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+
+[assembly: Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute("FluentValidation.AspNetCore")]
+[assembly: Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute("Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation")]
+[assembly: Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute("NToastNotify")]
+[assembly: Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute("Service")]
+[assembly: Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute("Swashbuckle.AspNetCore.SwaggerGen")]
+
+// Generated by the MSBuild WriteCodeFragment class.
+
+﻿namespace Core
+{
+    public class Class1
+    {
+ ////
+    }
+}
+
+namespace Core.Entities
+{
+
+    public abstract class EntityBase : IEntityBase
+    {
+        public virtual Guid Id { get; set; } = Guid.NewGuid();
+
+        public virtual string? CreatedBy { get; set; }
+        public virtual string? ModifiedBy { get; set; }
+        public virtual string? DeletedBy { get; set; }
+
+        public virtual DateTime CreatedDate { get; set; } = DateTime.UtcNow;          // = DateTime.Now;
+        public virtual DateTime? ModifiedDate { get; set; }
+        public virtual DateTime? DeletedDate { get; set; }
+        public virtual bool IsDeleted { get; set; } = false;
+
+
+
+    }
+}
+
+namespace Core.Entities
+{
+    public interface IEntityBase
+    {
+    }
+}
+// <autogenerated />
+[assembly: global::System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v7.0", FrameworkDisplayName = ".NET 7.0")]
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+
+[assembly: System.Reflection.AssemblyCompanyAttribute("Core")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83624b4475d53ed5bcdabec41dcb9bfb6b852610")]
+[assembly: System.Reflection.AssemblyProductAttribute("Core")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Core")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+
+// Generated by the MSBuild WriteCodeFragment class.
+
+// <auto-generated/>
+﻿namespace Data
+{
+    public class Class1
+    {
+
+    }
+}
+
+namespace  Data.Context
+{
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid, AppUserClaim, AppUserRole, AppUserLogin, AppRoleClaim, AppUserToken>
+    {
+        public AppDbContext()
+        {
+
+        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Image> Images { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        }
+    }
+}
+
+namespace  Data.Extensions
+{
+    public static class DataLayerExtensions
+    {
+        public static IServiceCollection LoadDataLayerExtension(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            //services.AddDbContext<AppDbContext>(opt =>
+            //    opt.UseSqlServer(
+            //        config.GetConnectionString("DefaultConnection"),
+            //        x => x.MigrationsAssembly("Data") 
+            //    )
+            //);
+            services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(config.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            return services;
+        }
+    }
+}
+
+namespace Data.Mappings
+{
+    public class ImageMap : IEntityTypeConfiguration<Image>
+    {
+        public void Configure(EntityTypeBuilder<Image> builder)
+        {
+            builder.HasData(new Image
+            {
+                Id = Guid.Parse("F71F4B9A-AA60-461D-B398-DE31001BF214"),
+                FileName = "images/testimage",
+                FileType = "jpg",
+                CreatedBy = "Admin Test",
+                CreatedDate = DateTime.UtcNow, //= DateTime.Now,
+                IsDeleted = false
+            },
+            new Image
+            {
+                Id = Guid.Parse("D16A6EC7-8C50-4AB0-89A5-02B9A551F0FA"),
+                FileName = "images/vstest",
+                FileType = "png",
+                CreatedBy = "Admin Test",
+                CreatedDate = DateTime.UtcNow,
+                IsDeleted = false
+            });
+        }
+    }
+}
+
+namespace  Data.Mappings
+{
+    public class RoleClaimMap : IEntityTypeConfiguration<AppRoleClaim>
+    {
+        public void Configure(EntityTypeBuilder<AppRoleClaim> builder)
+        {
+            builder.HasKey(rc => rc.Id);
+
+            // Maps to the AspNetRoleClaims table
+            builder.ToTable("AspNetRoleClaims");
+        }
+    }
+}
+
+namespace  Data.Mappings
+{
+    public class RoleMap : IEntityTypeConfiguration<AppRole>
+    {
+        public void Configure(EntityTypeBuilder<AppRole> builder)
+        {
+            builder.HasKey(r => r.Id);
+
+            // Index for "normalized" role name to allow efficient lookups
+            builder.HasIndex(r => r.NormalizedName).HasName("RoleNameIndex").IsUnique();
+
+            // Maps to the AspNetRoles table
+            builder.ToTable("AspNetRoles");
+
+            // A concurrency token for use with the optimistic concurrency checking
+            builder.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
+
+            // Limit the size of columns to use efficient database types
+            builder.Property(u => u.Name).HasMaxLength(256);
+            builder.Property(u => u.NormalizedName).HasMaxLength(256);
+
+            // The relationships between Role and other entity types
+            // Note that these relationships are configured with no navigation properties
+
+            // Each Role can have many entries in the UserRole join table
+            builder.HasMany<AppUserRole>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
+
+            // Each Role can have many associated RoleClaims
+            builder.HasMany<AppRoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+
+            builder.HasData(new AppRole
+            {
+                Id = Guid.Parse("16EA936C-7A28-4C30-86A2-9A9704B6115E"),
+                Name = "Superadmin",
+                NormalizedName = "SUPERADMIN",
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            },
+            new AppRole
+            {
+                Id = Guid.Parse("7CB750CF-3612-4FB4-9F7D-A38BA8F16BF4"),
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            },
+            new AppRole
+            {
+                Id = Guid.Parse("EDF6C246-41D8-475F-8D92-41DDDAC3AEFB"),
+                Name = "User",
+                NormalizedName = "USER",
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            });
+        }
+    }
+}
+
+namespace Data.Mappings
+{
+    public class StockHoldingMap : IEntityTypeConfiguration<StockHolding>
+    {
+        public void Configure(EntityTypeBuilder<StockHolding> builder)
+        {
+            builder.HasKey(sh => sh.Id);
+
+            builder.Property(sh => sh.Quantity)
+                .IsRequired();
+
+            builder.Property(sh => sh.PurchasePrice)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
+
+            // Linking StockHolding directly to AppUser
+            builder.HasOne(sh => sh.User)
+                .WithMany(u => u.StockHoldings)
+                .HasForeignKey(sh => sh.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Using a simple string for StockSymbol, no foreign key to a Stock entity
+            builder.Property(sh => sh.StockSymbol)
+                .IsRequired();
+
+            builder.ToTable("StockHoldings");
+        }
+    }
+}
+
+namespace Data.Mappings
+{
+    public class StockMap : IEntityTypeConfiguration<Stock>
+    {
+        public void Configure(EntityTypeBuilder<Stock> builder)
+        {
+            builder.HasKey(s => s.Id);
+
+            builder.Property(s => s.Symbol)
+                .IsRequired()
+                .HasMaxLength(10);
+
+            //builder.Property(s => s.Name)
+            //    .IsRequired()
+            //    .HasMaxLength(100);
+
+            // builder.HasMany(s => s.StockHoldings)
+            //     .WithOne(sh => sh.Stock)
+            //     .HasForeignKey(sh => sh.StockId)
+            //     .OnDelete(DeleteBehavior.Restrict);
+
+            builder.ToTable("Stocks");
+        }
+    }
+}
+
+namespace Data.Mappings
+{
+    public class TransactionMap : IEntityTypeConfiguration<Transaction>
+    {
+        public void Configure(EntityTypeBuilder<Transaction> builder)
+        {
+            builder.HasKey(t => t.Id);
+
+            builder.Property(t => t.Amount)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(t => t.TransactionDate)
+                .IsRequired();
+
+            builder.Property(t => t.Type)
+                .IsRequired();
+
+            builder.Property(t => t.Description)
+                .HasMaxLength(500);
+
+            builder.HasOne(t => t.User)
+                .WithMany(u => u.Transactions)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.ToTable("Transactions");
+        }
+    }
+}
+
+namespace  Data.Mappings
+{
+    public class UserClaimMap : IEntityTypeConfiguration<AppUserClaim>
+    {
+        public void Configure(EntityTypeBuilder<AppUserClaim> builder)
+        {
+            builder.HasKey(uc => uc.Id);
+
+            // Maps to the AspNetUserClaims table
+            builder.ToTable("AspNetUserClaims");
+        }
+    }
+}
+
+namespace  Data.Mappings
+{
+    public class UserLoginMap : IEntityTypeConfiguration<AppUserLogin>
+    {
+        public void Configure(EntityTypeBuilder<AppUserLogin> builder)
+        {
+            builder.HasKey(l => new { l.LoginProvider, l.ProviderKey });
+
+            // Limit the size of the composite key columns due to common DB restrictions
+            builder.Property(l => l.LoginProvider).HasMaxLength(128);
+            builder.Property(l => l.ProviderKey).HasMaxLength(128);
+
+            // Maps to the AspNetUserLogins table
+            builder.ToTable("AspNetUserLogins");
+        }
+    }
+}
+
+namespace  Data.Mappings
+{
+    public class UserMap : IEntityTypeConfiguration<AppUser>
+    {
+        public void Configure(EntityTypeBuilder<AppUser> builder)
+        {
+            builder.HasKey(u => u.Id);
+
+            // Indexes for "normalized" username and email, to allow efficient lookups
+            builder.HasIndex(u => u.NormalizedUserName).HasName("UserNameIndex").IsUnique();
+            builder.HasIndex(u => u.NormalizedEmail).HasName("EmailIndex");
+
+            // Maps to the AspNetUsers table
+            builder.ToTable("AspNetUsers");
+
+            // A concurrency token for use with the optimistic concurrency checking
+            builder.Property(u => u.ConcurrencyStamp).IsConcurrencyToken();
+
+            // Limit the size of columns to use efficient database types
+            builder.Property(u => u.UserName).HasMaxLength(256);
+            builder.Property(u => u.NormalizedUserName).HasMaxLength(256);
+            builder.Property(u => u.Email).HasMaxLength(256);
+            builder.Property(u => u.NormalizedEmail).HasMaxLength(256);
+
+            // The relationships between User and other entity types
+            // Note that these relationships are configured with no navigation properties
+
+            // Each User can have many UserClaims
+            builder.HasMany<AppUserClaim>().WithOne().HasForeignKey(uc => uc.UserId).IsRequired();
+
+            // Each User can have many UserLogins
+            builder.HasMany<AppUserLogin>().WithOne().HasForeignKey(ul => ul.UserId).IsRequired();
+
+            // Each User can have many UserTokens
+            builder.HasMany<AppUserToken>().WithOne().HasForeignKey(ut => ut.UserId).IsRequired();
+
+            // Each User can have many entries in the UserRole join table
+            builder.HasMany<AppUserRole>().WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
+
+            var superadmin = new AppUser
+            {
+                Id = Guid.Parse("CB94223B-CCB8-4F2F-93D7-0DF96A7F065C"),
+                UserName = "superadmin@gmail.com",
+                NormalizedUserName = "SUPERADMIN@GMAIL.COM",
+                Email = "superadmin@gmail.com",
+                NormalizedEmail = "SUPERADMIN@GMAIL.COM",
+                PhoneNumber = "+905439999999",
+                FirstName = "Can",
+                LastName = "Mersin",
+                PhoneNumberConfirmed = true,
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId = Guid.Parse("F71F4B9A-AA60-461D-B398-DE31001BF214")
+            };
+            superadmin.PasswordHash = CreatePasswordHash(superadmin, "123456");
+
+            var admin = new AppUser
+            {
+                Id = Guid.Parse("3AA42229-1C0F-4630-8C1A-DB879ECD0427"),
+                UserName = "admin@gmail.com",
+                NormalizedUserName = "ADMIN@GMAIL.COM",
+                Email = "admin@gmail.com",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
+                PhoneNumber = "+905439999988",
+                FirstName = "Admin",
+                LastName = "User",
+                PhoneNumberConfirmed = false,
+                EmailConfirmed = false,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId = Guid.Parse("D16A6EC7-8C50-4AB0-89A5-02B9A551F0FA")
+            };
+            admin.PasswordHash = CreatePasswordHash(admin, "123456");
+
+            builder.HasData(superadmin, admin);
+
+        }
+        private string CreatePasswordHash(AppUser user,string password)
+        {
+            var passwordHasher = new PasswordHasher<AppUser>();
+            return passwordHasher.HashPassword(user, password);
+        }
+    }
+}
+
+namespace  Data.Mappings
+{
+    public class UserRoleMap : IEntityTypeConfiguration<AppUserRole>
+    {
+        public void Configure(EntityTypeBuilder<AppUserRole> builder)
+        {
+            builder.HasKey(r => new { r.UserId, r.RoleId });
+
+            // Maps to the AspNetUserRoles table
+            builder.ToTable("AspNetUserRoles");
+
+            builder.HasData(new AppUserRole
+            {
+                UserId = Guid.Parse("CB94223B-CCB8-4F2F-93D7-0DF96A7F065C"),
+                RoleId = Guid.Parse("16EA936C-7A28-4C30-86A2-9A9704B6115E")
+            }, 
+            new AppUserRole
+            {
+                UserId = Guid.Parse("3AA42229-1C0F-4630-8C1A-DB879ECD0427"),
+                RoleId = Guid.Parse("7CB750CF-3612-4FB4-9F7D-A38BA8F16BF4")
+            });
+        }
+    }
+}
+
+namespace  Data.Mappings
+{
+    public class UserTokenMap : IEntityTypeConfiguration<AppUserToken>
+    {
+        public void Configure(EntityTypeBuilder<AppUserToken> builder)
+        {
+            builder.HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
+
+            // Limit the size of the composite key columns due to common DB restrictions
+            builder.Property(t => t.LoginProvider);
+            builder.Property(t => t.Name);
+
+            // Maps to the AspNetUserTokens table
+            builder.ToTable("AspNetUserTokens");
+        }
+    }
+}
+// <autogenerated />
+[assembly: global::System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v7.0", FrameworkDisplayName = ".NET 7.0")]
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//     Runtime Version:4.0.30319.42000
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+
+[assembly: System.Reflection.AssemblyCompanyAttribute("Data")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d705af26642b7361a73cdf564a16357e30d10d3")]
+[assembly: System.Reflection.AssemblyProductAttribute("Data")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Data")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+
+// Generated by the MSBuild WriteCodeFragment class.
+
+// <auto-generated/>
+
+namespace  Data.Repositories.Abstractions
+{
+    public interface IRepository<T> where T : class,IEntityBase, new()
+    {
+        Task AddAsync(T entity);
+        Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
+        Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
+        Task<T> GetByGuidAsync(Guid id);
+        Task<T> UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
+        Task<int> CountAsync(Expression<Func<T, bool>> predicate = null);
+
+          Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
+
+     }
+}
+
+namespace Data.Repositories.Concretes
+{
+    public class Repository<T> : IRepository<T> where T : class, IEntityBase, new()
+    {
+        private readonly AppDbContext _dbContext;
+
+        public Repository(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        private DbSet<T> Table => _dbContext.Set<T>();
+
+        public async Task AddAsync(T entity)
+        {
+            await Table.AddAsync(entity);
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+            Table.Remove(entity);
+            await Task.CompletedTask;
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = Table.AsQueryable();
+            query = query.Where(predicate);
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = Table.AsQueryable();
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<T> GetByGuidAsync(Guid id)
+        {
+            return await Table.FindAsync(id);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await Table.AnyAsync(predicate);
+        }
+
+        public async Task<int> CountAsync(Expression<Func<T, bool>> predicate = null)
+        {
+            if (predicate != null)
+            {
+                return await Table.CountAsync(predicate);
+            }
+            return await Table.CountAsync();
+        }
+
+        public Task<T> UpdateAsync(T entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            return Task.FromResult(entity);
+        }
+
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = Table.AsQueryable();
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            foreach (var include in includeProperties)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+    }
+}
+
+namespace  Data.UnitOfWorks
+{
+    public interface IUnitOfWork : IAsyncDisposable
+    {
+        IRepository<T> GetRepository<T>() where T : class,IEntityBase, new();
+        Task<int> SaveAsync();
+        int Save();
+    }
+}
+
+namespace Data.UnitOfWorks
+{
+    public class UnitOfWork : IUnitOfWork
+    {
+        private readonly AppDbContext dbContext;
+
+        public UnitOfWork(AppDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+        public async ValueTask DisposeAsync()
+        {
+            await dbContext.DisposeAsync();
+        }
+
+        public int Save()
+        {
+            return dbContext.SaveChanges();
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await dbContext.SaveChangesAsync();
+        }
+
+        IRepository<T> IUnitOfWork.GetRepository<T>()
+        {
+            return new Repository<T>(dbContext);
+        }
+    }
+}
+﻿namespace Entitiy
+{
+    public class Class1
+    {
+
+    }
+}
+
+namespace Entity.Configuration
+{
+        public class JwtSettings
+    {
+        public string Secret { get; set; }
+        public int ExpiryMinutes { get; set; }
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+    }
+}
+namespace  Entity.DTOs.Images
+{
+    public class ImageUploadedDto
+    {
+        public string FullName { get; set; }
+    }
+}
+
+namespace Entity.DTOs.Stock
+{
+public class StockCreateDto
+{
+    public string Symbol { get; set; }
+    public string Name { get; set; }
+}
+
+}
+namespace Entity.DTOs.Stock
+{
+public class StockDto
+{
+    public Guid Id { get; set; }
+    public string Symbol { get; set; }
+    public string Name { get; set; }
+}
+
+}
+namespace Entity.DTOs.Stock
+{
+public class StockUpdateDto
+{
+    public Guid Id { get; set; }
+    public string Symbol { get; set; }
+    public string Name { get; set; }
+}
+
+}
+namespace Entity.DTOs.StockHolding
+{
+    public class PortfolioDto
+    {
+        // List of stock holdings
+        public List<StockHoldingDto> StockHoldings { get; set; } = new List<StockHoldingDto>();
+
+        // Total gain/loss across all holdings
+        public decimal TotalGainLoss
+        {
+            get
+            {
+                decimal gainLoss = 0;
+                foreach (var holding in StockHoldings)
+                {
+                    gainLoss += (holding.CurrentPrice - holding.PurchasePrice) * holding.Quantity;
+                }
+                return gainLoss;
+            }
+        }
+
+        // Total value of all stocks
+        public decimal TotalValue
+        {
+            get
+            {
+                decimal totalValue = 0;
+                foreach (var holding in StockHoldings)
+                {
+                    totalValue += holding.Quantity * holding.CurrentPrice;
+                }
+                return totalValue;
+            }
+        }
+    }
+}
+
+namespace Entity.DTOs.StockHolding
+{
+public class StockHoldingCreateDto
+{
+    public int Quantity { get; set; }
+    public decimal PurchasePrice { get; set; }
+
+    public Guid PortfolioId { get; set; }
+    public Guid StockId { get; set; }
+}
+
+}
+namespace Entity.DTOs.StockHolding
+{
+ public class StockHoldingDto
+    {
+        public int StockId { get; set; }
+        public string StockSymbol { get; set; }
+        public int Quantity { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public decimal CurrentPrice { get; set; }
+        public decimal TotalValue { get; set; }
+    }
+}
+namespace Entity.DTOs.Transaction
+{
+public class TransactionCreateDto
+{
+    public decimal Amount { get; set; }
+    public DateTime TransactionDate { get; set; }
+    public TransactionType Type { get; set; }
+    public string Description { get; set; }
+
+    public Guid UserId { get; set; }
+}
+
+}
+namespace Entity.DTOs.Transaction
+{
+public class TransactionDepositDto
+{
+    //default 100
+    [DefaultValue(100)]
+    public decimal Amount { get; set; }
+}
+
+}
+namespace Entity.DTOs.Transaction
+{
+    public class TransactionDto
+    {
+        
+        public Guid Id { get; set; }
+        public Guid PortfolioId { get; set; }
+        public Guid StockId { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public DateTime Date { get; set; }
+    }
+}
+namespace Entity.DTOs.Transaction
+{
+    public class TransactionPurchaseDto
+    {
+        [DefaultValue("AAPL")]
+        public string StockSymbol { get; set; }
+        [DefaultValue(1)]
+        public int Quantity { get; set; }    
+    }
+
+}
+
+namespace Entity.DTOs.Transaction
+{
+    public class TransactionSellDto
+    {
+        [DefaultValue("AAPL")]
+        public string StockSymbol { get; set; }
+        [DefaultValue(1)]
+        public int Quantity { get; set; }    
+    }
+}
+namespace Entity.DTOs.Transaction
+{
+public class TransactionUpdateDto
+{
+    public Guid Id { get; set; }
+    public decimal Amount { get; set; }
+    public DateTime TransactionDate { get; set; }
+    public TransactionType Type { get; set; }
+    public string Description { get; set; }
+
+    public Guid UserId { get; set; }
+}
+
+}
+namespace Entity.DTOs.Transaction
+{
+    public class TransactionWithdrawalDto
+    {
+    [DefaultValue(100)]
+    public decimal Amount { get; set; }
+    }
+}
+namespace Entity.DTOs.Users
+{
+    public class UserLoginDto
+    {
+        //admin gmail 
+        //superadmin@gmail.com
+        //pass 123456
+
+        [DefaultValue("superadmin@gmail.com")]
+        public string Email { get; set; }
+           
+        [DefaultValue("123456")]
+        public string Password { get; set; }
+    }
+}
+
+namespace Entity.DTOs.Users
+{
+    public class UserRegistrationDto
+    {
+        [DefaultValue("superadmin@gmail.com")]
+        public string Email { get; set; }
+
+        [DefaultValue("123456")]
+        public string Password { get; set; }
+        [DefaultValue("Admin")]
+        public string RoleName { get; set; }
+    }
+}
+
+namespace Entity.DTOs.Users
+{
+    public class UserUpdateDto
+    {
+        public Guid UserId { get; set; }
+        public string NewEmail { get; set; }
+        public string NewPassword { get; set; }
+    }
+}
+
+namespace Entity.Entities
+{
+    public class AppRole : IdentityRole<Guid>
+    {
+    }
+}
+
+namespace Entity.Entities
+{
+    public class AppRoleClaim : IdentityRoleClaim<Guid>
+    {
+    }
+}
+
+namespace Entity.Entities
+{
+    public class AppUser : IdentityUser<Guid>, IEntityBase
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public Guid ImageId { get; set; } = Guid.Parse("F71F4B9A-AA60-461D-B398-DE31001BF214");
+        
+        // Guid.Parse("4084c97a-2aa1-4675-b519-69f6fe410633");
+        public Image Image { get; set; }
+
+
+            public decimal Balance { get; set; }  = 0;
+             //zero
+
+    // Navigation properties
+        public virtual ICollection<StockHolding> StockHoldings { get; set; }
+
+    public virtual List<Transaction> Transactions { get; set; }
+
+    }
+}
+
+namespace Entity.Entities
+{
+    public class AppUserClaim : IdentityUserClaim<Guid> 
+    {
+    }
+}
+
+namespace Entity.Entities
+{
+    public class AppUserLogin : IdentityUserLogin<Guid>
+    {
+    }
+}
+
+namespace Entity.Entities
+{
+    public class AppUserRole : IdentityUserRole<Guid>
+    {
+    }
+}
+
+namespace Entity.Entities
+{
+    public class AppUserToken : IdentityUserToken<Guid>
+    {
+    }
+}
+
+namespace  Entity.Entities
+{
+    public class Image : EntityBase
+    {
+
+        public Image()
+        {
+            Users = new HashSet<AppUser>();
+        }
+        public Image(string fileName,string fileType,string createdBy)
+        {
+            FileName = fileName;
+            FileType = fileType;
+            CreatedBy = createdBy;
+        }
+
+        public string FileName { get; set; }
+        public string FileType { get; set; }
+
+        public ICollection<AppUser> Users { get; set; }
+    }
+}
+
+namespace Entity.Entities.Stock
+{
+    public class Portfolio : EntityBase
+    {
+        public string Name { get; set; }
+        public Guid UserId { get; set; }
+        public virtual AppUser AppUser { get; set; }
+    }
+}
+
+namespace Entity.Entities.Stock
+{
+    public class Stock : EntityBase
+    {
+        
+        public string Symbol { get; set; }
+        //public string Name { get; set; }
+
+        // Navigation property
+        public virtual ICollection<StockHolding> StockHoldings { get; set; }
+    }
+}
+
+namespace Entity.Entities.Stock
+{
+    public class StockHolding : EntityBase
+    {
+        public Guid UserId { get; set; }
+        public int Quantity { get; set; }
+        public decimal PurchasePrice { get; set; }
+
+        [NotMapped]
+        public decimal CurrentPrice { get; set; }  // Updated from external API, not stored in DB
+
+        // Navigation property to AppUser
+        public virtual AppUser User { get; set; }
+
+        // Directly storing the stock symbol
+        public string StockSymbol { get; set; }
+    }
+}
+
+namespace Entity.Entities.Stock
+{
+    public class Transaction : EntityBase
+    {
+        public Guid UserId { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public TransactionType Type { get; set; }
+        public string ?Description { get; set; }
+
+        // Navigation property
+        public virtual AppUser User { get; set; }
+    }
+
+    public enum TransactionType
+    {
+        Deposit,
+        Withdrawal,
+        Purchase,
+        Sale
+    }
+}
+
+namespace  Entity.Enums
+{
+    public enum ImageType
+    {
+        User = 0,
+        Post = 1,
+    }
+}
+// <autogenerated />
+[assembly: global::System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v7.0", FrameworkDisplayName = ".NET 7.0")]
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+
+[assembly: System.Reflection.AssemblyCompanyAttribute("Entitiy")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9c0c0ed8aa3c0293b2392fe9f4c0532c86e980e")]
+[assembly: System.Reflection.AssemblyProductAttribute("Entitiy")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Entitiy")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+
+// MSBuild WriteCodeFragment sınıfı tarafından oluşturuldu.
+
+// <auto-generated/>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//     Runtime Version:4.0.30319.42000
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+
+[assembly: System.Reflection.AssemblyCompanyAttribute("Entity")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d705af26642b7361a73cdf564a16357e30d10d3")]
+[assembly: System.Reflection.AssemblyProductAttribute("Entity")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Entity")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+
+// Generated by the MSBuild WriteCodeFragment class.
+
+// <auto-generated/>
+﻿namespace Service
+{
+    public class Class1
+    {
+
+    }
+}
+
+namespace Service.Authentication
+{
+    public interface IJwtService
+    {
+        string GenerateToken(string email, Guid userId);
+    }
+
+}
+
+namespace Service.Authentication
+{
+  
+    public class JwtService : IJwtService
+    {
+        private readonly JwtSettings _jwtSettings;
+
+        public JwtService(JwtSettings jwtSettings)
