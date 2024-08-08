@@ -15,7 +15,7 @@ namespace Data.Mappings
                 .HasColumnType("decimal(18,2)");
 
             builder.Property(t => t.TransactionDate)
-                .IsRequired();
+                      .IsRequired();
 
             builder.Property(t => t.Type)
                 .IsRequired();

@@ -15,13 +15,16 @@ namespace Entity.Entities
         public Image Image { get; set; }
 
 
-            public decimal Balance { get; set; }  = 0;
+         public decimal Balance { get; set; }  = 0;
              //zero
 
     // Navigation properties
         public virtual ICollection<StockHolding> StockHoldings { get; set; }
 
     public virtual List<Transaction> Transactions { get; set; }
+
+
+
 
     }
 }

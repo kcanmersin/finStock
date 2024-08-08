@@ -1,3 +1,11 @@
+namespace Service.Authentication
+{
+  
+    public class JwtService : IJwtService
+    {
+        private readonly JwtSettings _jwtSettings;
+
+        public JwtService(JwtSettings jwtSettings)
         {
             _jwtSettings = jwtSettings;
         }
@@ -283,7 +291,7 @@ public class StockApiService : IStockApiService
     public StockApiService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
-        _apiKey = configuration["StockApiSettings:ApiKey"]; // Store the API key in the configuration
+        _apiKey = configuration["StockApiSettings:ApiKey"]; 
     }
 
     public async Task<decimal> GetStockPriceAsync(string symbol)
@@ -480,7 +488,7 @@ namespace  Service.Helpers.Images
 [assembly: System.Reflection.AssemblyCompanyAttribute("Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d705af26642b7361a73cdf564a16357e30d10d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49e07cfc659fe1777551ee1852290b494dbf1281")]
 [assembly: System.Reflection.AssemblyProductAttribute("Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

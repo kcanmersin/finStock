@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Service.Services.Abstractions;
 using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetUserStockHoldings()
         {
             var stockHoldings = await _stockHoldingService.GetUserStockHoldingsAsync();
+            Log.Information($"User stock holdings retrieved: {stockHoldings.TotalValue} items");
             return Ok(stockHoldings);
         }
     }

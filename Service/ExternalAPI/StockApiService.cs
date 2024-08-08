@@ -12,7 +12,7 @@ public class StockApiService : IStockApiService
     public StockApiService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
-        _apiKey = configuration["StockApiSettings:ApiKey"]; // Store the API key in the configuration
+        _apiKey = configuration["StockApiSettings:ApiKey"]; 
     }
 
     public async Task<decimal> GetStockPriceAsync(string symbol)

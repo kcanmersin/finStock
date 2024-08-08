@@ -10,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using Data.Context;
 using Entity.Entities;
 using Service.Describers;
+using Data.Mappings;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +60,13 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Finance API", Version = "v1" });
 });
 
+//Serilog usage
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("logs/logTest=.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -91,3 +100,8 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
+
+//RoleMap roleMap = new RoleMap();
+
+//roleMap.Configure(builder.Services);
+

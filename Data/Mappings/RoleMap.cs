@@ -9,6 +9,7 @@ using  Entity.Entities;
 
 namespace  Data.Mappings
 {
+    //internal
     public class RoleMap : IEntityTypeConfiguration<AppRole>
     {
         public void Configure(EntityTypeBuilder<AppRole> builder)

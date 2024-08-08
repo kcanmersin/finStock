@@ -1,0 +1,4 @@
+2024-08-08 11:54:45.834 +03:00 [INF] Stock price for AAPL: 209,82
+2024-08-08 11:54:48.615 +03:00 [INF] Stock price for X: 41,03
+2024-08-08 11:54:55.584 +03:00 [INF] User stock holdings retrieved: 0 items
+2024-08-08 11:55:09.088 +03:00 [INF] User stock holdings retrieved: 209,82 items

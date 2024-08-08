@@ -1,7 +1,7 @@
-﻿using  Core.Entities;
-using  Entity.Enums;
+﻿using Core.Entities;
+using Entity.Enums;
 
-namespace  Entity.Entities
+namespace Entity.Entities
 {
     public class Image : EntityBase
     {
@@ -10,10 +10,10 @@ namespace  Entity.Entities
         {
             Users = new HashSet<AppUser>();
         }
-        public Image(string fileName,string fileType,string createdBy)
+        public Image(string fileName, string fileType, string createdBy)
         {
             FileName = fileName;
-            FileType = fileType;
+                 FileType = fileType;
             CreatedBy = createdBy;
         }
 

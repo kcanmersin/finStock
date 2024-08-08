@@ -1,6 +1,7 @@
 ﻿using Entity.DTOs.Transaction;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Service.Services.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,6 @@ namespace API.Controllers
             }
 
             await _transactionService.AddDepositAsync(depositDto);
-
             return CreatedAtAction(nameof(GetTransactionById), new { id = Guid.NewGuid() }, depositDto);
         }
 
