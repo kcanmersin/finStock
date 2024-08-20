@@ -27,7 +27,6 @@ namespace Service.Extensions
             // Add services for dependency injection
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IImageHelper, ImageHelper>();
-            services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<ITransactionService, TransactionService>(); 
           //  services.AddScoped<IStockHoldingService, StockHoldingService>(); 
             services.AddScoped<IStockApiService, StockApiService>(); 
@@ -36,6 +35,7 @@ namespace Service.Extensions
             services.AddScoped<IStockApiService, StockApiService>();
             services.AddScoped<IStockHoldingService, StockHoldingService>();
             // Configure JWT settings
+            services.AddScoped<IJwtService, JwtService>();
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
             services.AddSingleton(jwtSettings);
 

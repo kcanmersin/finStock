@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MiDplp3hLrlsqJTNvwpgDj7hpCqN+VoMP9pvZIrXpj8=",
+  "Hash": "NSfpXfO6nnyQOs+uH3NzGkoAa1w9N7SGD8D5kpE2xBI=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "API\\wwwroot",
       "Source": "API",
-      "ContentRoot": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\",
+      "ContentRoot": "c:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\",
       "BasePath": "_content/API",
       "Pattern": "**"
     }
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "C:\\Users\\KC\\.nuget\\packages\\ntoastnotify\\8.0.0\\staticwebassets\\toastr.js"
     },
     {
-      "Identity": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\favicon.ico",
+      "Identity": "c:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\favicon.ico",
       "SourceId": "API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\",
+      "ContentRoot": "c:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\",
       "BasePath": "_content/API",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\images\\user-images\\a.png",
+      "Identity": "c:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\images\\user-images\\a.png",
       "SourceId": "API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\",
+      "ContentRoot": "c:\\Users\\KC\\Desktop\\kod\\.nets\\finance\\API\\wwwroot\\",
       "BasePath": "_content/API",
       "RelativePath": "images/user-images/a.png",
       "AssetKind": "All",

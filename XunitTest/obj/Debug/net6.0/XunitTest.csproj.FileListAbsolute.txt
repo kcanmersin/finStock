@@ -1,0 +1,6 @@
+C:\Users\KC\Desktop\kod\.nets\finance\XunitTest\obj\Debug\net6.0\XunitTest.csproj.AssemblyReference.cache
+C:\Users\KC\Desktop\kod\.nets\finance\XunitTest\obj\Debug\net6.0\XunitTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KC\Desktop\kod\.nets\finance\XunitTest\obj\Debug\net6.0\XunitTest.AssemblyInfoInputs.cache
+C:\Users\KC\Desktop\kod\.nets\finance\XunitTest\obj\Debug\net6.0\XunitTest.AssemblyInfo.cs
+C:\Users\KC\Desktop\kod\.nets\finance\XunitTest\obj\Debug\net6.0\XunitTest.csproj.CoreCompileInputs.cache
+C:\Users\KC\Desktop\kod\.nets\finance\XunitTest\obj\Debug\net6.0\XunitTest.sourcelink.json

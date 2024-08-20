@@ -59,15 +59,21 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Finance API", Version = "v1" });
 });
+//logging action filter ile daha özelleþtirilmiþ log 
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<LoggingActionFilter>();
+});
 
-//Serilog usage
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.Console()
-    .WriteTo.File("logs/logTest=.txt", rollingInterval: RollingInterval.Day)
+//Serilog usage read from appsettings.json
+Log.Logger  = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
 
+builder.Host.UseSerilog();
+
 var app = builder.Build();
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -82,6 +88,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Finance API V1");
     c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
 });
+app.UseSerilogRequestLogging();//for add all controller
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

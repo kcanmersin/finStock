@@ -28,7 +28,7 @@ namespace API.Controllers
             try
             {
                 var price = await _stockApiService.GetStockPriceAsync(symbol);
-                Log.Information($"Stock price for {symbol}: {price}");
+           //     Log.Information($"Stock price for {symbol}: {price}");
                 return Ok(new { Symbol = symbol, Price = price });
             }
             catch (HttpRequestException ex)

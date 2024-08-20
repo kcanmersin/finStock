@@ -1,0 +1,978 @@
+2024-08-08 12:01:58.972 +03:00 [INF] User profile is available. Using 'C:\Users\KC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-08-08 12:01:59.166 +03:00 [INF] Now listening on: https://localhost:7095
+2024-08-08 12:01:59.168 +03:00 [INF] Now listening on: http://localhost:5095
+2024-08-08 12:01:59.170 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-08-08 12:01:59.171 +03:00 [INF] Hosting environment: Development
+2024-08-08 12:01:59.172 +03:00 [INF] Content root path: C:\Users\KC\Desktop\kod\.nets\finance\API
+2024-08-08 12:02:01.086 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/index.html - -
+2024-08-08 12:02:01.311 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/index.html - - - 200 - text/html;charset=utf-8 227.5974ms
+2024-08-08 12:02:01.322 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - -
+2024-08-08 12:02:01.322 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_vs/browserLink - -
+2024-08-08 12:02:01.328 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - - - 200 13742 application/javascript;+charset=utf-8 6.2654ms
+2024-08-08 12:02:01.361 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 39.2556ms
+2024-08-08 12:02:01.521 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - -
+2024-08-08 12:02:01.630 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 109.4021ms
+2024-08-08 12:02:05.121 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/api/ExternalApiStock/price - -
+2024-08-08 12:02:05.161 +03:00 [INF] Executing endpoint 'API.Controllers.ExternalApiStockController.GetStockPrice (API)'
+2024-08-08 12:02:05.187 +03:00 [INF] Route matched with {action = "GetStockPrice", controller = "ExternalApiStock"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStockPrice(System.String) on controller API.Controllers.ExternalApiStockController (API).
+2024-08-08 12:02:05.233 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2024-08-08 12:02:05.241 +03:00 [INF] Executed action API.Controllers.ExternalApiStockController.GetStockPrice (API) in 48.0029ms
+2024-08-08 12:02:05.245 +03:00 [INF] Executed endpoint 'API.Controllers.ExternalApiStockController.GetStockPrice (API)'
+2024-08-08 12:02:05.249 +03:00 [INF] HTTP GET /api/ExternalApiStock/price responded 400 in 123.5528 ms
+2024-08-08 12:02:05.252 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/api/ExternalApiStock/price - - - 400 - text/plain;+charset=utf-8 131.8652ms
+2024-08-08 12:02:08.179 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/api/ExternalApiStock/price?symbol=x - -
+2024-08-08 12:02:08.184 +03:00 [INF] Executing endpoint 'API.Controllers.ExternalApiStockController.GetStockPrice (API)'
+2024-08-08 12:02:08.186 +03:00 [INF] Route matched with {action = "GetStockPrice", controller = "ExternalApiStock"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStockPrice(System.String) on controller API.Controllers.ExternalApiStockController (API).
+2024-08-08 12:02:08.196 +03:00 [INF] Start processing HTTP request GET https://finnhub.io/api/v1/quote?symbol=x&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:02:08.199 +03:00 [INF] Sending HTTP request GET https://finnhub.io/api/v1/quote?symbol=x&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:02:09.710 +03:00 [INF] Received HTTP response headers after 1508.493ms - 200
+2024-08-08 12:02:09.712 +03:00 [INF] End processing HTTP request after 1516.3188ms - 200
+2024-08-08 12:02:09.723 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.String, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Decimal, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-08-08 12:02:09.729 +03:00 [INF] Executed action API.Controllers.ExternalApiStockController.GetStockPrice (API) in 1541.0779ms
+2024-08-08 12:02:09.731 +03:00 [INF] Executed endpoint 'API.Controllers.ExternalApiStockController.GetStockPrice (API)'
+2024-08-08 12:02:09.733 +03:00 [INF] HTTP GET /api/ExternalApiStock/price responded 200 in 1552.3483 ms
+2024-08-08 12:02:09.735 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/api/ExternalApiStock/price?symbol=x - - - 200 - application/json;+charset=utf-8 1555.8999ms
+2024-08-08 12:02:15.060 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 19
+2024-08-08 12:02:15.065 +03:00 [INF] Executing endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:02:15.072 +03:00 [INF] Route matched with {action = "AddDeposit", controller = "Transaction"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] AddDeposit(Entity.DTOs.Transaction.TransactionDepositDto) on controller API.Controllers.TransactionController (API).
+2024-08-08 12:02:16.662 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."Balance", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."FirstName", a."ImageId", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Id" = @__userId_0
+LIMIT 1
+2024-08-08 12:02:16.920 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p18='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (DbType = Decimal), @p2='?', @p19='?', @p3='?', @p4='?' (DbType = Boolean), @p5='?', @p6='?' (DbType = Guid), @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?' (DbType = Boolean), @p17='?', @p20='?' (DbType = Guid), @p21='?' (DbType = Decimal), @p22='?', @p23='?' (DbType = DateTime), @p24='?', @p25='?' (DbType = DateTime), @p26='?', @p27='?' (DbType = Boolean), @p28='?', @p29='?' (DbType = DateTime), @p30='?' (DbType = DateTime), @p31='?' (DbType = Int32), @p32='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "Balance" = @p1, "ConcurrencyStamp" = @p2, "Email" = @p3, "EmailConfirmed" = @p4, "FirstName" = @p5, "ImageId" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TwoFactorEnabled" = @p16, "UserName" = @p17
+WHERE "Id" = @p18 AND "ConcurrencyStamp" = @p19;
+INSERT INTO "Transactions" ("Id", "Amount", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "Description", "IsDeleted", "ModifiedBy", "ModifiedDate", "TransactionDate", "Type", "UserId")
+VALUES (@p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32);
+2024-08-08 12:02:16.942 +03:00 [INF] Executing CreatedAtActionResult, writing value of type 'Entity.DTOs.Transaction.TransactionDepositDto'.
+2024-08-08 12:02:16.963 +03:00 [INF] Executed action API.Controllers.TransactionController.AddDeposit (API) in 1887.3949ms
+2024-08-08 12:02:16.965 +03:00 [INF] Executed endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:02:16.966 +03:00 [INF] HTTP POST /api/Transaction/deposit responded 201 in 1903.5267 ms
+2024-08-08 12:02:16.974 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 19 - 201 - application/json;+charset=utf-8 1914.2614ms
+2024-08-08 12:02:23.265 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7095/api/Transaction/withdrawal application/json 21
+2024-08-08 12:02:23.267 +03:00 [INF] Executing endpoint 'API.Controllers.TransactionController.AddWithdrawal (API)'
+2024-08-08 12:02:23.271 +03:00 [INF] Route matched with {action = "AddWithdrawal", controller = "Transaction"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] AddWithdrawal(Entity.DTOs.Transaction.TransactionWithdrawalDto) on controller API.Controllers.TransactionController (API).
+2024-08-08 12:02:23.322 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."Balance", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."FirstName", a."ImageId", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Id" = @__userId_0
+LIMIT 1
+2024-08-08 12:02:23.404 +03:00 [INF] Executed action API.Controllers.TransactionController.AddWithdrawal (API) in 131.7699ms
+2024-08-08 12:02:23.405 +03:00 [INF] Executed endpoint 'API.Controllers.TransactionController.AddWithdrawal (API)'
+2024-08-08 12:02:23.407 +03:00 [ERR] HTTP POST /api/Transaction/withdrawal responded 500 in 141.0220 ms
+System.InvalidOperationException: Insufficient funds.
+   at Service.Services.Concrete.TransactionService.AddWithdrawalAsync(TransactionWithdrawalDto withdrawalDto) in C:\Users\KC\Desktop\kod\.nets\finance\Service\Services\Concrete\TransactionService.cs:line 205
+   at API.Controllers.TransactionController.AddWithdrawal(TransactionWithdrawalDto withdrawalDto) in C:\Users\KC\Desktop\kod\.nets\finance\API\Controllers\TransactionController.cs:line 78
+   at lambda_method389(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-08-08 12:02:23.446 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Insufficient funds.
+   at Service.Services.Concrete.TransactionService.AddWithdrawalAsync(TransactionWithdrawalDto withdrawalDto) in C:\Users\KC\Desktop\kod\.nets\finance\Service\Services\Concrete\TransactionService.cs:line 205
+   at API.Controllers.TransactionController.AddWithdrawal(TransactionWithdrawalDto withdrawalDto) in C:\Users\KC\Desktop\kod\.nets\finance\API\Controllers\TransactionController.cs:line 78
+   at lambda_method389(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2024-08-08 12:02:23.455 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7095/api/Transaction/withdrawal application/json 21 - 500 - text/plain;+charset=utf-8 190.3375ms
+2024-08-08 12:02:59.758 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 19
+2024-08-08 12:02:59.760 +03:00 [INF] Executing endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:02:59.760 +03:00 [INF] Route matched with {action = "AddDeposit", controller = "Transaction"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] AddDeposit(Entity.DTOs.Transaction.TransactionDepositDto) on controller API.Controllers.TransactionController (API).
+2024-08-08 12:02:59.777 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."Balance", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."FirstName", a."ImageId", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Id" = @__userId_0
+LIMIT 1
+2024-08-08 12:02:59.785 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@p18='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (DbType = Decimal), @p2='?', @p19='?', @p3='?', @p4='?' (DbType = Boolean), @p5='?', @p6='?' (DbType = Guid), @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?' (DbType = Boolean), @p17='?', @p20='?' (DbType = Guid), @p21='?' (DbType = Decimal), @p22='?', @p23='?' (DbType = DateTime), @p24='?', @p25='?' (DbType = DateTime), @p26='?', @p27='?' (DbType = Boolean), @p28='?', @p29='?' (DbType = DateTime), @p30='?' (DbType = DateTime), @p31='?' (DbType = Int32), @p32='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "Balance" = @p1, "ConcurrencyStamp" = @p2, "Email" = @p3, "EmailConfirmed" = @p4, "FirstName" = @p5, "ImageId" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TwoFactorEnabled" = @p16, "UserName" = @p17
+WHERE "Id" = @p18 AND "ConcurrencyStamp" = @p19;
+INSERT INTO "Transactions" ("Id", "Amount", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "Description", "IsDeleted", "ModifiedBy", "ModifiedDate", "TransactionDate", "Type", "UserId")
+VALUES (@p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32);
+2024-08-08 12:02:59.789 +03:00 [INF] Executing CreatedAtActionResult, writing value of type 'Entity.DTOs.Transaction.TransactionDepositDto'.
+2024-08-08 12:02:59.791 +03:00 [INF] Executed action API.Controllers.TransactionController.AddDeposit (API) in 28.7956ms
+2024-08-08 12:02:59.792 +03:00 [INF] Executed endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:02:59.792 +03:00 [INF] HTTP POST /api/Transaction/deposit responded 201 in 32.8510 ms
+2024-08-08 12:02:59.794 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 19 - 201 - application/json;+charset=utf-8 35.1328ms
+2024-08-08 12:03:03.524 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 19
+2024-08-08 12:03:03.525 +03:00 [INF] Executing endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:03:03.526 +03:00 [INF] Route matched with {action = "AddDeposit", controller = "Transaction"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] AddDeposit(Entity.DTOs.Transaction.TransactionDepositDto) on controller API.Controllers.TransactionController (API).
+2024-08-08 12:03:03.533 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."Balance", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."FirstName", a."ImageId", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Id" = @__userId_0
+LIMIT 1
+2024-08-08 12:03:03.540 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@p18='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (DbType = Decimal), @p2='?', @p19='?', @p3='?', @p4='?' (DbType = Boolean), @p5='?', @p6='?' (DbType = Guid), @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?' (DbType = Boolean), @p17='?', @p20='?' (DbType = Guid), @p21='?' (DbType = Decimal), @p22='?', @p23='?' (DbType = DateTime), @p24='?', @p25='?' (DbType = DateTime), @p26='?', @p27='?' (DbType = Boolean), @p28='?', @p29='?' (DbType = DateTime), @p30='?' (DbType = DateTime), @p31='?' (DbType = Int32), @p32='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "Balance" = @p1, "ConcurrencyStamp" = @p2, "Email" = @p3, "EmailConfirmed" = @p4, "FirstName" = @p5, "ImageId" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TwoFactorEnabled" = @p16, "UserName" = @p17
+WHERE "Id" = @p18 AND "ConcurrencyStamp" = @p19;
+INSERT INTO "Transactions" ("Id", "Amount", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "Description", "IsDeleted", "ModifiedBy", "ModifiedDate", "TransactionDate", "Type", "UserId")
+VALUES (@p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32);
+2024-08-08 12:03:03.545 +03:00 [INF] Executing CreatedAtActionResult, writing value of type 'Entity.DTOs.Transaction.TransactionDepositDto'.
+2024-08-08 12:03:03.547 +03:00 [INF] Executed action API.Controllers.TransactionController.AddDeposit (API) in 19.7495ms
+2024-08-08 12:03:03.549 +03:00 [INF] Executed endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:03:03.550 +03:00 [INF] HTTP POST /api/Transaction/deposit responded 201 in 24.9646 ms
+2024-08-08 12:03:03.552 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 19 - 201 - application/json;+charset=utf-8 28.0429ms
+2024-08-08 12:03:41.001 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 20
+2024-08-08 12:03:41.002 +03:00 [INF] Executing endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:03:41.003 +03:00 [INF] Route matched with {action = "AddDeposit", controller = "Transaction"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] AddDeposit(Entity.DTOs.Transaction.TransactionDepositDto) on controller API.Controllers.TransactionController (API).
+2024-08-08 12:03:41.008 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."Balance", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."FirstName", a."ImageId", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Id" = @__userId_0
+LIMIT 1
+2024-08-08 12:03:41.013 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@p18='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (DbType = Decimal), @p2='?', @p19='?', @p3='?', @p4='?' (DbType = Boolean), @p5='?', @p6='?' (DbType = Guid), @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?' (DbType = Boolean), @p17='?', @p20='?' (DbType = Guid), @p21='?' (DbType = Decimal), @p22='?', @p23='?' (DbType = DateTime), @p24='?', @p25='?' (DbType = DateTime), @p26='?', @p27='?' (DbType = Boolean), @p28='?', @p29='?' (DbType = DateTime), @p30='?' (DbType = DateTime), @p31='?' (DbType = Int32), @p32='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "Balance" = @p1, "ConcurrencyStamp" = @p2, "Email" = @p3, "EmailConfirmed" = @p4, "FirstName" = @p5, "ImageId" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TwoFactorEnabled" = @p16, "UserName" = @p17
+WHERE "Id" = @p18 AND "ConcurrencyStamp" = @p19;
+INSERT INTO "Transactions" ("Id", "Amount", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "Description", "IsDeleted", "ModifiedBy", "ModifiedDate", "TransactionDate", "Type", "UserId")
+VALUES (@p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32);
+2024-08-08 12:03:41.019 +03:00 [INF] Executing CreatedAtActionResult, writing value of type 'Entity.DTOs.Transaction.TransactionDepositDto'.
+2024-08-08 12:03:41.022 +03:00 [INF] Executed action API.Controllers.TransactionController.AddDeposit (API) in 18.1453ms
+2024-08-08 12:03:41.024 +03:00 [INF] Executed endpoint 'API.Controllers.TransactionController.AddDeposit (API)'
+2024-08-08 12:03:41.024 +03:00 [INF] HTTP POST /api/Transaction/deposit responded 201 in 22.4656 ms
+2024-08-08 12:03:41.026 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7095/api/Transaction/deposit application/json 20 - 201 - application/json;+charset=utf-8 24.7172ms
+2024-08-08 12:03:45.091 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7095/api/Transaction/purchase application/json 44
+2024-08-08 12:03:45.093 +03:00 [INF] Executing endpoint 'API.Controllers.TransactionController.PurchaseStock (API)'
+2024-08-08 12:03:45.097 +03:00 [INF] Route matched with {action = "PurchaseStock", controller = "Transaction"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] PurchaseStock(Entity.DTOs.Transaction.TransactionPurchaseDto) on controller API.Controllers.TransactionController (API).
+2024-08-08 12:03:45.106 +03:00 [INF] Start processing HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:03:45.108 +03:00 [INF] Sending HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:03:46.302 +03:00 [INF] Received HTTP response headers after 1192.8494ms - 200
+2024-08-08 12:03:46.304 +03:00 [INF] End processing HTTP request after 1197.4258ms - 200
+2024-08-08 12:03:46.308 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."Balance", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."FirstName", a."ImageId", a."LastName", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Id" = @__userId_0
+LIMIT 1
+2024-08-08 12:03:46.323 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (DbType = Guid), @__purchaseDto_StockSymbol_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT s."Id", s."CreatedBy", s."CreatedDate", s."DeletedBy", s."DeletedDate", s."IsDeleted", s."ModifiedBy", s."ModifiedDate", s."PurchasePrice", s."Quantity", s."StockId", s."StockSymbol", s."UserId"
+FROM "StockHoldings" AS s
+WHERE s."UserId" = @__userId_0 AND s."StockSymbol" = @__purchaseDto_StockSymbol_1
+LIMIT 1
+2024-08-08 12:03:46.368 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@p18='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (DbType = Decimal), @p2='?', @p19='?', @p3='?', @p4='?' (DbType = Boolean), @p5='?', @p6='?' (DbType = Guid), @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?' (DbType = Boolean), @p17='?', @p21='?' (DbType = Guid), @p20='?' (DbType = Int32), @p22='?' (DbType = Guid), @p23='?' (DbType = Decimal), @p24='?', @p25='?' (DbType = DateTime), @p26='?', @p27='?' (DbType = DateTime), @p28='?', @p29='?' (DbType = Boolean), @p30='?', @p31='?' (DbType = DateTime), @p32='?' (DbType = DateTime), @p33='?' (DbType = Int32), @p34='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "AspNetUsers" SET "AccessFailedCount" = @p0, "Balance" = @p1, "ConcurrencyStamp" = @p2, "Email" = @p3, "EmailConfirmed" = @p4, "FirstName" = @p5, "ImageId" = @p6, "LastName" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TwoFactorEnabled" = @p16, "UserName" = @p17
+WHERE "Id" = @p18 AND "ConcurrencyStamp" = @p19;
+UPDATE "StockHoldings" SET "Quantity" = @p20
+WHERE "Id" = @p21;
+INSERT INTO "Transactions" ("Id", "Amount", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "Description", "IsDeleted", "ModifiedBy", "ModifiedDate", "TransactionDate", "Type", "UserId")
+VALUES (@p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34);
+2024-08-08 12:03:46.376 +03:00 [INF] Executing CreatedAtActionResult, writing value of type 'Entity.DTOs.Transaction.TransactionPurchaseDto'.
+2024-08-08 12:03:46.380 +03:00 [INF] Executed action API.Controllers.TransactionController.PurchaseStock (API) in 1280.55ms
+2024-08-08 12:03:46.382 +03:00 [INF] Executed endpoint 'API.Controllers.TransactionController.PurchaseStock (API)'
+2024-08-08 12:03:46.384 +03:00 [INF] HTTP POST /api/Transaction/purchase responded 201 in 1291.1622 ms
+2024-08-08 12:03:46.386 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7095/api/Transaction/purchase application/json 44 - 201 - application/json;+charset=utf-8 1294.3002ms
+2024-08-08 12:14:46.940 +03:00 [INF] User profile is available. Using 'C:\Users\KC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-08-08 12:14:47.381 +03:00 [INF] Now listening on: https://localhost:7095
+2024-08-08 12:14:47.383 +03:00 [INF] Now listening on: http://localhost:5095
+2024-08-08 12:14:47.386 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-08-08 12:14:47.386 +03:00 [INF] Hosting environment: Development
+2024-08-08 12:14:47.387 +03:00 [INF] Content root path: C:\Users\KC\Desktop\kod\.nets\finance\API
+2024-08-08 12:14:48.316 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/index.html - -
+2024-08-08 12:14:48.530 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/index.html - - - 200 - text/html;charset=utf-8 215.0985ms
+2024-08-08 12:14:48.538 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_vs/browserLink - -
+2024-08-08 12:14:48.538 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - -
+2024-08-08 12:14:48.546 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - - - 200 13742 application/javascript;+charset=utf-8 7.5802ms
+2024-08-08 12:14:48.576 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 37.5311ms
+2024-08-08 12:14:48.723 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - -
+2024-08-08 12:14:48.838 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 114.9168ms
+2024-08-08 12:15:27.546 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/api/StockHolding - -
+2024-08-08 12:15:27.587 +03:00 [INF] Executing endpoint 'API.Controllers.StockHoldingController.GetUserStockHoldings (API)'
+2024-08-08 12:15:27.602 +03:00 [INF] Route matched with {action = "GetUserStockHoldings", controller = "StockHolding"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetUserStockHoldings() on controller API.Controllers.StockHoldingController (API).
+2024-08-08 12:15:28.182 +03:00 [INF] Request for GET /api/StockHolding from ::1 with data {}
+2024-08-08 12:15:29.706 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT s."Id", s."CreatedBy", s."CreatedDate", s."DeletedBy", s."DeletedDate", s."IsDeleted", s."ModifiedBy", s."ModifiedDate", s."PurchasePrice", s."Quantity", s."StockId", s."StockSymbol", s."UserId"
+FROM "StockHoldings" AS s
+WHERE s."UserId" = @__userId_0
+2024-08-08 12:15:29.789 +03:00 [INF] Start processing HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:15:29.791 +03:00 [INF] Sending HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:15:33.205 +03:00 [INF] Received HTTP response headers after 3410.4039ms - 200
+2024-08-08 12:15:33.209 +03:00 [INF] End processing HTTP request after 3421.6103ms - 200
+2024-08-08 12:15:33.226 +03:00 [INF] User stock holdings retrieved: 419,64 items
+2024-08-08 12:15:33.233 +03:00 [INF] Response from 200 with data {"Value":{"StockHoldings":[{"StockId":0,"StockSymbol":"AAPL","Quantity":2,"PurchasePrice":209.82,"CurrentPrice":209.82,"TotalValue":419.64,"$type":"StockHoldingDto"}],"TotalGainLoss":0.00,"TotalValue":419.64,"$type":"PortfolioDto"},"Formatters":[],"ContentTypes":[],"DeclaredType":null,"StatusCode":200,"$type":"OkObjectResult"}
+2024-08-08 12:15:33.249 +03:00 [INF] Executing OkObjectResult, writing value of type 'Entity.DTOs.StockHolding.PortfolioDto'.
+2024-08-08 12:15:33.260 +03:00 [INF] Executed action API.Controllers.StockHoldingController.GetUserStockHoldings (API) in 5652.8488ms
+2024-08-08 12:15:33.261 +03:00 [INF] Executed endpoint 'API.Controllers.StockHoldingController.GetUserStockHoldings (API)'
+2024-08-08 12:15:33.265 +03:00 [INF] HTTP GET /api/StockHolding responded 200 in 5713.5695 ms
+2024-08-08 12:15:33.272 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/api/StockHolding - - - 200 - application/json;+charset=utf-8 5726.6280ms
+2024-08-08 12:17:15.807 +03:00 [INF] User profile is available. Using 'C:\Users\KC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-08-08 12:17:16.061 +03:00 [INF] Now listening on: https://localhost:7095
+2024-08-08 12:17:16.062 +03:00 [INF] Now listening on: http://localhost:5095
+2024-08-08 12:17:16.065 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-08-08 12:17:16.066 +03:00 [INF] Hosting environment: Development
+2024-08-08 12:17:16.067 +03:00 [INF] Content root path: C:\Users\KC\Desktop\kod\.nets\finance\API
+2024-08-08 12:17:18.336 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/index.html - -
+2024-08-08 12:17:18.509 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/index.html - - - 200 - text/html;charset=utf-8 175.3830ms
+2024-08-08 12:17:18.520 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_vs/browserLink - -
+2024-08-08 12:17:18.520 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - -
+2024-08-08 12:17:18.528 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - - - 200 13742 application/javascript;+charset=utf-8 7.9396ms
+2024-08-08 12:17:18.562 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 41.4058ms
+2024-08-08 12:17:18.754 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - -
+2024-08-08 12:17:18.879 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 124.4031ms
+2024-08-08 12:17:22.239 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/api/StockHolding - -
+2024-08-08 12:17:22.275 +03:00 [INF] Executing endpoint 'API.Controllers.StockHoldingController.GetUserStockHoldings (API)'
+2024-08-08 12:17:22.292 +03:00 [INF] Route matched with {action = "GetUserStockHoldings", controller = "StockHolding"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetUserStockHoldings() on controller API.Controllers.StockHoldingController (API).
+2024-08-08 12:17:24.054 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT s."Id", s."CreatedBy", s."CreatedDate", s."DeletedBy", s."DeletedDate", s."IsDeleted", s."ModifiedBy", s."ModifiedDate", s."PurchasePrice", s."Quantity", s."StockId", s."StockSymbol", s."UserId"
+FROM "StockHoldings" AS s
+WHERE s."UserId" = @__userId_0
+2024-08-08 12:17:24.143 +03:00 [INF] Start processing HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:17:24.147 +03:00 [INF] Sending HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:17:24.569 +03:00 [INF] Received HTTP response headers after 417.4662ms - 200
+2024-08-08 12:17:24.573 +03:00 [INF] End processing HTTP request after 432.2662ms - 200
+2024-08-08 12:17:24.595 +03:00 [INF] User stock holdings retrieved: 419,64 items
+2024-08-08 12:17:24.603 +03:00 [INF] Executing OkObjectResult, writing value of type 'Entity.DTOs.StockHolding.PortfolioDto'.
+2024-08-08 12:17:24.618 +03:00 [INF] Executed action API.Controllers.StockHoldingController.GetUserStockHoldings (API) in 2320.3686ms
+2024-08-08 12:17:24.621 +03:00 [INF] Executed endpoint 'API.Controllers.StockHoldingController.GetUserStockHoldings (API)'
+2024-08-08 12:17:24.625 +03:00 [INF] HTTP GET /api/StockHolding responded 200 in 2381.8775 ms
+2024-08-08 12:17:24.633 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/api/StockHolding - - - 200 - application/json;+charset=utf-8 2394.9190ms
+2024-08-08 12:20:00.276 +03:00 [INF] User profile is available. Using 'C:\Users\KC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-08-08 12:20:00.551 +03:00 [INF] Now listening on: https://localhost:7095
+2024-08-08 12:20:00.553 +03:00 [INF] Now listening on: http://localhost:5095
+2024-08-08 12:20:00.555 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-08-08 12:20:00.556 +03:00 [INF] Hosting environment: Development
+2024-08-08 12:20:00.557 +03:00 [INF] Content root path: C:\Users\KC\Desktop\kod\.nets\finance\API
+2024-08-08 12:20:02.811 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/index.html - -
+2024-08-08 12:20:02.943 +03:00 [INF] ****MiddleWare**** Incoming request: GET /index.html 
+2024-08-08 12:20:03.012 +03:00 [INF] ****MiddleWare**** Outgoing response: 200 <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div id="swagger-ui"></div>
+
+    <!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
+    <script>
+        if (window.navigator.userAgent.indexOf("Edge") > -1) {
+            console.log("Removing native Edge fetch in favor of swagger-ui's polyfill")
+            window.fetch = undefined;
+        }
+    </script>
+
+    <script src="./swagger-ui-bundle.js"></script>
+    <script src="./swagger-ui-standalone-preset.js"></script>
+    <script>
+        /* Source: https://gist.github.com/lamberta/3768814
+         * Parse a string function definition and return a function object. Does not use eval.
+         * @param {string} str
+         * @return {function}
+         *
+         * Example:
+         *  var f = function (x, y) { return x * y; };
+         *  var g = parseFunction(f.toString());
+         *  g(33, 3); //=> 99
+         */
+        function parseFunction(str) {
+            if (!str) return void (0);
+
+            var fn_body_idx = str.indexOf('{'),
+                fn_body = str.substring(fn_body_idx + 1, str.lastIndexOf('}')),
+                fn_declare = str.substring(0, fn_body_idx),
+                fn_params = fn_declare.substring(fn_declare.indexOf('(') + 1, fn_declare.lastIndexOf(')')),
+                args = fn_params.split(',');
+
+            args.push(fn_body);
+
+            function Fn() {
+                return Function.apply(this, args);
+            }
+            Fn.prototype = Function.prototype;
+
+            return new Fn();
+        }
+
+        window.onload = function () {
+            var configObject = JSON.parse('{"urls":[{"url":"/swagger/v1/swagger.json","name":"Finance API V1"}],"deepLinking":false,"persistAuthorization":false,"displayOperationId":false,"defaultModelsExpandDepth":1,"defaultModelExpandDepth":1,"defaultModelRendering":"example","displayRequestDuration":false,"docExpansion":"list","showExtensions":false,"showCommonExtensions":false,"supportedSubmitMethods":["get","put","post","delete","options","head","patch","trace"],"tryItOutEnabled":false}');
+            var oauthConfigObject = JSON.parse('{"scopeSeparator":" ","scopes":[],"useBasicAuthenticationWithAccessCodeGrant":false,"usePkceWithAuthorizationCodeGrant":false}');
+
+            // Workaround for https://github.com/swagger-api/swagger-ui/issues/5945
+            configObject.urls.forEach(function (item) {
+                if (item.url.startsWith("http") || item.url.startsWith("/")) return;
+                item.url = window.location.href.replace("index.html", item.url).split('#')[0];
+            });
+
+            // If validatorUrl is not explicitly provided, disable the feature by setting to null
+            if (!configObject.hasOwnProperty("validatorUrl"))
+                configObject.validatorUrl = null
+
+            // If oauth2RedirectUrl isn't specified, use the built-in default
+            if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
+                configObject.oauth2RedirectUrl = (new URL("oauth2-redirect.html", window.location.href)).href;
+
+            // Apply mandatory parameters
+            configObject.dom_id = "#swagger-ui";
+            configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
+            configObject.layout = "StandaloneLayout";
+
+            // Parse and add interceptor functions
+            var interceptors = JSON.parse('{"RequestInterceptorFunction":null,"ResponseInterceptorFunction":null}');
+            if (interceptors.RequestInterceptorFunction)
+                configObject.requestInterceptor = parseFunction(interceptors.RequestInterceptorFunction);
+            if (interceptors.ResponseInterceptorFunction)
+                configObject.responseInterceptor = parseFunction(interceptors.ResponseInterceptorFunction);
+
+            // Begin Swagger UI call region
+
+            const ui = SwaggerUIBundle(configObject);
+
+            ui.initOAuth(oauthConfigObject);
+
+            // End Swagger UI call region
+
+            window.ui = ui
+        }
+    </script>
+</body>
+</html>
+
+2024-08-08 12:20:03.034 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/index.html - - - 200 - text/html;charset=utf-8 224.4855ms
+2024-08-08 12:20:03.052 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - -
+2024-08-08 12:20:03.052 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/_vs/browserLink - -
+2024-08-08 12:20:03.061 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_framework/aspnetcore-browser-refresh.js - - - 200 13742 application/javascript;+charset=utf-8 9.2601ms
+2024-08-08 12:20:03.088 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 36.7377ms
+2024-08-08 12:20:03.230 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - -
+2024-08-08 12:20:03.231 +03:00 [INF] ****MiddleWare**** Incoming request: GET /swagger/v1/swagger.json 
+2024-08-08 12:20:03.351 +03:00 [INF] ****MiddleWare**** Outgoing response: 200 {
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Finance API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Auth/users": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistrationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistrationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistrationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ExternalApiStock/price": {
+      "get": {
+        "tags": [
+          "ExternalApiStock"
+        ],
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/StockHolding": {
+      "get": {
+        "tags": [
+          "StockHolding"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transaction/purchase": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionPurchaseDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionPurchaseDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionPurchaseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transaction/sell": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionSellDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionSellDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionSellDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transaction/deposit": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionDepositDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionDepositDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionDepositDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transaction/withdrawal": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionWithdrawalDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionWithdrawalDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionWithdrawalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transaction": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Transaction/{id}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DateOnly": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "dayOfYear": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "dayNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DayOfWeek": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TransactionDepositDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "default": 100
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransactionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "portfolioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "stockId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransactionPurchaseDto": {
+        "type": "object",
+        "properties": {
+          "stockSymbol": {
+            "type": "string",
+            "default": "AAPL",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransactionSellDto": {
+        "type": "object",
+        "properties": {
+          "stockSymbol": {
+            "type": "string",
+            "default": "AAPL",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransactionWithdrawalDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "default": 100
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserLoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "default": "superadmin@gmail.com",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "default": "123456",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserRegistrationDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "default": "superadmin@gmail.com",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "default": "123456",
+            "nullable": true
+          },
+          "roleName": {
+            "type": "string",
+            "default": "Admin",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
+2024-08-08 12:20:03.358 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 128.2437ms
+2024-08-08 12:20:08.243 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/api/ExternalApiStock/price?symbol=AA - -
+2024-08-08 12:20:08.244 +03:00 [INF] ****MiddleWare**** Incoming request: GET /api/ExternalApiStock/price 
+2024-08-08 12:20:08.281 +03:00 [INF] Executing endpoint 'API.Controllers.ExternalApiStockController.GetStockPrice (API)'
+2024-08-08 12:20:08.301 +03:00 [INF] Route matched with {action = "GetStockPrice", controller = "ExternalApiStock"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetStockPrice(System.String) on controller API.Controllers.ExternalApiStockController (API).
+2024-08-08 12:20:08.329 +03:00 [INF] ****ActionFilter**** Request for GET /api/ExternalApiStock/price from ::1 with data {"symbol":"AA"}
+2024-08-08 12:20:08.338 +03:00 [INF] Start processing HTTP request GET https://finnhub.io/api/v1/quote?symbol=AA&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:20:08.341 +03:00 [INF] Sending HTTP request GET https://finnhub.io/api/v1/quote?symbol=AA&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:20:08.800 +03:00 [INF] Received HTTP response headers after 456.4417ms - 200
+2024-08-08 12:20:08.802 +03:00 [INF] End processing HTTP request after 466.0807ms - 200
+2024-08-08 12:20:08.817 +03:00 [INF] ****ActionFilter**** Response from 200 with data {"Value":{"Symbol":"AA","Price":29.21},"Formatters":[],"ContentTypes":[],"DeclaredType":null,"StatusCode":200,"$type":"OkObjectResult"}
+2024-08-08 12:20:08.828 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.String, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Decimal, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-08-08 12:20:08.837 +03:00 [INF] Executed action API.Controllers.ExternalApiStockController.GetStockPrice (API) in 529.9474ms
+2024-08-08 12:20:08.839 +03:00 [INF] Executed endpoint 'API.Controllers.ExternalApiStockController.GetStockPrice (API)'
+2024-08-08 12:20:08.843 +03:00 [INF] HTTP GET /api/ExternalApiStock/price responded 200 in 594.0126 ms
+2024-08-08 12:20:08.845 +03:00 [INF] ****MiddleWare**** Outgoing response: 200 {"symbol":"AA","price":29.21}
+2024-08-08 12:20:08.847 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/api/ExternalApiStock/price?symbol=AA - - - 200 - application/json;+charset=utf-8 604.4536ms
+2024-08-08 12:20:13.353 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7095/api/StockHolding - -
+2024-08-08 12:20:13.355 +03:00 [INF] ****MiddleWare**** Incoming request: GET /api/StockHolding 
+2024-08-08 12:20:13.361 +03:00 [INF] Executing endpoint 'API.Controllers.StockHoldingController.GetUserStockHoldings (API)'
+2024-08-08 12:20:13.365 +03:00 [INF] Route matched with {action = "GetUserStockHoldings", controller = "StockHolding"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetUserStockHoldings() on controller API.Controllers.StockHoldingController (API).
+2024-08-08 12:20:13.574 +03:00 [INF] ****ActionFilter**** Request for GET /api/StockHolding from ::1 with data {}
+2024-08-08 12:20:15.001 +03:00 [INF] Executed DbCommand (26ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT s."Id", s."CreatedBy", s."CreatedDate", s."DeletedBy", s."DeletedDate", s."IsDeleted", s."ModifiedBy", s."ModifiedDate", s."PurchasePrice", s."Quantity", s."StockId", s."StockSymbol", s."UserId"
+FROM "StockHoldings" AS s
+WHERE s."UserId" = @__userId_0
+2024-08-08 12:20:15.082 +03:00 [INF] Start processing HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:20:15.084 +03:00 [INF] Sending HTTP request GET https://finnhub.io/api/v1/quote?symbol=AAPL&token=cqosfapr01qqj5dme8e0cqosfapr01qqj5dme8eg
+2024-08-08 12:20:15.393 +03:00 [INF] Received HTTP response headers after 307.8555ms - 200
+2024-08-08 12:20:15.395 +03:00 [INF] End processing HTTP request after 312.5192ms - 200
+2024-08-08 12:20:15.405 +03:00 [INF] User stock holdings retrieved: 419,64 items
+2024-08-08 12:20:15.407 +03:00 [INF] ****ActionFilter**** Response from 200 with data {"Value":{"StockHoldings":[{"StockId":0,"StockSymbol":"AAPL","Quantity":2,"PurchasePrice":209.82,"CurrentPrice":209.82,"TotalValue":419.64,"$type":"StockHoldingDto"}],"TotalGainLoss":0.00,"TotalValue":419.64,"$type":"PortfolioDto"},"Formatters":[],"ContentTypes":[],"DeclaredType":null,"StatusCode":200,"$type":"OkObjectResult"}
+2024-08-08 12:20:15.416 +03:00 [INF] Executing OkObjectResult, writing value of type 'Entity.DTOs.StockHolding.PortfolioDto'.
+2024-08-08 12:20:15.419 +03:00 [INF] Executed action API.Controllers.StockHoldingController.GetUserStockHoldings (API) in 2052.7348ms
+2024-08-08 12:20:15.420 +03:00 [INF] Executed endpoint 'API.Controllers.StockHoldingController.GetUserStockHoldings (API)'
+2024-08-08 12:20:15.421 +03:00 [INF] HTTP GET /api/StockHolding responded 200 in 2064.4892 ms
+2024-08-08 12:20:15.424 +03:00 [INF] ****MiddleWare**** Outgoing response: 200 {"stockHoldings":[{"stockId":0,"stockSymbol":"AAPL","quantity":2,"purchasePrice":209.82,"currentPrice":209.82,"totalValue":419.64}],"totalGainLoss":0.00,"totalValue":419.64}
+2024-08-08 12:20:15.432 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7095/api/StockHolding - - - 200 - application/json;+charset=utf-8 2079.1426ms

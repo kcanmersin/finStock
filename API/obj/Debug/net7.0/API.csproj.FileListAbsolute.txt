@@ -433,3 +433,9 @@ C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Serilog.Settings.Conf
 C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Serilog.Sinks.Console.dll
 C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
 C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Serilog.Sinks.File.dll
+C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\Moq.dll
+C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\xunit.abstractions.dll
+C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\xunit.assert.dll
+C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\xunit.core.dll
+C:\Users\KC\Desktop\kod\.nets\finance\API\bin\Debug\net7.0\xunit.execution.dotnet.dll
