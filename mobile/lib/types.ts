@@ -41,6 +41,40 @@ export interface Stock {
   lastUpdate: string;
 }
 
+export interface StockDetail extends Stock {
+  description?: string;
+  website?: string;
+  employees?: number;
+  founded?: string;
+  ceo?: string;
+  headquarters?: string;
+
+  eps?: number;
+  dividendYield?: number;
+  roe?: number;
+  roa?: number;
+  netMargin?: number;
+  grossMargin?: number;
+  debtToEquity?: number;
+  currentRatio?: number;
+  beta?: number;
+
+  high52w?: number;
+  low52w?: number;
+  avgVolume?: number;
+  openPrice?: number;
+  previousClose?: number;
+  dayHigh?: number;
+  dayLow?: number;
+
+  revenue?: number;
+  netIncome?: number;
+  ebitda?: number;
+
+  priceHistory?: { date: string; close: number; volume: number }[];
+  syncedAt?: string;
+}
+
 export interface Analysis {
   id: string;
   title: string;

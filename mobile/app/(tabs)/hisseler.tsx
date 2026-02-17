@@ -6,6 +6,7 @@ import {
   StyleSheet,
   RefreshControl,
 } from "react-native";
+import { useRouter } from "expo-router";
 import { Stock } from "@/lib/types";
 import { api } from "@/lib/api";
 import { StockCard } from "@/components/StockCard";
@@ -17,6 +18,7 @@ import { Colors } from "@/constants/Colors";
 export default function HisselerScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
+  const router = useRouter();
 
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,7 +76,12 @@ export default function HisselerScreen() {
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <StockCard stock={item} />}
+        renderItem={({ item }) => (
+          <StockCard
+            stock={item}
+            onPress={() => router.push(`/stock/${item.symbol}`)}
+          />
+        )}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
         refreshControl={

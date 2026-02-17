@@ -79,6 +79,36 @@ def get_stocks():
     return STOCKS
 
 
+@app.get("/api/stocks/{symbol}")
+def get_stock_detail(symbol: str):
+    """Tek bir hissenin detay bilgisini dondurur."""
+    for s in STOCKS:
+        if s.get("symbol", "").upper() == symbol.upper() or s.get("id") == symbol:
+            return s
+    raise HTTPException(status_code=404, detail="Hisse bulunamadi")
+
+
+@app.post("/api/stocks/{symbol}/sync")
+def sync_stock(symbol: str):
+    """
+    Hisse icin tum verileri dis kaynaklardan ceker ve gunceller.
+    TODO: Buraya gercek veri cekme mantigi yazilacak
+          (Yahoo Finance, TCMB, KAP, Finnet vs.)
+    Simdilik mevcut veriyi syncedAt ile isaretleyip dondurur.
+    """
+    for i, s in enumerate(STOCKS):
+        if s.get("symbol", "").upper() == symbol.upper() or s.get("id") == symbol:
+            s["syncedAt"] = datetime.utcnow().isoformat()
+            # TODO: Buraya gercek veri cekme kodu gelecek
+            # Ornek:
+            # detail = fetch_from_yahoo(symbol)
+            # s.update(detail)
+            STOCKS[i] = s
+            _save_json("stocks.json", STOCKS)
+            return s
+    raise HTTPException(status_code=404, detail="Hisse bulunamadi")
+
+
 @app.post("/api/stocks")
 def create_stock(stock: dict):
     stock.setdefault("id", str(uuid4()))

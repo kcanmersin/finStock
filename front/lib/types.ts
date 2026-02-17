@@ -41,6 +41,47 @@ export interface Stock {
   lastUpdate: string;
 }
 
+export interface StockDetail extends Stock {
+  // Temel bilgiler
+  description?: string;
+  website?: string;
+  employees?: number;
+  founded?: string;
+  ceo?: string;
+  headquarters?: string;
+
+  // Finansal metrikler
+  eps?: number;           // Hisse basina kar
+  dividendYield?: number; // Temettü verimi %
+  roe?: number;           // Ozkaynak karliligi %
+  roa?: number;           // Aktif karliligi %
+  netMargin?: number;     // Net kar marji %
+  grossMargin?: number;   // Brut kar marji %
+  debtToEquity?: number;  // Borc/Ozkaynak orani
+  currentRatio?: number;  // Cari oran
+  beta?: number;          // Beta katsayisi
+
+  // Fiyat seviyeleri
+  high52w?: number;       // 52 haftalik en yuksek
+  low52w?: number;        // 52 haftalik en dusuk
+  avgVolume?: number;     // Ortalama hacim
+  openPrice?: number;     // Acilis fiyati
+  previousClose?: number; // Onceki kapanis
+  dayHigh?: number;       // Gun ici en yuksek
+  dayLow?: number;        // Gun ici en dusuk
+
+  // Gelir tablosu (son donem)
+  revenue?: number;       // Gelir
+  netIncome?: number;     // Net kar
+  ebitda?: number;        // FAVOK
+
+  // Tarihsel fiyat verisi
+  priceHistory?: { date: string; close: number; volume: number }[];
+
+  // Meta
+  syncedAt?: string;      // Son sync zamani
+}
+
 export interface Analysis {
   id: string;
   title: string;

@@ -1,4 +1,4 @@
-import { Fund, Stock, Analysis } from "./types";
+import { Fund, Stock, StockDetail, Analysis } from "./types";
 
 // Gelistirme: bilgisayarinin yerel IP adresini yaz
 // Android emulator icin: 10.0.2.2
@@ -21,6 +21,14 @@ export const api = {
   getStocks: () => fetchJSON<Stock[]>("/api/stocks"),
   getAnalyses: () => fetchJSON<Analysis[]>("/api/analyses"),
   getAnalysis: (id: string) => fetchJSON<Analysis>(`/api/analyses/${id}`),
+  getStock: (symbol: string) => fetchJSON<StockDetail>(`/api/stocks/${symbol}`),
+  syncStock: async (symbol: string): Promise<StockDetail> => {
+    const res = await fetch(`${BASE_URL}/api/stocks/${symbol}/sync`, {
+      method: "POST",
+    });
+    if (!res.ok) throw new Error(`Sync hatasi: ${res.status}`);
+    return res.json();
+  },
   deleteAnalysis: async (id: string) => {
     const res = await fetch(`${BASE_URL}/api/analyses/${id}`, {
       method: "DELETE",

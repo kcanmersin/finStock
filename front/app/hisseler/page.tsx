@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Stock } from "@/lib/types";
@@ -66,7 +67,11 @@ const columns: ColumnDef<Stock, unknown>[] = [
         Kod <ArrowUpDown className="ml-1 h-3 w-3" />
       </Button>
     ),
-    cell: ({ row }) => <span className="font-mono font-bold">{row.getValue("symbol")}</span>,
+    cell: ({ row }) => (
+      <Link href={`/hisseler/${row.getValue("symbol")}`} className="font-mono font-bold text-primary hover:underline">
+        {row.getValue("symbol")}
+      </Link>
+    ),
   },
   {
     accessorKey: "name",
