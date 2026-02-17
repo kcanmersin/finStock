@@ -502,3 +502,407 @@ mobile/
 | `/api/analyses/{id}` | DELETE | ✅ | ✅ (Prisma) | ✅ | Response key farki |
 | `/api/upload` | POST | ✅ (stub) | ✅ (parse) | ❌ | Backend parse etmiyor |
 | `/health` | GET | ✅ | ❌ | ❌ | |
+
+---
+---
+
+# FRONTEND DOKUMANTASYONU
+
+> Asagida web (Next.js) ve mobil (Expo) uygulamalardaki tum ekranlar,
+> kullanici etkilesimleri, bilesenler ve navigasyon akislari belgelenmistir.
+
+---
+
+## WEB UYGULAMASI (Next.js)
+
+### Sayfa: Ana Sayfa `/`
+
+Otomatik olarak `/fonlar` sayfasina yonlendirir. Baska icerik yok.
+
+---
+
+### Sayfa: Fonlar Listesi `/fonlar`
+
+**Veri kaynagi:** `GET /api/funds` → `Fund[]`
+
+**Gorunum:**
+- Desktop: Gelismis tablo (tanstack/react-table)
+- Mobil: Kart gorunumu (otomatik gecis)
+
+**Tablo kolonlari (11 adet):**
+
+| Kolon | Alan | Format | Siralama | Filtre |
+|-------|------|--------|----------|--------|
+| ☐ | (secim) | checkbox | - | - |
+| Kod | `code` | mono font, **tiklanabilir link** → `/fonlar/{code}` | ✅ | - |
+| Fon Adi | `name` | max 250px, truncated | ✅ | string (contains) |
+| Tip | `type` | renk kodlu badge | - | string |
+| Risk | `riskLevel` | renk kodlu badge "X/7" | ✅ | number |
+| Gunluk | `dailyReturn` | yesil/kirmizi % | ✅ | number |
+| Aylik | `monthlyReturn` | yesil/kirmizi % | ✅ | number |
+| Yillik | `annualReturn` | yesil/kirmizi % | ✅ | number |
+| Yonetim Ucreti | `managementFee` | X.XX% | ✅ | number |
+| Toplam Deger | `totalValue` | formatLargeNumber | ✅ | number |
+| Yatirimci | `investorCount` | formatNumber | ✅ | - |
+
+**Kullanici etkilesimleri:**
+1. **Arama:** Fon adina gore anlik filtreleme (text input)
+2. **Siralama:** Kolon basligina tiklayarak asc/desc
+3. **Filtreleme:** Her kolon icin popover filtre (operatorler: contains, equals, gt, gte, lt, lte)
+4. **Coklu secim:** Checkbox ile satirlari sec, toplu sec
+5. **Disa aktarma:** Secili satirlari Excel (.xlsx) veya CSV olarak indir
+6. **Sayfalama:** Sayfa boyutu (10/20/50/100), ileri/geri, sayfa atlama
+7. **Navigasyon:** Fon koduna tikla → `/fonlar/{code}` detay sayfasi
+
+**Tip renk eslesmesi:**
+
+| Tip | Renk |
+|-----|------|
+| Hisse Senedi | mavi |
+| Tahvil/Bono | mor |
+| Karma | teal |
+| Para Piyasasi | gri |
+| Altin | amber |
+| Degisken | indigo |
+| Katilim | yesil |
+
+**Risk renk eslesmesi:**
+
+| Seviye | Renk |
+|--------|------|
+| 1-2 | yesil |
+| 3-4 | sari |
+| 5 | turuncu |
+| 6-7 | kirmizi |
+
+**Export kolonlari:** Kod, Adi, Tip, Risk, Gunluk%, Aylik%, Yillik%, Ucret%, Deger, Yatirimci
+
+---
+
+### Sayfa: Fon Detay `/fonlar/[code]`
+
+**Veri kaynagi:** `GET /api/funds/{code}` → `FundDetail`
+
+**Kullanici etkilesimleri:**
+1. **Geri butonu** → `/fonlar` listesine don
+2. **Verileri Guncelle butonu** → `POST /api/funds/{code}/sync` cagirir, spin animasyonu
+3. **Scroll** → Bolumler arasinda gezin
+
+**Gosterilen bolumler:**
+
+| Bolum | Icerik | Kosul |
+|-------|--------|-------|
+| Header | code (mono, buyuk), name, tip badge, risk badge | her zaman |
+| Sync | "Verileri Guncelle" butonu, son sync zamani | her zaman |
+| Getiri Grid | Gunluk, Haftalik, Aylik, 3A, 6A, YBB, Yillik, 3Y, 5Y | value != null olan gorunur |
+| Fon Bilgileri | Buyukluk, Deger, Yatirimci, Ucret, Giris/Cikis komisyonu, Min yatirim, Kurulus, Benchmark, Yonetici, Saklayici | her zaman |
+| Risk Metrikleri | Sharpe, StdSapma, MaxDusus, Beta, Alpha, TrackingError | sharpeRatio/stdDev/maxDrawdown varsa |
+| Varlik Dagilimi | Hisse%, Tahvil%, Nakit%, Diger% | totalStockWeight/totalBondWeight varsa |
+| Portfoy Detay | Her varligin agirligi | portfolio dizisi bos degilse |
+
+**Layout:** Desktop 2 kolon grid, mobil tek kolon
+
+---
+
+### Sayfa: Hisseler Listesi `/hisseler`
+
+**Veri kaynagi:** `GET /api/stocks` → `Stock[]`
+
+**Tablo kolonlari (13 adet):**
+
+| Kolon | Alan | Format | Siralama | Filtre |
+|-------|------|--------|----------|--------|
+| ☐ | (secim) | checkbox | - | - |
+| Kod | `symbol` | mono font, **tiklanabilir link** → `/hisseler/{symbol}` | ✅ | - |
+| Sirket | `name` | max 200px, truncated | ✅ | string |
+| Fiyat | `price` | formatCurrency ₺ | ✅ | number |
+| Gunluk % | `dailyChange` | yesil/kirmizi | ✅ | number |
+| Hacim | `volume` | formatLargeNumber | ✅ | number |
+| Piyasa Deg. | `marketCap` | formatLargeNumber | ✅ | number |
+| F/K | `peRatio` | .toFixed(1) | ✅ | number |
+| PD/DD | `pbRatio` | .toFixed(2) | ✅ | number |
+| Haftalik | `weeklyReturn` | yesil/kirmizi % | - | - |
+| Aylik | `monthlyReturn` | yesil/kirmizi % | - | number |
+| Yillik | `annualReturn` | yesil/kirmizi % | - | number |
+| Sektor | `sector` | renk kodlu badge | - | string |
+
+**Sektor renk eslesmesi (18 sektor):**
+Ulastirma (sky), Savunma (slate), Bankacilik (emerald), Demir Celik (zinc), Perakende (pink), Cam (cyan), Enerji (amber), Otomotiv (blue), Teknoloji (violet), Madencilik (orange), Holding (indigo), Kimya (teal), Insaat (stone), Gida (lime), Telekom (purple), Beyaz_Esya (gray), GYO (rose), Gubre (green)
+
+**Kullanici etkilesimleri:** Arama, siralama, filtreleme, coklu secim, export, sayfalama — fonlarla ayni pattern
+
+---
+
+### Sayfa: Hisse Detay `/hisseler/[symbol]`
+
+**Veri kaynagi:** `GET /api/stocks/{symbol}` → `StockDetail`
+
+**Kullanici etkilesimleri:**
+1. **Geri butonu** → `/hisseler`
+2. **Verileri Guncelle butonu** → `POST /api/stocks/{symbol}/sync`
+3. **Scroll**
+
+**Gosterilen bolumler:**
+
+| Bolum | Icerik | Kosul |
+|-------|--------|-------|
+| Header | symbol (mono), name, sektor badge, fiyat, gunluk%, degisim TL | her zaman |
+| Getiri Grid | Gunluk, Haftalik, Aylik, Yillik (4 kart) | her zaman |
+| Fiyat Bilgileri | Acilis, Onceki Kapanis, Gun Yuksek/Dusuk, 52H Yuksek/Dusuk | alan != null |
+| Piyasa Verileri | Piyasa Degeri, Hacim, Ort Hacim, F/K, PD/DD, Beta | her zaman (temel) |
+| Finansal Oranlar | EPS, Temettu, ROE, ROA, Net Marj, Brut Marj, Borc/Ozkaynak, Cari Oran | eps/roe/dividendYield varsa |
+| Gelir Tablosu | Gelir, Net Kar, FAVOK | revenue/netIncome varsa |
+| Sirket Bilgileri | Aciklama, CEO, Merkez, Calisan, Kurulus, Website | description/ceo varsa |
+
+---
+
+### Sayfa: Analizler Listesi `/analizler`
+
+**Veri kaynagi:** `GET /api/analyses` → `Analysis[]`
+
+**Gorunum:** Grid layout (1 kolon mobil, 2 tablet, 3 desktop)
+
+**Her kart gosterir:**
+- Ikon (PieChart fon icin, TrendingUp hisse icin)
+- Baslik, tarih, tip badge (Fon/Hisse)
+- Ozet metin
+- Aksiyon sayilari: AL:X TUT:X SAT:X IZLE:X (renk kodlu)
+- Detay butonu → `/analizler/{id}`
+- Silme butonu (onay sonrasi `DELETE /api/analyses/{id}`)
+
+**Kullanici etkilesimleri:**
+1. **Analiz Yukle butonu** → UploadDialog acar
+2. **Detay tikla** → `/analizler/{id}`
+3. **Sil tikla** → onay → sil
+4. **Upload dialog:** drag-drop veya tik ile dosya sec (.xlsx/.csv), baslik gir, tip sec (Fon/Hisse), yukle
+
+**Upload akisi:**
+1. Dosya secilir (.xlsx veya .csv)
+2. Baslik girilir (opsiyonel — bos ise dosya adi)
+3. Tip secilir (Fon/Hisse)
+4. `POST /api/upload` ile FormData gonderilir
+5. Basarili → toast bildirimi → `/analizler` sayfasina don
+
+---
+
+### Sayfa: Analiz Detay `/analizler/[id]`
+
+**Veri kaynagi:** `GET /api/analyses/{id}` → `Analysis`
+
+**Gosterilen:**
+- Header: baslik, tip badge, tarih, dosya adi
+- Istatistik kutulari: AL sayisi (yesil), TUT sayisi (sari), SAT sayisi (kirmizi), IZLE sayisi (gri)
+- Ozet metin
+- Oneriler:
+  - **Desktop:** Tablo (sira, isim, oneri badge, puan bar, gerekce)
+  - **Mobil:** Kart listesi
+
+**Puan gorseli:**
+- 70+ yesil progress bar
+- 40-69 sari progress bar
+- <40 kirmizi progress bar
+
+**Kullanici etkilesimleri:**
+1. **Geri butonu** → `/analizler`
+2. **Excel'e aktar** → dropdown (Excel/CSV), onerileri indir
+3. **Sil butonu** → `DELETE /api/analyses/{id}`
+
+---
+
+### Sayfa: AI Prompt `/ai-prompt`
+
+**Kullanici etkilesimleri:**
+1. **Sekme degistir:** Fon Analizi / Hisse Analizi prompt'lari
+2. **Kopyala butonu** → prompt'u panoya kopyalar, 2sn "Kopyalandi" gosterir
+3. **Scroll:** 5 adimli rehber kartlarini goruntule
+
+**5 adimli is akisi:**
+1. Fonlar/Hisseler sayfasindan veri export et (Excel)
+2. Prompt'u kopyala
+3. ChatGPT/Claude'a gonderin (veri + prompt)
+4. AI ciktisini Excel olarak kaydedin
+5. Sisteme yukleyin (`POST /api/upload`)
+
+---
+
+### Web Layout Bilesenleri
+
+**Sidebar (desktop, lg: ve ustu):**
+- Logo + uygulama adi
+- Navigasyon: Fonlar, Hisseler, Analizler, AI Analiz
+- Aktif sayfa vurgusu
+- Tema degistirici (light/dark)
+
+**Mobile Header (mobil, lg: alti):**
+- Logo + uygulama adi (sol)
+- Tema degistirici (sag)
+- Backdrop blur efekti
+
+**Bottom Nav (mobil, lg: alti):**
+- 4 navigasyon ogesi: Fonlar, Hisseler, Analizler, AI Analiz
+- Aktif durum: mavi renk + ust cizgi + ikon buyutme
+
+**Tema:**
+- Light / Dark mod destegi
+- Tailwind CSS + shadcn/ui bilesen kutuphanesi
+
+---
+
+## MOBIL UYGULAMA (Expo / React Native)
+
+### Tab: Fonlar `(tabs)/fonlar`
+
+**Veri kaynagi:** `api.getFunds()` → `GET /api/funds`
+
+**Kullanici etkilesimleri:**
+1. **Arama:** Fon adi veya koduna gore anlik filtreleme
+2. **Asagi cekme:** Pull-to-refresh ile yenileme
+3. **Karta tikla:** → `/fund/{code}` detay ekranina git
+4. **Bos durum:** Veri yoksa ozel mesaj gosterir
+
+**FundCard bileseni gosterir:**
+- Fon kodu (mono), fon adi (1 satir)
+- Tip badge (renk kodlu), risk badge (X/7 renk kodlu)
+- Metrikler satiri: Gunluk%, Aylik%, Yillik%, Ucret%, Buyukluk
+- Tiklandiginda spring animasyonu (0.97 olcek) + haptic feedback
+
+---
+
+### Tab: Hisseler `(tabs)/hisseler`
+
+**Veri kaynagi:** `api.getStocks()` → `GET /api/stocks`
+
+**Kullanici etkilesimleri:**
+1. **Arama:** Hisse adi veya sembol ile filtreleme
+2. **Asagi cekme:** Pull-to-refresh
+3. **Karta tikla:** → `/stock/{symbol}` detay ekranina git
+
+**StockCard bileseni gosterir:**
+- Sembol (mono) + sektor badge, sirket adi, fiyat + gunluk% (renk kodlu)
+- Metrikler: Haftalik%, Aylik%, Yillik%, Hacim, F/K
+- Spring animasyonu + haptic feedback
+
+---
+
+### Tab: Analizler `(tabs)/analizler`
+
+**Veri kaynagi:** `api.getAnalyses()` → `GET /api/analyses`
+
+**Kullanici etkilesimleri:**
+1. **Asagi cekme:** Pull-to-refresh
+2. **Karta tikla:** → `/analysis/{id}` detay ekranina git
+3. **Sil ikonu tikla:** Onay dialogu → `api.deleteAnalysis(id)` → haptic warning feedback
+
+**AnalysisCard bileseni gosterir:**
+- Baslik (2 satir max), tip badge (Fon/Hisse), tarih
+- Ozet metin (2 satir truncated)
+- Aksiyon sayilari: AL (yesil), TUT (sari), SAT (kirmizi), IZLE (gri)
+- Silme butonu (cop kutusu ikonu)
+
+---
+
+### Tab: AI Prompt `(tabs)/ai-prompt`
+
+**Kullanici etkilesimleri:**
+1. **Yatay kaydirma:** 5 adimli rehber kartlari
+2. **Sekme degistir:** Fon / Hisse prompt'lari (haptic feedback)
+3. **Kopyala butonu:** Prompt'u panoya kopyalar → onay (checkmark, 2sn)
+
+---
+
+### Ekran: Fon Detay `/fund/[code]`
+
+**Veri kaynagi:** `api.getFund(code)` → `GET /api/funds/{code}`
+
+**Kullanici etkilesimleri:**
+1. **Verileri Guncelle:** `api.syncFund(code)` → donen ikon animasyonu (Reanimated) + haptic
+2. **Basari/hata:** Haptic notification (success/error) + Alert
+3. **Geri:** Header back butonu
+
+**Gosterilen bolumler:** (web versiyonuyla ayni — kosullu kart gosterimi)
+
+---
+
+### Ekran: Hisse Detay `/stock/[symbol]`
+
+**Veri kaynagi:** `api.getStock(symbol)` → `GET /api/stocks/{symbol}`
+
+**Kullanici etkilesimleri:**
+1. **Verileri Guncelle:** `api.syncStock(symbol)` → animasyon + haptic
+2. **Geri:** Header back butonu
+
+**Gosterilen bolumler:** (web versiyonuyla ayni — kosullu kart gosterimi)
+
+---
+
+### Ekran: Analiz Detay `/analysis/[id]`
+
+**Veri kaynagi:** `api.getAnalysis(id)` → `GET /api/analyses/{id}`
+
+**Gosterilen:**
+- Baslik, tip badge, tarih
+- Ozet kutusu
+- Istatistik satiri: AL/TUT/SAT/IZLE sayilari (renk kodlu kutular)
+- Oneri kartlari: isim, aksiyon badge, puan bar (renk kodlu), puan/100, gerekce
+
+---
+
+### Mobil Navigasyon Yapisi
+
+```
+(tabs)/
+  ├── fonlar        → liste
+  ├── hisseler      → liste
+  ├── analizler     → liste
+  └── ai-prompt     → rehber
+
+fund/[code]         → fon detay (stack push)
+stock/[symbol]      → hisse detay (stack push)
+analysis/[id]       → analiz detay (stack push)
+```
+
+**Tab bar:** 4 sekme — Fonlar (pie-chart), Hisseler (trending-up), Analizler (document-text), AI Prompt (sparkles)
+
+**Stack animasyonu:** `slide_from_right`
+
+---
+
+### Mobil Ortak Bilesenler
+
+| Bilesen | Dosya | Kullanim |
+|---------|-------|----------|
+| `FundCard` | components/FundCard.tsx | Fon listesinde her kart |
+| `StockCard` | components/StockCard.tsx | Hisse listesinde her kart |
+| `AnalysisCard` | components/AnalysisCard.tsx | Analiz listesinde her kart |
+| `Badge` | components/Badge.tsx | Tip, risk, sektor etiketleri |
+| `ReturnText` | components/ReturnText.tsx | Getiri % degerleri (yesil/kirmizi/gri, sm/md/lg) |
+| `SearchBar` | components/SearchBar.tsx | Arama cubugu (ikon + input + temizle) |
+| `EmptyState` | components/EmptyState.tsx | Bos liste durumu (ikon + baslik + mesaj) |
+
+---
+
+## FORMAT FONKSIYONLARI
+
+### Web (`front/lib/utils.ts`)
+
+| Fonksiyon | Ornek Cikti |
+|-----------|-------------|
+| `formatCurrency(312.4)` | `₺312,40` |
+| `formatNumber(184200)` | `184.200` |
+| `formatLargeNumber(431200000000)` | `431,2 Milyar` |
+| `formatLargeNumber(48520000)` | `48,5 Milyon` |
+| `formatPercentage(2.35)` | `+2.35%` |
+| `formatPercentage(-1.20)` | `-1.20%` |
+
+### Mobil (`mobile/lib/format.ts`)
+
+| Fonksiyon | Ornek Cikti |
+|-----------|-------------|
+| `formatCurrency(312.4)` | `₺312,40` |
+| `formatNumber(184200)` | `184.200` |
+| `formatLargeNumber(431200000000)` | `431.2B` |
+| `formatLargeNumber(48520000)` | `48.5M` |
+| `formatPercentage(2.35)` | `+2.35%` |
+
+> **NOT:** Web ve mobil format fonksiyonlari farkli cikti uretir:
+> Web `Milyar/Milyon`, mobil `B/M/K` kullanir.
