@@ -23,6 +23,35 @@ export type FundType =
   | "Degisken"
   | "Katilim";
 
+export interface FundDetail extends Fund {
+  portfolio?: { asset: string; weight: number }[];
+  weeklyReturn?: number;
+  threeMonthReturn?: number;
+  sixMonthReturn?: number;
+  ytdReturn?: number;
+  threeYearReturn?: number;
+  fiveYearReturn?: number;
+  sharpeRatio?: number;
+  standardDeviation?: number;
+  maxDrawdown?: number;
+  beta?: number;
+  alpha?: number;
+  trackingError?: number;
+  benchmark?: string;
+  manager?: string;
+  custodian?: string;
+  kap?: string;
+  minInvestment?: number;
+  entryFee?: number;
+  exitFee?: number;
+  totalBondWeight?: number;
+  totalStockWeight?: number;
+  totalCashWeight?: number;
+  totalOtherWeight?: number;
+  navHistory?: { date: string; nav: number }[];
+  syncedAt?: string;
+}
+
 export interface Stock {
   id: string;
   symbol: string;

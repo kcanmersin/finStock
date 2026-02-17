@@ -6,6 +6,7 @@ import {
   StyleSheet,
   RefreshControl,
 } from "react-native";
+import { useRouter } from "expo-router";
 import { Fund } from "@/lib/types";
 import { api } from "@/lib/api";
 import { FundCard } from "@/components/FundCard";
@@ -17,6 +18,7 @@ import { Colors } from "@/constants/Colors";
 export default function FonlarScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
+  const router = useRouter();
 
   const [funds, setFunds] = useState<Fund[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,7 +76,12 @@ export default function FonlarScreen() {
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <FundCard fund={item} />}
+        renderItem={({ item }) => (
+          <FundCard
+            fund={item}
+            onPress={() => router.push(`/fund/${item.code}`)}
+          />
+        )}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
         refreshControl={

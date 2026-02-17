@@ -63,6 +63,36 @@ def get_funds():
     return FUNDS
 
 
+@app.get("/api/funds/{code}")
+def get_fund_detail(code: str):
+    """Tek bir fonun detay bilgisini dondurur."""
+    for f in FUNDS:
+        if f.get("code", "").upper() == code.upper() or f.get("id") == code:
+            return f
+    raise HTTPException(status_code=404, detail="Fon bulunamadi")
+
+
+@app.post("/api/funds/{code}/sync")
+def sync_fund(code: str):
+    """
+    Fon icin tum verileri dis kaynaklardan ceker ve gunceller.
+    TODO: Buraya gercek veri cekme mantigi yazilacak
+          (TEFAS, KAP, SPK vs.)
+    Simdilik mevcut veriyi syncedAt ile isaretleyip dondurur.
+    """
+    for i, f in enumerate(FUNDS):
+        if f.get("code", "").upper() == code.upper() or f.get("id") == code:
+            f["syncedAt"] = datetime.utcnow().isoformat()
+            # TODO: Buraya gercek veri cekme kodu gelecek
+            # Ornek:
+            # detail = fetch_from_tefas(code)
+            # f.update(detail)
+            FUNDS[i] = f
+            _save_json("funds.json", FUNDS)
+            return f
+    raise HTTPException(status_code=404, detail="Fon bulunamadi")
+
+
 @app.post("/api/funds")
 def create_fund(fund: dict):
     fund.setdefault("id", str(uuid4()))

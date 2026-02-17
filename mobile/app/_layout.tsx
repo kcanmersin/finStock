@@ -19,6 +19,17 @@ export default function RootLayout() {
       >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen
+          name="fund/[code]"
+          options={{
+            headerShown: true,
+            headerTitle: "Fon Detay",
+            headerTintColor: colors.tint,
+            headerStyle: { backgroundColor: colors.background },
+            headerTitleStyle: { color: colors.text },
+            presentation: "card",
+          }}
+        />
+        <Stack.Screen
           name="stock/[symbol]"
           options={{
             headerShown: true,

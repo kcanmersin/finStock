@@ -23,6 +23,48 @@ export type FundType =
   | "Degisken"
   | "Katilim";
 
+export interface FundDetail extends Fund {
+  // Portfoy dagilimi
+  portfolio?: { asset: string; weight: number }[];
+
+  // Performans metrikleri
+  weeklyReturn?: number;
+  threeMonthReturn?: number;
+  sixMonthReturn?: number;
+  ytdReturn?: number;
+  threeYearReturn?: number;
+  fiveYearReturn?: number;
+
+  // Risk metrikleri
+  sharpeRatio?: number;
+  standardDeviation?: number;
+  maxDrawdown?: number;
+  beta?: number;
+  alpha?: number;
+  trackingError?: number;
+
+  // Fon bilgileri
+  benchmark?: string;
+  manager?: string;
+  custodian?: string;
+  kap?: string;
+  minInvestment?: number;
+  entryFee?: number;
+  exitFee?: number;
+
+  // Varlik dagilimi ozeti
+  totalBondWeight?: number;
+  totalStockWeight?: number;
+  totalCashWeight?: number;
+  totalOtherWeight?: number;
+
+  // Tarihsel birim pay degeri
+  navHistory?: { date: string; nav: number }[];
+
+  // Meta
+  syncedAt?: string;
+}
+
 export interface Stock {
   id: string;
   symbol: string;
