@@ -194,13 +194,19 @@ const exportColumns = [
   { key: "sector", header: "Sektor" },
 ];
 
+const mobileCardConfig = {
+  primaryColumns: ["symbol", "name"],
+  metricColumns: ["price", "dailyChange", "volume", "peRatio", "monthlyReturn", "annualReturn"],
+  badgeColumns: ["sector"],
+};
+
 export default function HisselerPage() {
   const { data, loading, error } = useDataFetch<Stock>("/api/stocks");
 
   if (loading) {
     return (
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Hisseler</h1>
+        <h1 className="text-2xl font-bold md:text-3xl">Hisseler</h1>
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
         </div>
@@ -211,7 +217,7 @@ export default function HisselerPage() {
   if (error) {
     return (
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Hisseler</h1>
+        <h1 className="text-2xl font-bold md:text-3xl">Hisseler</h1>
         <div className="text-destructive">Hata: {error}</div>
       </div>
     );
@@ -220,8 +226,8 @@ export default function HisselerPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-3xl font-bold">Hisseler</h1>
-        <p className="text-muted-foreground mt-1">
+        <h1 className="text-2xl font-bold md:text-3xl">Hisseler</h1>
+        <p className="text-sm text-muted-foreground mt-1 md:text-base">
           BIST hisse senetlerini filtreleyin, secin ve disa aktarin.
         </p>
       </div>
@@ -232,6 +238,7 @@ export default function HisselerPage() {
         searchKey="name"
         exportColumns={exportColumns}
         exportFileName="hisseler_export"
+        mobileCardConfig={mobileCardConfig}
       />
     </div>
   );

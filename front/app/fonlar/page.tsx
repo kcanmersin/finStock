@@ -184,13 +184,19 @@ const exportColumns = [
   { key: "investorCount", header: "Yatirimci Sayisi" },
 ];
 
+const mobileCardConfig = {
+  primaryColumns: ["code", "name"],
+  metricColumns: ["dailyReturn", "monthlyReturn", "annualReturn", "managementFee", "totalValue", "investorCount"],
+  badgeColumns: ["type", "riskLevel"],
+};
+
 export default function FonlarPage() {
   const { data, loading, error } = useDataFetch<Fund>("/api/funds");
 
   if (loading) {
     return (
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Fonlar</h1>
+        <h1 className="text-2xl font-bold md:text-3xl">Fonlar</h1>
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
         </div>
@@ -201,7 +207,7 @@ export default function FonlarPage() {
   if (error) {
     return (
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Fonlar</h1>
+        <h1 className="text-2xl font-bold md:text-3xl">Fonlar</h1>
         <div className="text-destructive">Hata: {error}</div>
       </div>
     );
@@ -210,8 +216,8 @@ export default function FonlarPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-3xl font-bold">Fonlar</h1>
-        <p className="text-muted-foreground mt-1">
+        <h1 className="text-2xl font-bold md:text-3xl">Fonlar</h1>
+        <p className="text-sm text-muted-foreground mt-1 md:text-base">
           Turkiye yatirim fonlarini filtreleyin, secin ve disa aktarin.
         </p>
       </div>
@@ -222,6 +228,7 @@ export default function FonlarPage() {
         searchKey="name"
         exportColumns={exportColumns}
         exportFileName="fonlar_export"
+        mobileCardConfig={mobileCardConfig}
       />
     </div>
   );

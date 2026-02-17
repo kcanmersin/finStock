@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
+import { MobileCardView } from "./mobile-card-view";
 import { evaluateFilter } from "@/lib/filters";
 
 declare module "@tanstack/react-table" {
@@ -46,6 +47,12 @@ interface FilterableColumn {
   type: "string" | "number";
 }
 
+interface MobileCardConfig {
+  primaryColumns: string[];
+  metricColumns: string[];
+  badgeColumns?: string[];
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -53,6 +60,7 @@ interface DataTableProps<TData, TValue> {
   searchKey?: string;
   exportColumns?: { key: string; header: string }[];
   exportFileName?: string;
+  mobileCardConfig?: MobileCardConfig;
 }
 
 export function DataTable<TData, TValue>({
@@ -62,6 +70,7 @@ export function DataTable<TData, TValue>({
   searchKey,
   exportColumns,
   exportFileName = "export",
+  mobileCardConfig,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -101,7 +110,8 @@ export function DataTable<TData, TValue>({
         exportFileName={exportFileName}
       />
 
-      <div className="rounded-md border overflow-x-auto">
+      {/* Desktop: Table view */}
+      <div className="hidden md:block rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -149,6 +159,67 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+
+      {/* Mobile: Card view */}
+      {mobileCardConfig ? (
+        <div className="md:hidden">
+          <MobileCardView
+            table={table}
+            primaryColumns={mobileCardConfig.primaryColumns}
+            metricColumns={mobileCardConfig.metricColumns}
+            badgeColumns={mobileCardConfig.badgeColumns}
+          />
+        </div>
+      ) : (
+        <div className="md:hidden rounded-md border overflow-x-auto">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id} className="whitespace-nowrap">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="whitespace-nowrap">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    Sonuc bulunamadi.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       <DataTablePagination table={table} />
     </div>

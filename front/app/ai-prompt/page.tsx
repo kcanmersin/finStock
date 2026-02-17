@@ -20,16 +20,16 @@ function CopyButton({ text }: { text: string }) {
   };
 
   return (
-    <Button onClick={handleCopy} variant="outline" size="sm" className="gap-1">
+    <Button onClick={handleCopy} variant="outline" size="sm" className="gap-1 shrink-0">
       {copied ? (
         <>
           <Check className="h-4 w-4" />
-          Kopyalandi
+          <span className="hidden sm:inline">Kopyalandi</span>
         </>
       ) : (
         <>
           <Copy className="h-4 w-4" />
-          Kopyala
+          <span className="hidden sm:inline">Kopyala</span>
         </>
       )}
     </Button>
@@ -66,30 +66,30 @@ const steps = [
 
 export default function AIPromptPage() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <Sparkles className="h-7 w-7 text-primary" />
-          <h1 className="text-3xl font-bold">{aiPromptTemplate.title}</h1>
+          <Sparkles className="h-6 w-6 text-primary md:h-7 md:w-7" />
+          <h1 className="text-2xl font-bold md:text-3xl">{aiPromptTemplate.title}</h1>
         </div>
-        <p className="text-muted-foreground mt-1 max-w-2xl">
+        <p className="text-sm text-muted-foreground mt-1 max-w-2xl md:text-base">
           {aiPromptTemplate.description}
         </p>
       </div>
 
-      {/* Workflow Steps */}
-      <div className="grid gap-3 sm:grid-cols-5">
+      {/* Workflow Steps - horizontal scroll on mobile, grid on desktop */}
+      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide md:grid md:grid-cols-5 md:overflow-visible md:pb-0">
         {steps.map((step, idx) => (
-          <Card key={idx} className="relative">
-            <CardContent className="p-4 text-center">
-              <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                <step.icon className="h-5 w-5 text-primary" />
+          <Card key={idx} className="min-w-[140px] shrink-0 md:min-w-0">
+            <CardContent className="p-3 text-center md:p-4">
+              <div className="mx-auto mb-2 flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 md:h-10 md:w-10">
+                <step.icon className="h-4 w-4 text-primary md:h-5 md:w-5" />
               </div>
-              <Badge variant="outline" className="mb-1 text-xs">
+              <Badge variant="outline" className="mb-1 text-[10px] md:text-xs">
                 Adim {idx + 1}
               </Badge>
-              <h3 className="text-sm font-semibold">{step.title}</h3>
-              <p className="text-xs text-muted-foreground mt-1">{step.desc}</p>
+              <h3 className="text-xs font-semibold md:text-sm">{step.title}</h3>
+              <p className="text-[10px] text-muted-foreground mt-1 hidden sm:block md:text-xs">{step.desc}</p>
             </CardContent>
           </Card>
         ))}
@@ -98,18 +98,18 @@ export default function AIPromptPage() {
       {/* Prompt Tabs */}
       <Tabs defaultValue="funds" className="w-full">
         <TabsList className="grid w-full grid-cols-2 max-w-md">
-          <TabsTrigger value="funds">Fon Analizi Prompt</TabsTrigger>
-          <TabsTrigger value="stocks">Hisse Analizi Prompt</TabsTrigger>
+          <TabsTrigger value="funds" className="text-xs sm:text-sm">Fon Analizi Prompt</TabsTrigger>
+          <TabsTrigger value="stocks" className="text-xs sm:text-sm">Hisse Analizi Prompt</TabsTrigger>
         </TabsList>
 
         <TabsContent value="funds" className="mt-4">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-3">
-              <CardTitle className="text-lg">Fon Analizi icin AI Prompt</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between gap-2 pb-3">
+              <CardTitle className="text-base md:text-lg">Fon Analizi icin AI Prompt</CardTitle>
               <CopyButton text={aiPromptTemplate.promptForFunds} />
             </CardHeader>
             <CardContent>
-              <pre className="whitespace-pre-wrap text-sm bg-muted p-4 rounded-lg overflow-auto max-h-[400px] leading-relaxed">
+              <pre className="whitespace-pre-wrap text-xs bg-muted p-3 rounded-lg overflow-auto max-h-[300px] leading-relaxed md:text-sm md:p-4 md:max-h-[400px]">
                 {aiPromptTemplate.promptForFunds}
               </pre>
             </CardContent>
@@ -118,12 +118,12 @@ export default function AIPromptPage() {
 
         <TabsContent value="stocks" className="mt-4">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-3">
-              <CardTitle className="text-lg">Hisse Analizi icin AI Prompt</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between gap-2 pb-3">
+              <CardTitle className="text-base md:text-lg">Hisse Analizi icin AI Prompt</CardTitle>
               <CopyButton text={aiPromptTemplate.promptForStocks} />
             </CardHeader>
             <CardContent>
-              <pre className="whitespace-pre-wrap text-sm bg-muted p-4 rounded-lg overflow-auto max-h-[400px] leading-relaxed">
+              <pre className="whitespace-pre-wrap text-xs bg-muted p-3 rounded-lg overflow-auto max-h-[300px] leading-relaxed md:text-sm md:p-4 md:max-h-[400px]">
                 {aiPromptTemplate.promptForStocks}
               </pre>
             </CardContent>
@@ -134,14 +134,14 @@ export default function AIPromptPage() {
       {/* Example Output */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Ornek AI Ciktisi</CardTitle>
+          <CardTitle className="text-base md:text-lg">Ornek AI Ciktisi</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground mb-3">
+          <p className="text-xs text-muted-foreground mb-3 md:text-sm">
             AI aracinin dondurmesi beklenen Excel tablosu asagidaki gibi olmalidir:
           </p>
           <div className="overflow-x-auto">
-            <pre className="whitespace-pre-wrap text-sm bg-muted p-4 rounded-lg leading-relaxed">
+            <pre className="whitespace-pre-wrap text-xs bg-muted p-3 rounded-lg leading-relaxed md:text-sm md:p-4">
               {aiPromptTemplate.exampleOutput}
             </pre>
           </div>

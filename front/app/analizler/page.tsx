@@ -43,11 +43,11 @@ export default function AnalizlerPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Analizler</h1>
-          <p className="text-muted-foreground mt-1">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold md:text-3xl">Analizler</h1>
+          <p className="text-sm text-muted-foreground mt-1 hidden sm:block">
             Yapay zeka ile yapilmis yatirim analizleriniz.
           </p>
         </div>
@@ -59,10 +59,10 @@ export default function AnalizlerPage() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
         </div>
       ) : analyses.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-64 text-center">
-          <FileBarChart className="h-16 w-16 text-muted-foreground/50 mb-4" />
-          <h2 className="text-xl font-semibold mb-2">Henuz analiz yok</h2>
-          <p className="text-muted-foreground mb-4 max-w-md">
+        <div className="flex flex-col items-center justify-center h-64 text-center px-4">
+          <FileBarChart className="h-12 w-12 text-muted-foreground/50 mb-3 md:h-16 md:w-16 md:mb-4" />
+          <h2 className="text-lg font-semibold mb-2 md:text-xl">Henuz analiz yok</h2>
+          <p className="text-sm text-muted-foreground mb-4 max-w-md">
             Fonlar veya Hisseler sayfasindan verileri export edin, AI ile analiz
             ettirin ve sonucu buraya yukleyin.
           </p>
@@ -76,7 +76,7 @@ export default function AnalizlerPage() {
           />
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {analyses.map((analysis) => (
             <AnalysisCard
               key={analysis.id}

@@ -36,11 +36,11 @@ export function DataTableToolbar<TData>({
   const selectedRows = table.getFilteredSelectedRowModel().rows.map((row) => row.original);
 
   return (
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex flex-1 items-center gap-2 flex-wrap">
-        {/* Global search */}
+    <div className="space-y-3">
+      {/* Search + Export row */}
+      <div className="flex items-center gap-2">
         {searchKey && (
-          <div className="relative w-full sm:w-64">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="Ara..."
@@ -50,63 +50,71 @@ export function DataTableToolbar<TData>({
               onChange={(e) =>
                 table.getColumn(searchKey)?.setFilterValue(e.target.value)
               }
-              className="pl-9"
+              className="pl-9 h-9"
             />
           </div>
         )}
 
-        {/* Column filters */}
-        {filterableColumns.map((col) => {
-          const column = table.getColumn(col.id);
-          if (!column) return null;
-          return (
-            <DataTableColumnFilter
-              key={col.id}
-              column={column}
-              title={col.title}
-              type={col.type}
-            />
-          );
-        })}
-
-        {/* Active filter count + clear */}
-        {activeFilterCount > 0 && (
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="gap-1">
-              <SlidersHorizontal className="h-3 w-3" />
-              {activeFilterCount} filtre aktif
+        <div className="flex items-center gap-2 shrink-0">
+          {selectedCount > 0 && (
+            <Badge variant="outline" className="hidden sm:flex">
+              {selectedCount} / {totalCount} secildi
             </Badge>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => table.resetColumnFilters()}
-              className="h-8 px-2"
-            >
-              <X className="h-4 w-4 mr-1" />
-              Temizle
-            </Button>
-          </div>
-        )}
+          )}
+          {exportColumns && exportFileName && (
+            <ExportButton
+              data={selectedRows as Record<string, unknown>[]}
+              columns={exportColumns}
+              fileName={exportFileName}
+              disabled={selectedCount === 0}
+            />
+          )}
+        </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        {/* Selection count */}
-        {selectedCount > 0 && (
-          <Badge variant="outline">
+      {/* Filter chips - horizontal scroll on mobile */}
+      {filterableColumns.length > 0 && (
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {filterableColumns.map((col) => {
+            const column = table.getColumn(col.id);
+            if (!column) return null;
+            return (
+              <DataTableColumnFilter
+                key={col.id}
+                column={column}
+                title={col.title}
+                type={col.type}
+              />
+            );
+          })}
+
+          {activeFilterCount > 0 && (
+            <div className="flex items-center gap-1.5 shrink-0">
+              <Badge variant="secondary" className="gap-1 text-xs">
+                <SlidersHorizontal className="h-3 w-3" />
+                {activeFilterCount}
+              </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => table.resetColumnFilters()}
+                className="h-8 px-2"
+              >
+                <X className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Mobile selection count */}
+      {selectedCount > 0 && (
+        <div className="sm:hidden">
+          <Badge variant="outline" className="text-xs">
             {selectedCount} / {totalCount} secildi
           </Badge>
-        )}
-
-        {/* Export */}
-        {exportColumns && exportFileName && (
-          <ExportButton
-            data={selectedRows as Record<string, unknown>[]}
-            columns={exportColumns}
-            fileName={exportFileName}
-            disabled={selectedCount === 0}
-          />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
