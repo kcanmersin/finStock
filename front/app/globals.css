@@ -58,6 +58,17 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Native app davranisi: metin secimini engelle, uzun basma menusunu kapat */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    /* Overscroll bounce (iOS rubber band efekti) */
+    overscroll-behavior-y: contain;
+  }
+  /* Input ve textarea'larda metin secimi acik kalsin */
+  input, textarea, [contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
   }
 }
 
@@ -79,6 +90,29 @@
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+/* Safe area padding (notch, dynamic island, home indicator) */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Native-style active press feedback */
+.native-press {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.native-press:active {
+  transform: scale(0.97);
+  opacity: 0.8;
+}
+
+/* iOS-style momentum scrolling */
+.native-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 .skeleton {

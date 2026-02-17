@@ -10,7 +10,14 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:setup": "prisma generate && prisma db push",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "mobile:build": "CAPACITOR=1 next build",
+    "mobile:sync": "npx cap sync",
+    "mobile:android": "npx cap open android",
+    "mobile:ios": "npx cap open ios",
+    "mobile:run:android": "npx cap run android",
+    "mobile:run:ios": "npx cap run ios",
+    "mobile": "npm run mobile:build && npm run mobile:sync"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
@@ -36,7 +43,13 @@
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.7.0",
     "tailwindcss-animate": "^1.0.7",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/haptics": "^6.0.0",
+    "@capacitor/status-bar": "^6.0.0",
+    "@capacitor/splash-screen": "^6.0.0",
+    "@capacitor/keyboard": "^6.0.0"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
@@ -49,6 +62,7 @@
     "postcss": "^8.5.3",
     "prisma": "^6.4.1",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "@capacitor/cli": "^6.2.0"
   }
 }

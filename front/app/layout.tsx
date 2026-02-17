@@ -6,6 +6,7 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { MobileHeader } from "@/components/layout/mobile-header";
 import { BottomNav } from "@/components/layout/bottom-nav";
 import { Toaster } from "sonner";
+import { CapacitorInit } from "@/components/providers/capacitor-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "finStock",
   },
 };
@@ -46,11 +47,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <CapacitorInit />
           <div className="flex h-[100dvh] overflow-hidden">
             <Sidebar />
             <div className="flex flex-1 flex-col overflow-hidden">
               <MobileHeader />
-              <main className="flex-1 overflow-y-auto overscroll-contain">
+              <main className="flex-1 overflow-y-auto overscroll-contain scroll-smooth">
                 <div className="container mx-auto px-4 py-4 pb-20 lg:px-8 lg:py-8 lg:pb-8">
                   {children}
                 </div>

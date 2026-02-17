@@ -4,6 +4,7 @@ import * as React from "react";
 import { Table as TanstackTable, flexRender } from "@tanstack/react-table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { hapticSelection } from "@/lib/capacitor";
 
 interface MobileCardViewProps<TData> {
   table: TanstackTable<TData>;
@@ -50,14 +51,17 @@ export function MobileCardView<TData>({
           <Card
             key={row.id}
             data-state={row.getIsSelected() && "selected"}
-            className="data-[state=selected]:border-primary transition-colors"
+            className="data-[state=selected]:border-primary transition-all duration-200 active:scale-[0.98] active:bg-accent/50"
           >
             <CardContent className="p-3">
               {/* Header row: checkbox + primary info */}
               <div className="flex items-start gap-3">
                 <Checkbox
                   checked={row.getIsSelected()}
-                  onCheckedChange={(value) => row.toggleSelected(!!value)}
+                  onCheckedChange={(value) => {
+                    row.toggleSelected(!!value);
+                    hapticSelection();
+                  }}
                   aria-label="Satir sec"
                   className="mt-1"
                 />
