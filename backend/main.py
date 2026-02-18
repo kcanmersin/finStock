@@ -1,0 +1,193 @@
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from uuid import uuid4
+from datetime import datetime
+import json, os
+
+app = FastAPI(title="finStock API", version="0.1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ---------------------------------------------------------------------------
+# In-memory store  (swap with a real DB when needed)
+# ---------------------------------------------------------------------------
+DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+FUNDS: list[dict] = []
+STOCKS: list[dict] = []
+ANALYSES: list[dict] = []
+
+
+def _load_json(name: str) -> list[dict]:
+    path = os.path.join(DATA_DIR, name)
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+
+def _save_json(name: str, data: list[dict]):
+    with open(os.path.join(DATA_DIR, name), "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+@app.on_event("startup")
+def startup():
+    global FUNDS, STOCKS, ANALYSES
+    FUNDS = _load_json("funds.json")
+    STOCKS = _load_json("stocks.json")
+    ANALYSES = _load_json("analyses.json")
+
+
+# ---------------------------------------------------------------------------
+# Health
+# ---------------------------------------------------------------------------
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+# ---------------------------------------------------------------------------
+# Funds
+# ---------------------------------------------------------------------------
+@app.get("/api/funds")
+def get_funds():
+    return FUNDS
+
+
+@app.get("/api/funds/{code}")
+def get_fund_detail(code: str):
+    """Tek bir fonun detay bilgisini dondurur."""
+    for f in FUNDS:
+        if f.get("code", "").upper() == code.upper() or f.get("id") == code:
+            return f
+    raise HTTPException(status_code=404, detail="Fon bulunamadi")
+
+
+@app.post("/api/funds/{code}/sync")
+def sync_fund(code: str):
+    """
+    Fon icin tum verileri dis kaynaklardan ceker ve gunceller.
+    TODO: Buraya gercek veri cekme mantigi yazilacak
+          (TEFAS, KAP, SPK vs.)
+    Simdilik mevcut veriyi syncedAt ile isaretleyip dondurur.
+    """
+    for i, f in enumerate(FUNDS):
+        if f.get("code", "").upper() == code.upper() or f.get("id") == code:
+            f["syncedAt"] = datetime.utcnow().isoformat()
+            # TODO: Buraya gercek veri cekme kodu gelecek
+            # Ornek:
+            # detail = fetch_from_tefas(code)
+            # f.update(detail)
+            FUNDS[i] = f
+            _save_json("funds.json", FUNDS)
+            return f
+    raise HTTPException(status_code=404, detail="Fon bulunamadi")
+
+
+@app.post("/api/funds")
+def create_fund(fund: dict):
+    fund.setdefault("id", str(uuid4()))
+    FUNDS.append(fund)
+    _save_json("funds.json", FUNDS)
+    return fund
+
+
+# ---------------------------------------------------------------------------
+# Stocks
+# ---------------------------------------------------------------------------
+@app.get("/api/stocks")
+def get_stocks():
+    return STOCKS
+
+
+@app.get("/api/stocks/{symbol}")
+def get_stock_detail(symbol: str):
+    """Tek bir hissenin detay bilgisini dondurur."""
+    for s in STOCKS:
+        if s.get("symbol", "").upper() == symbol.upper() or s.get("id") == symbol:
+            return s
+    raise HTTPException(status_code=404, detail="Hisse bulunamadi")
+
+
+@app.post("/api/stocks/{symbol}/sync")
+def sync_stock(symbol: str):
+    """
+    Hisse icin tum verileri dis kaynaklardan ceker ve gunceller.
+    TODO: Buraya gercek veri cekme mantigi yazilacak
+          (Yahoo Finance, TCMB, KAP, Finnet vs.)
+    Simdilik mevcut veriyi syncedAt ile isaretleyip dondurur.
+    """
+    for i, s in enumerate(STOCKS):
+        if s.get("symbol", "").upper() == symbol.upper() or s.get("id") == symbol:
+            s["syncedAt"] = datetime.utcnow().isoformat()
+            # TODO: Buraya gercek veri cekme kodu gelecek
+            # Ornek:
+            # detail = fetch_from_yahoo(symbol)
+            # s.update(detail)
+            STOCKS[i] = s
+            _save_json("stocks.json", STOCKS)
+            return s
+    raise HTTPException(status_code=404, detail="Hisse bulunamadi")
+
+
+@app.post("/api/stocks")
+def create_stock(stock: dict):
+    stock.setdefault("id", str(uuid4()))
+    STOCKS.append(stock)
+    _save_json("stocks.json", STOCKS)
+    return stock
+
+
+# ---------------------------------------------------------------------------
+# Analyses
+# ---------------------------------------------------------------------------
+@app.get("/api/analyses")
+def get_analyses():
+    return ANALYSES
+
+
+@app.get("/api/analyses/{analysis_id}")
+def get_analysis(analysis_id: str):
+    for a in ANALYSES:
+        if a["id"] == analysis_id:
+            return a
+    raise HTTPException(status_code=404, detail="Analiz bulunamadi")
+
+
+@app.delete("/api/analyses/{analysis_id}")
+def delete_analysis(analysis_id: str):
+    global ANALYSES
+    ANALYSES = [a for a in ANALYSES if a["id"] != analysis_id]
+    _save_json("analyses.json", ANALYSES)
+    return {"ok": True}
+
+
+@app.post("/api/upload")
+async def upload_analysis(
+    file: UploadFile = File(...),
+    title: str = Form(""),
+    type: str = Form("fund"),
+):
+    content = await file.read()
+    analysis = {
+        "id": str(uuid4()),
+        "title": title or file.filename,
+        "createdAt": datetime.utcnow().isoformat(),
+        "type": type,
+        "summary": "Yuklenen dosyadan olusturuldu.",
+        "recommendations": [],
+        "rawData": [],
+        "fileName": file.filename,
+    }
+    ANALYSES.append(analysis)
+    _save_json("analyses.json", ANALYSES)
+    return analysis
